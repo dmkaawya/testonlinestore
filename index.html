@@ -1,44 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RU Online Store | Shop Smart in Sri Lanka</title>
 
-  <!-- ✅ SEO Meta -->
   <meta name="description" content="RU Online Store — buy quality electronics, clothing, and more with fast delivery across Sri Lanka.">
   <meta name="keywords" content="online store, sri lanka, ruonlinestore, buy online, electronics, fashion, home appliances">
   <meta name="author" content="RU Online Store">
 
-  <!-- ✅ Open Graph (Facebook / WhatsApp preview) -->
   <meta property="og:title" content="RU Online Store">
   <meta property="og:description" content="Shop smart — electronics, clothes, and more with fast delivery.">
   <meta property="og:image" content="https://ruonlinestore.vercel.app/images/og-image.jpg">
   <meta property="og:url" content="https://ruonlinestore.vercel.app/">
   <meta property="og:type" content="website">
 
-  <!-- ✅ Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="RU Online Store">
   <meta name="twitter:description" content="Shop smart — electronics, clothes, and more with fast delivery.">
   <meta name="twitter:image" content="https://ruonlinestore.vercel.app/images/og-image.jpg">
 
-  <!-- ✅ Favicon -->
   <link rel="icon" href="images/favicon.png" type="image/png">
 
-  <!-- ✅ CSS -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- ✅ Structured Data (Google SEO) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "RU Online Store",
-    "url": "https://ruonlinestore.vercel.app/",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://ruonlinestore.vercel.app/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #222;
+      --accent: #e91e63;
     }
-  }
-  </script>
+    [data-theme="dark"] {
+      --bg: #121212;
+      --text: #f0f0f0;
+      --accent: #ff4081;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; font-family: "Poppins", sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.5; }
+    header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 20px; background:var(--accent); color:#fff;
+      position:sticky; top:0; z-index:1000;
+    }
+    .logo { font-weight:700; font-size:1.3rem; }
+    nav a {
+      color:#fff; text-decoration:none; margin:0 10px; font-weight:500;
+    }
+    nav a:hover { text-decoration:underline; }
+    .menu-toggle { display:none; background:none; border:none; font-size:1.5rem; color:#fff; }
+
+    main { padding: 20px; }
+    .hero {
+      background: linear-gradient(45deg, var(--accent), #ff9800);
+      color:#fff; padding:60px 20px; text-align:center; border-radius:16px;
+      margin-bottom:40px;
+    }
+    .hero h1 { font-size:2rem; margin-bottom:10px; }
+    .hero p { opacity:0.9; }
+
+    .product-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;
+    }
+    .product-card {
+      background:var(--bg); border:1px solid #ddd; border-radius:12px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1); overflow:hidden;
+      transition:transform 0.2s ease;
+    }
+    .product-card:hover { transform:translateY(-5px); }
+    .product-card img { width:100%; height:180px; object-fit:cover; }
+    .product-card h3 { font-size:1.1rem; padding:10px; }
+    .product-card p { padding:0 10px 10px; }
+    .btn {
+      display:inline-block; margin:10px; background:var(--accent); color:#fff;
+      border:none; padding:10px 16px; border-radius:8px; cursor:pointer;
+    }
+    .btn:hover { opacity:0.9; }
+
+    footer {
+      background:#333; color:#ddd; padding:30px 20px; margin-top:50px;
+    }
+    .footer-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px;
+    }
+    footer a { color:#ff80ab; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    .copyright { text-align:center; margin-top:20px; font-size:0.9rem; color:#aaa; }
+
+    .theme-toggle {
+      background:none; border:2px solid #fff; border-radius:50%;
+      width:32px; height:32px; color:#fff; font-weight:bold;
+    }
+
+    @media (max-width:700px){
+      nav { display:none; flex-direction:column; background:#444; position:absolute; right:0; top:60px; width:200px; }
+      nav.active { display:flex; }
+      .menu-toggle { display:block; }
+    }
+  </style>
 </head>
+
+<body>
+  <header>
+    <div class="logo">RU <span style="font-weight:400;">Online Store</span></div>
+    <nav class="navbar">
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#contact">Contact</a>
+      <a href="login.html">Login</a>
+    </nav>
+    <div style="display:flex; gap:10px;">
+      <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <h1>Welcome to RU Online Store</h1>
+      <p>Your trusted Sri Lankan e-commerce platform for quality products.</p>
+      <a href="#products" class="btn">Shop Now</a>
+    </section>
+
+    <section id="products">
+      <h2 style="margin-bottom:20px;">Featured Products</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="images/product1.jpg" alt="Wireless Headphones">
+          <h3>Wireless Headphones</h3>
+          <p>Rs. 5,990</p>
+          <button class="btn">Add to Cart</button>
+        </div>
+        <div class="product-card">
+          <img src="images/product2.jpg" alt="Smart Watch">
+          <h3>Smart Watch</h3>
+          <p>Rs. 8,490</p>
+          <button class="btn">Add to Cart</button>
+        </div>
+        <div class="product-card">
+          <img src="images/product3.jpg" alt="Bluetooth Speaker">
+          <h3>Bluetooth Speaker</h3>
+          <p>Rs. 3,750</p>
+          <button class="btn">Add to Cart</button>
+        </div>
+        <div class="product-card">
+          <img src="images/product4.jpg" alt="Power Bank 10000mAh">
+          <h3>Power Bank 10000mAh</h3>
+          <p>Rs. 2,990</p>
+          <button class="btn">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" style="margin-top:50px;">
+      <h2>Contact Us</h2>
+      <p>📍 Kalutara, Sri Lanka</p>
+      <p>📞 +94 77 123 4567</p>
+      <p>📧 <a href="mailto:ruonlinestore@gmail.com">ruonlinestore@gmail.com</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h3>RU Online Store</h3>
+        <p>Trusted online shopping platform in Sri Lanka. Fast delivery and best prices guaranteed!</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#shipping">Shipping Policy</a></li>
+          <li><a href="#returns">Returns & Refunds</a></li>
+          <li><a href="#privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow Us</h4>
+        <p><a href="#">Facebook</a> | <a href="#">Instagram</a></p>
+      </div>
+    </div>
+    <p class="copyright">© 2025 RU Online Store. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.navbar').classList.toggle('active');
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute('data-theme');
+      body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+      localStorage.setItem('theme', body.getAttribute('data-theme'));
+    }
+
+    (function(){
+      const saved = localStorage.getItem('theme');
+      if(saved){ document.body.setAttribute('data-theme', saved); }
+    })();
+  </script>
+</body>
+</html>
