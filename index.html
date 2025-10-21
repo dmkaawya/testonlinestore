@@ -13,6 +13,14 @@
             font-family: 'Inter', sans-serif;
         }
         
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
         .product-card {
             transition: all 0.3s ease;
         }
@@ -117,276 +125,1163 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+        
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item {
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-item:hover {
+            background-color: #f3f4f6;
+            padding-left: 2rem;
+        }
+        
+        .card {
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .contact-card {
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .map-container {
+            height: 400px;
+            background: url('https://picsum.photos/seed/map/800/400') center/cover;
+            position: relative;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-control {
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- Notification Container -->
     <div id="notificationContainer" class="fixed top-4 right-4 z-50"></div>
 
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-40">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-2 rounded-lg mr-3">
-                        <i class="fas fa-store text-2xl"></i>
-                    </div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">RU Online Store</h1>
-                </div>
-
-                <!-- Search Bar -->
-                <div class="flex-1 max-w-2xl mx-8 relative">
-                    <div class="relative">
-                        <input type="text" id="searchInput" placeholder="Search for products..." 
-                               class="w-full px-5 py-3 pr-12 border border-gray-300 rounded-full focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
-                        <button onclick="performSearch()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600 transition">
-                            <i class="fas fa-search text-lg"></i>
-                        </button>
-                    </div>
-                    <!-- Search Suggestions -->
-                    <div id="searchSuggestions" class="absolute w-full bg-white border border-gray-200 rounded-xl shadow-xl mt-2 hidden">
-                        <div class="search-suggestion px-5 py-3 cursor-pointer rounded-t-xl" onclick="selectSuggestion('Smartphones')">
-                            <i class="fas fa-mobile-alt mr-3 text-purple-600"></i>Smartphones
-                        </div>
-                        <div class="search-suggestion px-5 py-3 cursor-pointer" onclick="selectSuggestion('Laptops')">
-                            <i class="fas fa-laptop mr-3 text-blue-600"></i>Laptops
-                        </div>
-                        <div class="search-suggestion px-5 py-3 cursor-pointer rounded-b-xl" onclick="selectSuggestion('Fashion')">
-                            <i class="fas fa-tshirt mr-3 text-pink-600"></i>Fashion
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Navigation Icons -->
-                <div class="flex items-center space-x-6">
-                    <button onclick="showLoginModal()" class="text-gray-600 hover:text-purple-600 transition flex items-center">
-                        <i class="fas fa-user-circle text-2xl"></i>
-                        <span class="ml-2 text-sm font-medium hidden md:block">Account</span>
-                    </button>
-                    <button onclick="showWishlist()" class="text-gray-600 hover:text-red-600 transition relative">
-                        <i class="fas fa-heart text-2xl"></i>
-                        <span id="wishlistCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
-                    </button>
-                    <button onclick="toggleCart()" class="text-gray-600 hover:text-purple-600 transition relative">
-                        <i class="fas fa-shopping-cart text-2xl"></i>
-                        <span id="cartCount" class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigation Menu -->
-        <nav class="bg-gray-50 border-t">
+    <!-- Home Page -->
+    <div id="homePage" class="page active">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-40">
             <div class="container mx-auto px-4">
-                <ul class="flex space-x-8 py-3 overflow-x-auto">
-                    <li><a href="#" onclick="showCategory('all')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">All Products</a></li>
-                    <li><a href="#" onclick="showCategory('electronics')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Electronics</a></li>
-                    <li><a href="#" onclick="showCategory('clothing')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Fashion</a></li>
-                    <li><a href="#" onclick="showCategory('home')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Home & Living</a></li>
-                    <li><a href="#" onclick="showCategory('beauty')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Beauty</a></li>
-                    <li><a href="#" onclick="showCategory('sports')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Sports</a></li>
-                    <li><a href="#" onclick="showDeals()" class="text-red-600 hover:text-red-700 font-bold transition whitespace-nowrap">
-                        <i class="fas fa-fire mr-1"></i>Hot Deals
-                    </a></li>
-                    <li><a href="contact.html" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Contact</a></li>
-                    <li><a href="admin.html" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Admin</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero-gradient text-white py-20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-black opacity-20"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="flex items-center justify-between">
-                <div class="max-w-xl">
-                    <div class="floating-badge inline-block bg-yellow-400 text-gray-900 px-4 py-2 rounded-full font-bold mb-4">
-                        <i class="fas fa-bolt mr-2"></i>50% OFF TODAY ONLY
+                <div class="flex items-center justify-between h-16">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-2 rounded-lg mr-3">
+                            <i class="fas fa-store text-2xl"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">RU Online Store</h1>
                     </div>
-                    <h2 class="text-5xl font-bold mb-6">Discover Your Dream Products</h2>
-                    <p class="text-xl mb-8 text-gray-100">Premium quality, unbeatable prices, lightning-fast delivery</p>
+
+                    <!-- Search Bar -->
+                    <div class="flex-1 max-w-2xl mx-8 relative">
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="Search for products..." 
+                                   class="w-full px-5 py-3 pr-12 border border-gray-300 rounded-full focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                            <button onclick="performSearch()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600 transition">
+                                <i class="fas fa-search text-lg"></i>
+                            </button>
+                        </div>
+                        <!-- Search Suggestions -->
+                        <div id="searchSuggestions" class="absolute w-full bg-white border border-gray-200 rounded-xl shadow-xl mt-2 hidden">
+                            <div class="search-suggestion px-5 py-3 cursor-pointer rounded-t-xl" onclick="selectSuggestion('Smartphones')">
+                                <i class="fas fa-mobile-alt mr-3 text-purple-600"></i>Smartphones
+                            </div>
+                            <div class="search-suggestion px-5 py-3 cursor-pointer" onclick="selectSuggestion('Laptops')">
+                                <i class="fas fa-laptop mr-3 text-blue-600"></i>Laptops
+                            </div>
+                            <div class="search-suggestion px-5 py-3 cursor-pointer rounded-b-xl" onclick="selectSuggestion('Fashion')">
+                                <i class="fas fa-tshirt mr-3 text-pink-600"></i>Fashion
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Icons -->
+                    <div class="flex items-center space-x-6">
+                        <button onclick="showPage('admin')" class="text-gray-600 hover:text-purple-600 transition flex items-center">
+                            <i class="fas fa-user-circle text-2xl"></i>
+                            <span class="ml-2 text-sm font-medium hidden md:block">Admin</span>
+                        </button>
+                        <button onclick="showWishlist()" class="text-gray-600 hover:text-red-600 transition relative">
+                            <i class="fas fa-heart text-2xl"></i>
+                            <span id="wishlistCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
+                        </button>
+                        <button onclick="toggleCart()" class="text-gray-600 hover:text-purple-600 transition relative">
+                            <i class="fas fa-shopping-cart text-2xl"></i>
+                            <span id="cartCount" class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="bg-gray-50 border-t">
+                <div class="container mx-auto px-4">
+                    <ul class="flex space-x-8 py-3 overflow-x-auto">
+                        <li><a href="#" onclick="showCategory('all')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">All Products</a></li>
+                        <li><a href="#" onclick="showCategory('electronics')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Electronics</a></li>
+                        <li><a href="#" onclick="showCategory('clothing')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Fashion</a></li>
+                        <li><a href="#" onclick="showCategory('home')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Home & Living</a></li>
+                        <li><a href="#" onclick="showCategory('beauty')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Beauty</a></li>
+                        <li><a href="#" onclick="showCategory('sports')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Sports</a></li>
+                        <li><a href="#" onclick="showDeals()" class="text-red-600 hover:text-red-700 font-bold transition whitespace-nowrap">
+                            <i class="fas fa-fire mr-1"></i>Hot Deals
+                        </a></li>
+                        <li><a href="#" onclick="showPage('contact')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Contact</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-gradient text-white py-20 relative overflow-hidden">
+            <div class="absolute inset-0 bg-black opacity-20"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="flex items-center justify-between">
+                    <div class="max-w-xl">
+                        <div class="floating-badge inline-block bg-yellow-400 text-gray-900 px-4 py-2 rounded-full font-bold mb-4">
+                            <i class="fas fa-bolt mr-2"></i>50% OFF TODAY ONLY
+                        </div>
+                        <h2 class="text-5xl font-bold mb-6">Discover Your Dream Products</h2>
+                        <p class="text-xl mb-8 text-gray-100">Premium quality, unbeatable prices, lightning-fast delivery</p>
+                        <div class="flex space-x-4">
+                            <button onclick="showDeals()" class="btn-primary text-white px-8 py-4 rounded-full font-bold text-lg">
+                                Shop Now
+                            </button>
+                            <button class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hidden lg:block">
+                        <img src="https://picsum.photos/seed/hero/600/400" alt="Hero" class="rounded-2xl shadow-2xl transform rotate-3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Grid -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h3 class="text-4xl font-bold mb-4">Shop by Category</h3>
+                    <p class="text-gray-600 text-lg">Find exactly what you're looking for</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                    <div class="category-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('electronics')">
+                        <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-laptop text-3xl text-purple-600"></i>
+                        </div>
+                        <h4 class="font-bold text-lg">Electronics</h4>
+                        <p class="text-sm text-gray-600 mt-1">2,450 items</p>
+                    </div>
+                    <div class="category-card bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('clothing')">
+                        <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-tshirt text-3xl text-pink-600"></i>
+                        </div>
+                        <h4 class="font-bold text-lg">Fashion</h4>
+                        <p class="text-sm text-gray-600 mt-1">5,120 items</p>
+                    </div>
+                    <div class="category-card bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('home')">
+                        <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-home text-3xl text-green-600"></i>
+                        </div>
+                        <h4 class="font-bold text-lg">Home</h4>
+                        <p class="text-sm text-gray-600 mt-1">3,890 items</p>
+                    </div>
+                    <div class="category-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('beauty')">
+                        <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-spa text-3xl text-purple-600"></i>
+                        </div>
+                        <h4 class="font-bold text-lg">Beauty</h4>
+                        <p class="text-sm text-gray-600 mt-1">1,760 items</p>
+                    </div>
+                    <div class="category-card bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('sports')">
+                        <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-football-ball text-3xl text-orange-600"></i>
+                        </div>
+                        <h4 class="font-bold text-lg">Sports</h4>
+                        <p class="text-sm text-gray-600 mt-1">980 items</p>
+                    </div>
+                    <div class="category-card bg-gradient-to-br from-red-100 to-red-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('books')">
+                        <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-book text-3xl text-red-600"></i>
+                        </div>
+                        <h4 class="font-bold text-lg">Books</h4>
+                        <p class="text-sm text-gray-600 mt-1">2,340 items</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center mb-12">
+                    <div>
+                        <h3 class="text-4xl font-bold mb-2">Featured Products</h3>
+                        <p class="text-gray-600">Handpicked just for you</p>
+                    </div>
                     <div class="flex space-x-4">
-                        <button onclick="showDeals()" class="btn-primary text-white px-8 py-4 rounded-full font-bold text-lg">
-                            Shop Now
-                        </button>
-                        <button class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
-                            Learn More
-                        </button>
+                        <select id="sortSelect" onchange="sortProducts()" class="px-6 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-purple-500 bg-white">
+                            <option value="popular">Most Popular</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="newest">Newest First</option>
+                        </select>
                     </div>
                 </div>
-                <div class="hidden lg:block">
-                    <img src="https://picsum.photos/seed/hero/600/400" alt="Hero" class="rounded-2xl shadow-2xl transform rotate-3">
+
+                <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Products will be dynamically loaded here -->
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Categories Grid -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h3 class="text-4xl font-bold mb-4">Shop by Category</h3>
-                <p class="text-gray-600 text-lg">Find exactly what you're looking for</p>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                <div class="category-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('electronics')">
-                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-laptop text-3xl text-purple-600"></i>
-                    </div>
-                    <h4 class="font-bold text-lg">Electronics</h4>
-                    <p class="text-sm text-gray-600 mt-1">2,450 items</p>
-                </div>
-                <div class="category-card bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('clothing')">
-                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-tshirt text-3xl text-pink-600"></i>
-                    </div>
-                    <h4 class="font-bold text-lg">Fashion</h4>
-                    <p class="text-sm text-gray-600 mt-1">5,120 items</p>
-                </div>
-                <div class="category-card bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('home')">
-                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-home text-3xl text-green-600"></i>
-                    </div>
-                    <h4 class="font-bold text-lg">Home</h4>
-                    <p class="text-sm text-gray-600 mt-1">3,890 items</p>
-                </div>
-                <div class="category-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('beauty')">
-                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-spa text-3xl text-purple-600"></i>
-                    </div>
-                    <h4 class="font-bold text-lg">Beauty</h4>
-                    <p class="text-sm text-gray-600 mt-1">1,760 items</p>
-                </div>
-                <div class="category-card bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('sports')">
-                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-football-ball text-3xl text-orange-600"></i>
-                    </div>
-                    <h4 class="font-bold text-lg">Sports</h4>
-                    <p class="text-sm text-gray-600 mt-1">980 items</p>
-                </div>
-                <div class="category-card bg-gradient-to-br from-red-100 to-red-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('books')">
-                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-book text-3xl text-red-600"></i>
-                    </div>
-                    <h4 class="font-bold text-lg">Books</h4>
-                    <p class="text-sm text-gray-600 mt-1">2,340 items</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Products -->
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center mb-12">
-                <div>
-                    <h3 class="text-4xl font-bold mb-2">Featured Products</h3>
-                    <p class="text-gray-600">Handpicked just for you</p>
-                </div>
-                <div class="flex space-x-4">
-                    <select id="sortSelect" onchange="sortProducts()" class="px-6 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-purple-500 bg-white">
-                        <option value="popular">Most Popular</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                        <option value="newest">Newest First</option>
-                    </select>
-                </div>
-            </div>
-
-            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Products will be dynamically loaded here -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Special Offers Banner -->
-    <section class="py-16 bg-gradient-to-r from-yellow-400 to-orange-500">
-        <div class="container mx-auto px-4 text-center">
-            <h3 class="text-4xl font-bold text-white mb-4">Limited Time Offer</h3>
-            <p class="text-xl text-white mb-8">Get free shipping on orders over $50</p>
-            <button class="bg-white text-orange-500 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
-                Shop Now & Save
-            </button>
-        </div>
-    </section>
-
-    <!-- Shopping Cart Sidebar -->
-    <div id="cartSidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
-        <div class="p-6 border-b bg-gray-50">
-            <div class="flex justify-between items-center">
-                <h3 class="text-2xl font-bold">Your Cart</h3>
-                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times text-xl"></i>
+        <!-- Special Offers Banner -->
+        <section class="py-16 bg-gradient-to-r from-yellow-400 to-orange-500">
+            <div class="container mx-auto px-4 text-center">
+                <h3 class="text-4xl font-bold text-white mb-4">Limited Time Offer</h3>
+                <p class="text-xl text-white mb-8">Get free shipping on orders over $50</p>
+                <button class="bg-white text-orange-500 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
+                    Shop Now & Save
                 </button>
             </div>
-        </div>
-        <div id="cartItems" class="p-6 overflow-y-auto" style="height: calc(100% - 200px);">
-            <div class="text-center py-12">
-                <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-4"></i>
-                <p class="text-gray-500 text-lg">Your cart is empty</p>
-                <button onclick="toggleCart()" class="mt-4 text-purple-600 font-semibold hover:text-purple-700">
-                    Continue Shopping
+        </section>
+
+        <!-- Shopping Cart Sidebar -->
+        <div id="cartSidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
+            <div class="p-6 border-b bg-gray-50">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-2xl font-bold">Your Cart</h3>
+                    <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="cartItems" class="p-6 overflow-y-auto" style="height: calc(100% - 200px);">
+                <div class="text-center py-12">
+                    <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500 text-lg">Your cart is empty</p>
+                    <button onclick="toggleCart()" class="mt-4 text-purple-600 font-semibold hover:text-purple-700">
+                        Continue Shopping
+                    </button>
+                </div>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gray-50 p-6 border-t">
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600">Subtotal:</span>
+                    <span id="cartSubtotal" class="font-semibold">$0.00</span>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <span class="text-gray-600">Shipping:</span>
+                    <span class="font-semibold text-green-600">FREE</span>
+                </div>
+                <div class="flex justify-between mb-6 text-xl">
+                    <span class="font-bold">Total:</span>
+                    <span id="cartTotal" class="font-bold text-2xl text-purple-600">$0.00</span>
+                </div>
+                <button onclick="proceedToCheckout()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
+                    Proceed to Checkout
                 </button>
             </div>
-        </div>
-        <div class="absolute bottom-0 left-0 right-0 bg-gray-50 p-6 border-t">
-            <div class="flex justify-between mb-2">
-                <span class="text-gray-600">Subtotal:</span>
-                <span id="cartSubtotal" class="font-semibold">$0.00</span>
-            </div>
-            <div class="flex justify-between mb-4">
-                <span class="text-gray-600">Shipping:</span>
-                <span class="font-semibold text-green-600">FREE</span>
-            </div>
-            <div class="flex justify-between mb-6 text-xl">
-                <span class="font-bold">Total:</span>
-                <span id="cartTotal" class="font-bold text-2xl text-purple-600">$0.00</span>
-            </div>
-            <button onclick="proceedToCheckout()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
-                Proceed to Checkout
-            </button>
         </div>
     </div>
 
-    <!-- Login Modal -->
-    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform scale-95 transition-transform">
-            <div class="text-center mb-6">
-                <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-user text-2xl"></i>
+    <!-- Product Detail Page -->
+    <div id="productPage" class="page">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-40">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between h-16">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-2 rounded-lg mr-3">
+                            <i class="fas fa-store text-2xl"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">RU Online Store</h1>
+                    </div>
+
+                    <!-- Navigation -->
+                    <nav class="hidden md:flex space-x-8">
+                        <a href="#" onclick="showPage('home')" class="text-gray-700 hover:text-purple-600 font-semibold transition">Home</a>
+                        <a href="#" onclick="showPage('contact')" class="text-gray-700 hover:text-purple-600 font-semibold transition">Contact</a>
+                        <a href="#" onclick="showPage('admin')" class="text-gray-700 hover:text-purple-600 font-semibold transition">Admin</a>
+                    </nav>
+
+                    <!-- Back Button -->
+                    <button onclick="showPage('home')" class="text-gray-600 hover:text-purple-600 transition flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Back to Shop
+                    </button>
                 </div>
-                <h3 class="text-2xl font-bold mb-2">Welcome Back</h3>
-                <p class="text-gray-600">Sign in to your account</p>
             </div>
-            <form onsubmit="handleLogin(event)">
-                <div class="mb-4">
-                    <label class="block text-gray-700 mb-2 font-semibold">Username</label>
-                    <input type="text" id="username" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+        </header>
+
+        <!-- Product Details -->
+        <main class="container mx-auto px-4 py-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Product Images -->
+                    <div>
+                        <div class="mb-4">
+                            <img id="mainImage" src="" alt="Product" class="main-image w-full h-96 object-cover rounded-xl">
+                        </div>
+                        <div class="image-gallery" id="imageGallery">
+                            <!-- Images will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Product Info -->
+                    <div>
+                        <div class="mb-4">
+                            <span id="productBadge" class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-2"></span>
+                            <span id="productCategory" class="text-gray-600 text-sm"></span>
+                        </div>
+                        
+                        <h1 id="productName" class="text-3xl font-bold mb-4"></h1>
+                        
+                        <div class="flex items-center mb-4">
+                            <div id="productRating" class="flex text-yellow-400 mr-2">
+                                <!-- Rating will be loaded here -->
+                            </div>
+                            <span id="productReviews" class="text-gray-600"></span>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <span id="productPrice" class="text-3xl font-bold text-purple-600 mr-2"></span>
+                            <span id="productOriginalPrice" class="text-xl text-gray-500 line-through"></span>
+                            <span id="productDiscount" class="ml-2 text-green-600 font-semibold"></span>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p id="productDescription" class="text-gray-700 mb-4"></p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <i class="fas fa-truck text-purple-600 mb-2"></i>
+                                    <p class="text-sm text-gray-600">Delivery</p>
+                                    <p id="productDelivery" class="font-semibold"></p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <i class="fas fa-dollar-sign text-purple-600 mb-2"></i>
+                                    <p class="text-sm text-gray-600">Delivery Charge</p>
+                                    <p id="productDeliveryCharge" class="font-semibold"></p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <i class="fas fa-box text-purple-600 mb-2"></i>
+                                    <p class="text-sm text-gray-600">Stock</p>
+                                    <p id="productStock" class="font-semibold"></p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <i class="fas fa-shopping-bag text-purple-600 mb-2"></i>
+                                    <p class="text-sm text-gray-600">Sold</p>
+                                    <p id="productSold" class="font-semibold"></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-4">
+                            <button onclick="addToCart()" class="btn-primary text-white px-8 py-4 rounded-xl font-bold text-lg flex-1">
+                                <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
+                            </button>
+                            <button onclick="toggleWishlist()" class="bg-gray-200 text-gray-700 px-6 py-4 rounded-xl font-bold hover:bg-gray-300 transition">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 mb-2 font-semibold">Password</label>
-                    <input type="password" id="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
-                </div>
-                <div class="flex items-center justify-between mb-6">
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-2">
-                        <span class="text-sm text-gray-600">Remember me</span>
-                    </label>
-                    <a href="#" class="text-sm text-purple-600 hover:text-purple-700">Forgot password?</a>
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-bold hover:shadow-lg transition">
-                    Sign In
-                </button>
-            </form>
-            <div class="mt-6 text-center">
-                <p class="text-gray-600">Don't have an account? <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Sign up</a></p>
             </div>
-            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
-                <i class="fas fa-times text-xl"></i>
-            </button>
+
+            <!-- Reviews Section -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 mt-8">
+                <h2 class="text-2xl font-bold mb-6">Customer Reviews</h2>
+                <div id="reviewsContainer" class="space-y-4">
+                    <!-- Reviews will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Checkout Page -->
+    <div id="checkoutPage" class="page">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-40">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between h-16">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-2 rounded-lg mr-3">
+                            <i class="fas fa-store text-2xl"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">RU Online Store</h1>
+                    </div>
+
+                    <!-- Navigation -->
+                    <nav class="hidden md:flex space-x-8">
+                        <a href="#" onclick="showPage('home')" class="text-gray-700 hover:text-purple-600 font-semibold transition">Home</a>
+                        <a href="#" onclick="showPage('contact')" class="text-gray-700 hover:text-purple-600 font-semibold transition">Contact</a>
+                        <a href="#" onclick="showPage('admin')" class="text-gray-700 hover:text-purple-600 font-semibold transition">Admin</a>
+                    </nav>
+
+                    <!-- Back Button -->
+                    <button onclick="showPage('home')" class="text-gray-600 hover:text-purple-600 transition flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Back to Shop
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Checkout Form -->
+        <main class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Checkout Form -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h2 class="text-2xl font-bold mb-6">Checkout Information</h2>
+                        
+                        <form onsubmit="processCheckout(event)">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group mb-4">
+                                    <label class="block text-gray-700 mb-2 font-semibold">Full Name</label>
+                                    <input type="text" id="fullName" required class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
+                                </div>
+                                
+                                <div class="form-group mb-4">
+                                    <label class="block text-gray-700 mb-2 font-semibold">Email Address</label>
+                                    <input type="email" id="email" required class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
+                                </div>
+                                
+                                <div class="form-group mb-4">
+                                    <label class="block text-gray-700 mb-2 font-semibold">Phone Number</label>
+                                    <input type="tel" id="phone" required class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
+                                </div>
+                                
+                                <div class="form-group mb-4">
+                                    <label class="block text-gray-700 mb-2 font-semibold">Work Number</label>
+                                    <input type="tel" id="workNumber" required class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
+                                </div>
+                                
+                                <div class="form-group mb-4 md:col-span-2">
+                                    <label class="block text-gray-700 mb-2 font-semibold">Address</label>
+                                    <textarea id="address" rows="3" required class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"></textarea>
+                                </div>
+                                
+                                <div class="form-group mb-4">
+                                    <label class="block text-gray-700 mb-2 font-semibold">District</label>
+                                    <select id="district" required class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
+                                        <option value="">Select District</option>
+                                        <option value="Colombo">Colombo</option>
+                                        <option value="Gampaha">Gampaha</option>
+                                        <option value="Kalutara">Kalutara</option>
+                                        <option value="Kandy">Kandy</option>
+                                        <option value="Matale">Matale</option>
+                                        <option value="Nuwara Eliya">Nuwara Eliya</option>
+                                        <option value="Galle">Galle</option>
+                                        <option value="Matara">Matara</option>
+                                        <option value="Hambantota">Hambantota</option>
+                                        <option value="Jaffna">Jaffna</option>
+                                        <option value="Kilinochchi">Kilinochchi</option>
+                                        <option value="Mannar">Mannar</option>
+                                        <option value="Vavuniya">Vavuniya</option>
+                                        <option value="Mullaitivu">Mullaitivu</option>
+                                        <option value="Batticaloa">Batticaloa</option>
+                                        <option value="Ampara">Ampara</option>
+                                        <option value="Trincomalee">Trincomalee</option>
+                                        <option value="Kurunegala">Kurunegala</option>
+                                        <option value="Puttalam">Puttalam</option>
+                                        <option value="Anuradhapura">Anuradhapura</option>
+                                        <option value="Polonnaruwa">Polonnaruwa</option>
+                                        <option value="Badulla">Badulla</option>
+                                        <option value="Moneragala">Moneragala</option>
+                                        <option value="Ratnapura">Ratnapura</option>
+                                        <option value="Kegalle">Kegalle</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group mb-4">
+                                    <label class="block text-gray-700 mb-2 font-semibold">City</label>
+                                    <input type="text" id="city" required class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
+                                </div>
+                                
+                                <div class="form-group mb-4">
+                                    <label class="block text-gray-700 mb-2 font-semibold">Postal Code</label>
+                                    <input type="text" id="postalCode" required class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h3 class="text-xl font-bold mb-4">Payment Method</h3>
+                                <div class="space-y-3">
+                                    <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="payment" value="cod" checked class="mr-3">
+                                        <i class="fas fa-money-bill-wave text-green-600 mr-3"></i>
+                                        <span>Cash on Delivery</span>
+                                    </label>
+                                    <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="payment" value="card" class="mr-3">
+                                        <i class="fas fa-credit-card text-blue-600 mr-3"></i>
+                                        <span>Credit/Debit Card</span>
+                                    </label>
+                                    <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="payment" value="bank" class="mr-3">
+                                        <i class="fas fa-university text-purple-600 mr-3"></i>
+                                        <span>Bank Transfer</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h3 class="text-xl font-bold mb-4">Dropshipping Partner Information</h3>
+                                <div class="bg-purple-50 p-6 rounded-lg">
+                                    <p class="text-gray-700 mb-4">If you are a dropshipping partner, please provide your details:</p>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="form-group mb-4">
+                                            <label class="block text-gray-700 mb-2 font-semibold">Your Profit Margin (%)</label>
+                                            <input type="number" id="profitMargin" min="0" max="100" class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label class="block text-gray-700 mb-2 font-semibold">Your Name</label>
+                                            <input type="text" id="partnerName" class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label class="block text-gray-700 mb-2 font-semibold">Your WhatsApp Number</label>
+                                            <input type="tel" id="partnerWhatsApp" class="form-control w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <button type="submit" class="btn-primary w-full text-white py-4 rounded-xl font-bold text-lg">
+                                    <i class="fas fa-check-circle mr-2"></i>Place Order
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-gray-100 rounded-2xl p-8">
+                        <h3 class="text-xl font-bold mb-6">Order Summary</h3>
+                        
+                        <div id="orderItems">
+                            <!-- Order items will be loaded here -->
+                        </div>
+                        
+                        <div class="order-item">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        
+                        <div class="order-item">
+                            <span>Shipping</span>
+                            <span id="shipping">$0.00</span>
+                        </div>
+                        
+                        <div class="order-item">
+                            <span>Tax</span>
+                            <span id="tax">$0.00</span>
+                        </div>
+                        
+                        <div class="order-item font-bold text-lg">
+                            <span>Total</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">Need Help?</h3>
+                        <div class="space-y-3">
+                            <a href="#" onclick="showPage('contact')" class="flex items-center text-purple-600 hover:text-purple-800">
+                                <i class="fas fa-phone mr-3"></i>
+                                Contact Support
+                            </a>
+                            <a href="#" class="flex items-center text-purple-600 hover:text-purple-800">
+                                <i class="fas fa-shipping-fast mr-3"></i>
+                                Shipping Info
+                            </a>
+                            <a href="#" class="flex items-center text-purple-600 hover:text-purple-800">
+                                <i class="fas fa-undo mr-3"></i>
+                                Return Policy
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Admin Page -->
+    <div id="adminPage" class="page">
+        <!-- Login Form -->
+        <div id="loginForm" class="min-h-screen flex items-center justify-center">
+            <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
+                <div class="text-center mb-8">
+                    <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-shield text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-2">Admin Login</h2>
+                    <p class="text-gray-600">Enter your credentials to continue</p>
+                </div>
+                
+                <form onsubmit="handleLogin(event)">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2 font-semibold">Username</label>
+                        <input type="text" id="username" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2 font-semibold">Password</label>
+                        <input type="password" id="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                    </div>
+                    <button type="submit" class="w-full btn-primary text-white py-3 rounded-lg font-bold">
+                        Login
+                    </button>
+                </form>
+                
+                <div class="mt-4 text-center text-sm text-gray-600">
+                    <p>Use: Admin / admin123</p>
+                </div>
+            </div>
         </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center">
+                        <button onclick="toggleSidebar()" class="text-gray-600 hover:text-gray-800 mr-4">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-gray-600">Welcome, Admin</span>
+                        <button onclick="logout()" class="text-red-600 hover:text-red-800">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex">
+                <!-- Sidebar -->
+                <aside id="sidebar" class="sidebar w-64 bg-white h-screen fixed shadow-lg">
+                    <nav class="p-4">
+                        <a href="#" onclick="showAdminSection('dashboard')" class="sidebar-item block py-3 px-4 rounded-lg mb-2 text-gray-700 hover:text-purple-600">
+                            <i class="fas fa-tachometer-alt mr-3"></i>Dashboard
+                        </a>
+                        <a href="#" onclick="showAdminSection('products')" class="sidebar-item block py-3 px-4 rounded-lg mb-2 text-gray-700 hover:text-purple-600">
+                            <i class="fas fa-box mr-3"></i>Products
+                        </a>
+                        <a href="#" onclick="showAdminSection('orders')" class="sidebar-item block py-3 px-4 rounded-lg mb-2 text-gray-700 hover:text-purple-600">
+                            <i class="fas fa-shopping-cart mr-3"></i>Orders
+                        </a>
+                        <a href="#" onclick="showAdminSection('customers')" class="sidebar-item block py-3 px-4 rounded-lg mb-2 text-gray-700 hover:text-purple-600">
+                            <i class="fas fa-users mr-3"></i>Customers
+                        </a>
+                        <a href="#" onclick="showAdminSection('analytics')" class="sidebar-item block py-3 px-4 rounded-lg mb-2 text-gray-700 hover:text-purple-600">
+                            <i class="fas fa-chart-line mr-3"></i>Analytics
+                        </a>
+                        <a href="#" onclick="showAdminSection('dropshipping')" class="sidebar-item block py-3 px-4 rounded-lg mb-2 text-gray-700 hover:text-purple-600">
+                            <i class="fas fa-truck mr-3"></i>Dropshipping
+                        </a>
+                    </nav>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="ml-64 p-6">
+                    <!-- Dashboard Section -->
+                    <div id="dashboardSection" class="admin-section">
+                        <h2 class="text-3xl font-bold mb-6">Dashboard Overview</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                            <div class="card bg-white p-6 rounded-xl shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-gray-600">Total Products</p>
+                                        <p class="text-3xl font-bold">50</p>
+                                    </div>
+                                    <div class="bg-purple-100 p-3 rounded-full">
+                                        <i class="fas fa-box text-purple-600 text-xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card bg-white p-6 rounded-xl shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-gray-600">Total Orders</p>
+                                        <p class="text-3xl font-bold">234</p>
+                                    </div>
+                                    <div class="bg-blue-100 p-3 rounded-full">
+                                        <i class="fas fa-shopping-cart text-blue-600 text-xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card bg-white p-6 rounded-xl shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-gray-600">Customers</p>
+                                        <p class="text-3xl font-bold">1,234</p>
+                                    </div>
+                                    <div class="bg-green-100 p-3 rounded-full">
+                                        <i class="fas fa-users text-green-600 text-xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card bg-white p-6 rounded-xl shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-gray-600">Revenue</p>
+                                        <p class="text-3xl font-bold">$45,678</p>
+                                    </div>
+                                    <div class="bg-yellow-100 p-3 rounded-full">
+                                        <i class="fas fa-dollar-sign text-yellow-600 text-xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="bg-white p-6 rounded-xl shadow">
+                                <h3 class="text-xl font-bold mb-4">Recent Orders</h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between py-2 border-b">
+                                        <div>
+                                            <p class="font-semibold">Order #1234</p>
+                                            <p class="text-sm text-gray-600">John Doe</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-semibold">$234.56</p>
+                                            <p class="text-sm text-green-600">Delivered</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between py-2 border-b">
+                                        <div>
+                                            <p class="font-semibold">Order #1235</p>
+                                            <p class="text-sm text-gray-600">Jane Smith</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-semibold">$156.78</p>
+                                            <p class="text-sm text-yellow-600">Processing</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between py-2">
+                                        <div>
+                                            <p class="font-semibold">Order #1236</p>
+                                            <p class="text-sm text-gray-600">Mike Johnson</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-semibold">$89.99</p>
+                                            <p class="text-sm text-blue-600">Shipped</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-xl shadow">
+                                <h3 class="text-xl font-bold mb-4">Top Products</h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between py-2 border-b">
+                                        <div class="flex items-center">
+                                            <img src="https://picsum.photos/seed/headphones/50/50" alt="Product" class="w-12 h-12 rounded-lg mr-3">
+                                            <div>
+                                                <p class="font-semibold">Wireless Headphones</p>
+                                                <p class="text-sm text-gray-600">Electronics</p>
+                                            </div>
+                                        </div>
+                                        <p class="font-semibold">$79.99</p>
+                                    </div>
+                                    <div class="flex items-center justify-between py-2 border-b">
+                                        <div class="flex items-center">
+                                            <img src="https://picsum.photos/seed/smartwatch/50/50" alt="Product" class="w-12 h-12 rounded-lg mr-3">
+                                            <div>
+                                                <p class="font-semibold">Smart Watch</p>
+                                                <p class="text-sm text-gray-600">Electronics</p>
+                                            </div>
+                                        </div>
+                                        <p class="font-semibold">$199.99</p>
+                                    </div>
+                                    <div class="flex items-center justify-between py-2">
+                                        <div class="flex items-center">
+                                            <img src="https://picsum.photos/seed/skincare/50/50" alt="Product" class="w-12 h-12 rounded-lg mr-3">
+                                            <div>
+                                                <p class="font-semibold">Skincare Set</p>
+                                                <p class="text-sm text-gray-600">Beauty</p>
+                                            </div>
+                                        </div>
+                                        <p class="font-semibold">$59.99</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Products Section -->
+                    <div id="productsSection" class="admin-section hidden">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-3xl font-bold">Products Management</h2>
+                            <button onclick="showAddProductModal()" class="btn-primary text-white px-6 py-3 rounded-lg font-bold">
+                                <i class="fas fa-plus mr-2"></i>Add Product
+                            </button>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow overflow-hidden">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200" id="productsTable">
+                                    <!-- Products will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Orders Section -->
+                    <div id="ordersSection" class="admin-section hidden">
+                        <h2 class="text-3xl font-bold mb-6">Orders Management</h2>
+                        <div class="bg-white rounded-xl shadow overflow-hidden">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">#1234</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">John Doe</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$234.56</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Delivered</span></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">2024-01-15</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                            <button class="text-red-600 hover:text-red-900">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">#1235</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">Jane Smith</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$156.78</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Processing</span></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">2024-01-16</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                            <button class="text-red-600 hover:text-red-900">Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Customers Section -->
+                    <div id="customersSection" class="admin-section hidden">
+                        <h2 class="text-3xl font-bold mb-6">Customers Management</h2>
+                        <div class="bg-white rounded-xl shadow overflow-hidden">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orders</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Spent</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">John Doe</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">john@example.com</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">12</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$1,234.56</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">2023-10-15</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                            <button class="text-red-600 hover:text-red-900">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">Jane Smith</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">jane@example.com</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">8</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">$856.78</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">2023-11-20</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                            <button class="text-red-600 hover:text-red-900">Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Section -->
+                    <div id="analyticsSection" class="admin-section hidden">
+                        <h2 class="text-3xl font-bold mb-6">Analytics</h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="bg-white p-6 rounded-xl shadow">
+                                <h3 class="text-xl font-bold mb-4">Sales Overview</h3>
+                                <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                                    <p class="text-gray-600">Sales Chart Placeholder</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow">
+                                <h3 class="text-xl font-bold mb-4">Product Performance</h3>
+                                <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                                    <p class="text-gray-600">Product Chart Placeholder</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropshipping Section -->
+                    <div id="dropshippingSection" class="admin-section hidden">
+                        <h2 class="text-3xl font-bold mb-6">Dropshipping Partners</h2>
+                        <div class="bg-white rounded-xl shadow overflow-hidden">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partner Name</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Profit Margin</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">WhatsApp</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orders</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">Partner A</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">15%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">+94771234567</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">45</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                            <button class="text-red-600 hover:text-red-900">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">Partner B</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">20%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">+94771234568</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">32</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                            <button class="text-red-600 hover:text-red-900">Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contactPage" class="page">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-40">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between h-16">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-2 rounded-lg mr-3">
+                            <i class="fas fa-store text-2xl"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">RU Online Store</h1>
+                    </div>
+
+                    <!-- Navigation -->
+                    <nav class="hidden md:flex space-x-8">
+                        <a href="#" onclick="showPage('home')" class="text-gray-700 hover:text-purple-600 font-semibold transition">Home</a>
+                        <a href="#" onclick="showPage('admin')" class="text-gray-700 hover:text-purple-600 font-semibold transition">Admin</a>
+                    </nav>
+
+                    <!-- Back Button -->
+                    <button onclick="showPage('home')" class="text-gray-600 hover:text-purple-600 transition flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Back to Shop
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contact Section -->
+        <main class="container mx-auto px-4 py-12">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold mb-4">Contact Us</h1>
+                <p class="text-xl text-gray-600">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold mb-6">Send us a message</h2>
+                    <form onsubmit="sendEmail(event)">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2 font-semibold">Your Name</label>
+                            <input type="text" id="contactName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2 font-semibold">Email Address</label>
+                            <input type="email" id="contactEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2 font-semibold">Subject</label>
+                            <input type="text" id="contactSubject" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2 font-semibold">Message</label>
+                            <textarea id="contactMessage" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary text-white px-8 py-3 rounded-lg font-bold w-full">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                        <h2 class="text-2xl font-bold mb-6">Get in Touch</h2>
+                        <div class="space-y-6">
+                            <div class="contact-card flex items-start">
+                                <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-map-marker-alt text-purple-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">Address</h3>
+                                    <p class="text-gray-600">123 Shopping Street, Colombo 04, Sri Lanka</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-card flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-phone text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">Phone</h3>
+                                    <p class="text-gray-600">+94 77 504 8455</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-card flex items-start">
+                                <div class="bg-green-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-envelope text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">Email</h3>
+                                    <p class="text-gray-600">support@ruonlinestore.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-card flex items-start">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">Business Hours</h3>
+                                    <p class="text-gray-600">Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="map-container rounded-2xl overflow-hidden shadow-lg">
+                        <div class="map-overlay"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="mt-16">
+                <h2 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="font-semibold mb-2">How can I track my order?</h3>
+                        <p class="text-gray-600">You can track your order by clicking on the tracking link sent to your email after purchase.</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="font-semibold mb-2">What is your return policy?</h3>
+                        <p class="text-gray-600">We offer a 30-day return policy for all unused items in original packaging.</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="font-semibold mb-2">Do you ship internationally?</h3>
+                        <p class="text-gray-600">Yes, we ship to over 50 countries worldwide. Shipping costs vary by location.</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="font-semibold mb-2">How can I contact customer support?</h3>
+                        <p class="text-gray-600">You can reach us via email, phone, or through the contact form on this page.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
@@ -1597,6 +2492,7 @@
         let cart = [];
         let wishlist = [];
         let currentCategory = 'all';
+        let selectedProduct = null;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -1604,6 +2500,39 @@
             updateCartCount();
             updateWishlistCount();
         });
+
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageName + 'Page').classList.add('active');
+            
+            // Special handling for admin page
+            if (pageName === 'admin') {
+                if (localStorage.getItem('adminLoggedIn') === 'true') {
+                    document.getElementById('adminDashboard').classList.remove('hidden');
+                    document.getElementById('loginForm').classList.add('hidden');
+                } else {
+                    document.getElementById('adminDashboard').classList.add('hidden');
+                    document.getElementById('loginForm').classList.remove('hidden');
+                }
+            }
+        }
+
+        // Admin Section Navigation
+        function showAdminSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + 'Section').classList.remove('hidden');
+        }
 
         // Search functionality
         document.getElementById('searchInput').addEventListener('input', function(e) {
@@ -1695,9 +2624,89 @@
 
         // View product details
         function viewProduct(productId) {
-            const product = products.find(p => p.id === productId);
-            localStorage.setItem('selectedProduct', JSON.stringify(product));
-            window.location.href = 'product.html';
+            selectedProduct = products.find(p => p.id === productId);
+            if (selectedProduct) {
+                loadProductDetails();
+                showPage('product');
+            }
+        }
+
+        // Load product details
+        function loadProductDetails() {
+            if (!selectedProduct) return;
+            
+            document.getElementById('mainImage').src = selectedProduct.images[0];
+            document.getElementById('productName').textContent = selectedProduct.name;
+            document.getElementById('productBadge').textContent = selectedProduct.badge || '';
+            document.getElementById('productCategory').textContent = selectedProduct.category.charAt(0).toUpperCase() + selectedProduct.category.slice(1);
+            document.getElementById('productPrice').textContent = `$${selectedProduct.price}`;
+            document.getElementById('productOriginalPrice').textContent = `$${selectedProduct.originalPrice}`;
+            document.getElementById('productDiscount').textContent = `Save ${(100 - (selectedProduct.price / selectedProduct.originalPrice * 100)).toFixed(0)}%`;
+            document.getElementById('productDescription').textContent = selectedProduct.description;
+            document.getElementById('productDelivery').textContent = `${selectedProduct.deliveryDays} days`;
+            document.getElementById('productDeliveryCharge').textContent = selectedProduct.deliveryCharge === 0 ? 'FREE' : `$${selectedProduct.deliveryCharge}`;
+            document.getElementById('productStock').textContent = selectedProduct.stock > 0 ? `${selectedProduct.stock} in stock` : 'Out of stock';
+            document.getElementById('productSold').textContent = selectedProduct.sold;
+            
+            // Load rating
+            const ratingContainer = document.getElementById('productRating');
+            ratingContainer.innerHTML = Array(5).fill().map((_, i) => 
+                `<i class="fas fa-star${i < Math.floor(selectedProduct.rating) ? '' : '-o'}"></i>`
+            ).join('');
+            
+            document.getElementById('productReviews').textContent = `(${selectedProduct.reviews} reviews)`;
+            
+            // Load image gallery
+            const imageGallery = document.getElementById('imageGallery');
+            imageGallery.innerHTML = selectedProduct.images.map((img, index) => `
+                <img src="${img}" alt="Product ${index + 1}" class="w-full h-20 object-cover rounded-lg cursor-pointer" onclick="changeMainImage('${img}')">
+            `).join('');
+            
+            // Load reviews
+            loadReviews();
+        }
+
+        function changeMainImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+
+        function loadReviews() {
+            const reviews = [
+                {
+                    name: "John Doe",
+                    rating: 5,
+                    date: "2024-01-15",
+                    comment: "Amazing product! Exactly what I was looking for."
+                },
+                {
+                    name: "Jane Smith",
+                    rating: 4,
+                    date: "2024-01-10",
+                    comment: "Good quality, fast delivery. Very satisfied."
+                },
+                {
+                    name: "Mike Johnson",
+                    rating: 5,
+                    date: "2024-01-05",
+                    comment: "Excellent value for money. Highly recommend!"
+                }
+            ];
+            
+            const reviewsContainer = document.getElementById('reviewsContainer');
+            reviewsContainer.innerHTML = reviews.map(review => `
+                <div class="bg-gray-50 p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-semibold">${review.name}</h4>
+                        <span class="text-sm text-gray-600">${review.date}</span>
+                    </div>
+                    <div class="flex text-yellow-400 mb-2">
+                        ${Array(5).fill().map((_, i) => 
+                            `<i class="fas fa-star${i < review.rating ? '' : '-o'}"></i>`
+                        ).join('')}
+                    </div>
+                    <p class="text-gray-700">${review.comment}</p>
+                </div>
+            `).join('');
         }
 
         // Cart functionality
@@ -1902,37 +2911,6 @@
             `).join('');
         }
 
-        // Modal functionality
-        function showLoginModal() {
-            document.getElementById('loginModal').style.display = 'flex';
-            setTimeout(() => {
-                document.querySelector('#loginModal > div').classList.remove('scale-95');
-                document.querySelector('#loginModal > div').classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeLoginModal() {
-            document.querySelector('#loginModal > div').classList.remove('scale-100');
-            document.querySelector('#loginModal > div').classList.add('scale-95');
-            setTimeout(() => {
-                document.getElementById('loginModal').style.display = 'none';
-            }, 300);
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            if (username === 'Admin' && password === 'admin123') {
-                showNotification('Login successful! Welcome Admin.', 'success');
-                closeLoginModal();
-                window.location.href = 'admin.html';
-            } else {
-                showNotification('Invalid username or password', 'error');
-            }
-        }
-
         // Other functions
         function showDeals() {
             showCategory('all');
@@ -1946,8 +2924,203 @@
                 showNotification('Your cart is empty', 'warning');
                 return;
             }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            window.location.href = 'checkout.html';
+            showPage('checkout');
+            loadOrderSummary();
+        }
+
+        function loadOrderSummary() {
+            const orderItems = document.getElementById('orderItems');
+            let subtotal = 0;
+            let shipping = 0;
+            
+            if (cart.length === 0) {
+                orderItems.innerHTML = '<p class="text-gray-600">Your cart is empty</p>';
+                return;
+            }
+            
+            orderItems.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                shipping += item.deliveryCharge * item.quantity;
+                
+                return `
+                    <div class="order-item">
+                        <div>
+                            <h4 class="font-semibold">${item.name}</h4>
+                            <p class="text-sm text-gray-600">Qty: ${item.quantity}</p>
+                        </div>
+                        <span>$${itemTotal.toFixed(2)}</span>
+                    </div>
+                `;
+            }).join('');
+            
+            const tax = subtotal * 0.1; // 10% tax
+            const total = subtotal + shipping + tax;
+            
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('shipping').textContent = shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+
+        function processCheckout(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                workNumber: document.getElementById('workNumber').value,
+                address: document.getElementById('address').value,
+                district: document.getElementById('district').value,
+                city: document.getElementById('city').value,
+                postalCode: document.getElementById('postalCode').value,
+                payment: document.querySelector('input[name="payment"]:checked').value,
+                profitMargin: document.getElementById('profitMargin').value,
+                partnerName: document.getElementById('partnerName').value,
+                partnerWhatsApp: document.getElementById('partnerWhatsApp').value,
+                cart: cart,
+                total: document.getElementById('total').textContent
+            };
+            
+            // Send WhatsApp message
+            const message = `🛒 NEW ORDER FROM RU ONLINE STORE 🛒\n\n` +
+                `👤 Customer: ${formData.fullName}\n` +
+                `📧 Email: ${formData.email}\n` +
+                `📱 Phone: ${formData.phone}\n` +
+                `🏢 Work: ${formData.workNumber}\n` +
+                `📍 Address: ${formData.address}, ${formData.city}, ${formData.district}\n` +
+                `💳 Payment: ${formData.payment}\n\n` +
+                `📦 Order Items:\n${cart.map(item => `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`).join('\n')}\n\n` +
+                `💰 Total: ${formData.total}\n\n` +
+                `🚚 Delivery Info: ${cart[0]?.deliveryDays || 'N/A'} days\n` +
+                `📦 Stock: ${cart[0]?.stock || 'N/A'}\n` +
+                `🛍️ Sold: ${cart[0]?.sold || 'N/A'}`;
+            
+            if (formData.partnerName) {
+                message += `\n\n👥 Dropshipping Partner:\n` +
+                    `Name: ${formData.partnerName}\n` +
+                    `Profit: ${formData.profitMargin}%\n` +
+                    `WhatsApp: ${formData.partnerWhatsApp}`;
+            }
+            
+            const whatsappUrl = `https://wa.me/94775048455?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Show success message
+            alert('Order placed successfully! You will receive a confirmation message shortly.');
+            
+            // Clear cart
+            cart = [];
+            updateCartCount();
+            
+            // Redirect to home page
+            setTimeout(() => {
+                showPage('home');
+            }, 3000);
+        }
+
+        // Admin functions
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'Admin' && password === 'admin123') {
+                localStorage.setItem('adminLoggedIn', 'true');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                document.getElementById('loginForm').classList.add('hidden');
+                loadProducts();
+            } else {
+                showNotification('Invalid username or password', 'error');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+
+        function loadProducts() {
+            const productsTable = document.getElementById('productsTable');
+            const products = [
+                { id: 1, name: 'Wireless Headphones', category: 'Electronics', price: 79.99, stock: 15, status: 'Active' },
+                { id: 2, name: 'Smart Watch', category: 'Electronics', price: 199.99, stock: 8, status: 'Active' },
+                { id: 3, name: 'Designer Jacket', category: 'Clothing', price: 89.99, stock: 25, status: 'Active' },
+                { id: 4, name: 'Coffee Maker', category: 'Home', price: 129.99, stock: 12, status: 'Active' },
+                { id: 5, name: 'Skincare Set', category: 'Beauty', price: 59.99, stock: 30, status: 'Active' }
+            ];
+            
+            productsTable.innerHTML = products.map(product => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <img src="https://picsum.photos/seed/product${product.id}/50/50" alt="${product.name}" class="w-10 h-10 rounded-lg mr-3">
+                            <div>
+                                <div class="text-sm font-medium text-gray-900">${product.name}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.category}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$${product.price}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.stock}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            ${product.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
+                        <button class="text-red-600 hover:text-red-900">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showAddProductModal() {
+            alert('Add Product functionality would open a modal here');
+        }
+
+        // Contact functions
+        function sendEmail(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // Email API integration
+            const emailData = {
+                service_id: 'default_service',
+                template_id: 'template_id',
+                user_id: 'c95e74a2-7e94-46a6-b730-f6ce448c01b9',
+                template_params: {
+                    'from_name': name,
+                    'from_email': email,
+                    'to_email': 'support@ruonlinestore.com',
+                    'subject': subject,
+                    'message': message
+                }
+            };
+            
+            // Simulate email sending
+            alert('Thank you for your message! We will get back to you soon.');
+            
+            // Reset form
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactSubject').value = '';
+            document.getElementById('contactMessage').value = '';
         }
 
         // Notification system
