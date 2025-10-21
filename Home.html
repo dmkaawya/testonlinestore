@@ -390,1209 +390,1473 @@
     </div>
 
     <script>
-        // Sample product data with 50 products
+        // Sample product data with additional fields
         const products = [
             {
-                id: 1,
-                name: "Wireless Headphones",
-                price: 79.99,
-                originalPrice: 129.99,
-                image: "https://picsum.photos/seed/headphones/300/300",
-                category: "electronics",
-                rating: 4.5,
-                reviews: 234,
-                badge: "Sale",
-                stock: 15,
-                sold: 892,
-                deliveryDays: "2-3",
-                deliveryCharge: 0,
-                description: "Premium wireless headphones with noise cancellation",
-                images: [
-                    "https://picsum.photos/seed/headphones1/600/600",
-                    "https://picsum.photos/seed/headphones2/600/600",
-                    "https://picsum.photos/seed/headphones3/600/600",
-                    "https://picsum.photos/seed/headphones4/600/600",
-                    "https://picsum.photos/seed/headphones5/600/600",
-                    "https://picsum.photos/seed/headphones6/600/600"
-                ]
+                "id": "prod1",
+                "title": " Portable Mini Ironing Machine",
+                "short_description": "Mini Iron Professional Micro Steam Flatiron Convenient Handheld Household Iron Portable Wet Dry Ironing Machine",
+                "price": 1200,
+                "original_price": 6500,
+                "discount_percent": 25,
+                "stock": 15,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 5},
+                    {"min_qty": 5, "discount_pct": 10}
+                ],
+                "images": [
+                    "https://i.ibb.co/d4svzKPh/1b31fbfd-a528-481d-8f6c-7552e9381091.jpg",
+                    "https://i.ibb.co/MkLdnhML/download.jpg",
+                    "https://i.ibb.co/TqN6hd7N/images.jpg",
+                    "https://i.ibb.co/hxh0Fj0t/images.jpg",
+                    "https://i.ibb.co/TxdHLqq2/images.jpg",
+                    "https://i.ibb.co/s9YYLT1t/images.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 0,
+                "reviews": [
+                    {
+                        "name": "9477****455",
+                        "rating": 5,
+                        "comment": "Good",
+                        "date": "2025-10-16"
+                    },
+                    {
+                        "name": "9476****144",
+                        "rating": 4,
+                        "comment": "best",
+                        "date": "2025-10-16"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 2,
-                name: "Smart Watch",
-                price: 199.99,
-                originalPrice: 299.99,
-                image: "https://picsum.photos/seed/smartwatch/300/300",
-                category: "electronics",
-                rating: 4.8,
-                reviews: 567,
-                badge: "Hot",
-                stock: 8,
-                sold: 1203,
-                deliveryDays: "1-2",
-                deliveryCharge: 5.99,
-                description: "Advanced smartwatch with health monitoring",
-                images: [
-                    "https://picsum.photos/seed/watch1/600/600",
-                    "https://picsum.photos/seed/watch2/600/600",
-                    "https://picsum.photos/seed/watch3/600/600",
-                    "https://picsum.photos/seed/watch4/600/600",
-                    "https://picsum.photos/seed/watch5/600/600",
-                    "https://picsum.photos/seed/watch6/600/600"
-                ]
+                "id": "prod2",
+                "title": "RGB Party Light With Remote 15W",
+                "short_description": "LED RGB Lamp Spotlight Bulb 220V Bombillas LED 5W 10W 15W IR Remote Control Led Bulb 2835 SMD Dimmable Magic Light Bulb 110V",
+                "price": 750,
+                "original_price": 1500,
+                "discount_percent": 5,
+                "stock": 8,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 2, "discount_pct": 5},
+                    {"min_qty": 5, "discount_pct": 12}
+                ],
+                "images": [
+                    "https://i.ibb.co/wZp0xsj5/1b18ebd3-33da-4292-8e2b-465dcf015e66.jpg",
+                    "https://i.ibb.co/3YC8ByGC/download.jpg",
+                    "https://i.ibb.co/bMGcX5h6/download.jpg",
+                    "https://i.ibb.co/Z6JByG7q/download.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 28,
+                "reviews": [
+                    {
+                        "name": "ka***a@*****.com",
+                        "rating": 5,
+                        "comment": "amazing!",
+                        "date": "2025-05-12"
+                    },
+                    {
+                        "name": "Sarath",
+                        "rating": 4,
+                        "comment": "Good.",
+                        "date": "2025-06-25"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 3,
-                name: "Designer Jacket",
-                price: 89.99,
-                originalPrice: 149.99,
-                image: "https://picsum.photos/seed/jacket/300/300",
-                category: "clothing",
-                rating: 4.3,
-                reviews: 123,
-                badge: "New",
-                stock: 25,
-                sold: 456,
-                deliveryDays: "3-5",
-                deliveryCharge: 0,
-                description: "Stylish designer jacket for all seasons",
-                images: [
-                    "https://picsum.photos/seed/jacket1/600/600",
-                    "https://picsum.photos/seed/jacket2/600/600",
-                    "https://picsum.photos/seed/jacket3/600/600",
-                    "https://picsum.photos/seed/jacket4/600/600",
-                    "https://picsum.photos/seed/jacket5/600/600",
-                    "https://picsum.photos/seed/jacket6/600/600"
-                ]
+                "id": "prod3",
+                "title": "Portable Electric Household Sewing Machine - 12 Stitches Presser Foot Pedal Light & Adjustable Speed",
+                "short_description": "Multifunctional Sewing Machine CGSM505 Household Sewing Machine Electric Micro-Sewing Machine Mini Sewing Machine 12 stich Overlock Embroidery Letters",
+                "price": 6500,
+                "original_price": 14000,
+                "discount_percent": 15,
+                "stock": 3,
+                "delivery_fee": 350,
+                "wholesale_breaks": [],
+                "images": [
+                    "https://married-emerald-kv15coxjxe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 15,
+                "reviews": [
+                    {
+                        "name": "9474*****78",
+                        "rating": 5,
+                        "comment": "good",
+                        "date": "2025-05-08"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 130
             },
             {
-                id: 4,
-                name: "Coffee Maker",
-                price: 129.99,
-                originalPrice: 179.99,
-                image: "https://picsum.photos/seed/coffee/300/300",
-                category: "home",
-                rating: 4.7,
-                reviews: 345,
-                badge: "Sale",
-                stock: 12,
-                sold: 678,
-                deliveryDays: "2-4",
-                deliveryCharge: 7.99,
-                description: "Professional coffee maker for home use",
-                images: [
-                    "https://picsum.photos/seed/coffee1/600/600",
-                    "https://picsum.photos/seed/coffee2/600/600",
-                    "https://picsum.photos/seed/coffee3/600/600",
-                    "https://picsum.photos/seed/coffee4/600/600",
-                    "https://picsum.photos/seed/coffee5/600/600",
-                    "https://picsum.photos/seed/coffee6/600/600"
-                ]
+                "id": "prod4",
+                "title": "Vacuum Flask Set - Good Quality",
+                "short_description": "Vaccum Flask Set With 3 Cups Keep Warm for 12 Hours",
+                "price": 999,
+                "original_price": 1299,
+                "discount_percent": 10,
+                "stock": 5,
+                "delivery_fee": 350,
+                "wholesale_breaks": [],
+                "images": [
+                    "https://other-gray-mmjr5teo33.edgeone.app/b0533235-81da-4246-9381-29fb5d982313.jpg",
+                    "https://alive-gray-vy5pz05ydf.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 32,
+                "reviews": [
+                    {
+                        "name": "9474*****96",
+                        "rating": 5,
+                        "comment": "Good",
+                        "date": "2025-04-01"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 5,
-                name: "Skincare Set",
-                price: 59.99,
-                originalPrice: 89.99,
-                image: "https://picsum.photos/seed/skincare/300/300",
-                category: "beauty",
-                rating: 4.9,
-                reviews: 789,
-                badge: "Bestseller",
-                stock: 30,
-                sold: 2341,
-                deliveryDays: "1-3",
-                deliveryCharge: 0,
-                description: "Complete skincare set for radiant skin",
-                images: [
-                    "https://picsum.photos/seed/skincare1/600/600",
-                    "https://picsum.photos/seed/skincare2/600/600",
-                    "https://picsum.photos/seed/skincare3/600/600",
-                    "https://picsum.photos/seed/skincare4/600/600",
-                    "https://picsum.photos/seed/skincare5/600/600",
-                    "https://picsum.photos/seed/skincare6/600/600"
-                ]
+                "id": "prod5",
+                "title": "Bunny Hat Light Up Cute Plush Pikachu Hat Moving Ears With Colorful Led Random Clrs.",
+                "short_description": "60cm Pikachu Hat Ears Down Air Bag Plush Cap Birthday",
+                "price": 1200,
+                "original_price": 2000,
+                "discount_percent": 20,
+                "stock": 12,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 5, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760641807/vi7q0qeswqum4seuj0wk.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "furniture",
+                "soldCount": 18,
+                "reviews": [
+                    {
+                        "name": "9477****524",
+                        "rating": 4,
+                        "comment": "Good",
+                        "date": "2025-04-28"
+                    }
+                ],
+                "variants": {
+                    "colors": ["Yellow"],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 6,
-                name: "Running Shoes",
-                price: 119.99,
-                originalPrice: 159.99,
-                image: "https://picsum.photos/seed/shoes/300/300",
-                category: "sports",
-                rating: 4.6,
-                reviews: 456,
-                badge: "Sale",
-                stock: 18,
-                sold: 1567,
-                deliveryDays: "2-3",
-                deliveryCharge: 0,
-                description: "Professional running shoes for athletes",
-                images: [
-                    "https://picsum.photos/seed/shoes1/600/600",
-                    "https://picsum.photos/seed/shoes2/600/600",
-                    "https://picsum.photos/seed/shoes3/600/600",
-                    "https://picsum.photos/seed/shoes4/600/600",
-                    "https://picsum.photos/seed/shoes5/600/600",
-                    "https://picsum.photos/seed/shoes6/600/600"
-                ]
+                "id": "prod6",
+                "title": " Sports Sound Stereo Wireless Headset Music & Movement Hands Free Bluetooth Headphone NO Warranty",
+                "short_description": "Bluetooth wireless earphone smart Magnetic Sports and Gaming Headphone Noise Reduction Headset with Mic/i12 Airpods and Inpods 12 Waterproof Portable Earbuds Full Set with Box For Iphone,Samsung and All Mobile Phones(Features i7s,i11,i12,i15,i18)",
+                "price": 799,
+                "original_price": 1115,
+                "discount_percent": 21,
+                "stock": 6,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 2, "discount_pct": 7},
+                    {"min_qty": 4, "discount_pct": 12}
+                ],
+                "images": [
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760642932/e9brepy9rjlf1vkuixoa.jpg",
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760643011/d7bro13vckuydgg6fr3r.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 24,
+                "reviews": [
+                    {
+                        "name": "9476****555",
+                        "rating": 5,
+                        "comment": "Great quality Items",
+                        "date": "2025-04-25"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 7,
-                name: "Laptop Stand",
-                price: 39.99,
-                originalPrice: 59.99,
-                image: "https://picsum.photos/seed/laptopstand/300/300",
-                category: "electronics",
-                rating: 4.4,
-                reviews: 178,
-                badge: "New",
-                stock: 40,
-                sold: 234,
-                deliveryDays: "1-2",
-                deliveryCharge: 3.99,
-                description: "Ergonomic laptop stand for better posture",
-                images: [
-                    "https://picsum.photos/seed/stand1/600/600",
-                    "https://picsum.photos/seed/stand2/600/600",
-                    "https://picsum.photos/seed/stand3/600/600",
-                    "https://picsum.photos/seed/stand4/600/600",
-                    "https://picsum.photos/seed/stand5/600/600",
-                    "https://picsum.photos/seed/stand6/600/600"
-                ]
+                "id": "prod7",
+                "title": " 53Pcs Socket Set 53 Pcs Tool Set Tool Box",
+                "short_description": "53-piece tool set for home repairs, DIY projects, and maintenance Includes hammer, adjustable wrench, 6″ long-nose pliers, and utility knife Features 8 hex keys (1.5-6mm) and 20 screwdriver bits (Phillips, Slotted, Torx) Contains 1/4″ drive sockets (5-13mm) and 4 precision screwdrivers 8ft measuring tape and level for accurate measurements Made of durable carbon steel with rust-resistant chrome plating Ergonomic grips for comfort during extended use Sturdy carrying case for organized storage and portability Ideal for homeowners, renters, or DIY enthusiasts",
+                "price": 2499,
+                "original_price": 3499,
+                "discount_percent": 29,
+                "stock": 25,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 5, "discount_pct": 10},
+                    {"min_qty": 10, "discount_pct": 20}
+                ],
+                "images": [
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760643509/ww82zei9rn19if4agcra.jpg",
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760643708/qhplkse9lj8tn2ucsbfk.jpg",
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760644044/scuvqk09xegkhewyn3if.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 56,
+                "reviews": [
+                    {
+                        "name": "dil***@*****.com",
+                        "rating": 4,
+                        "comment": "good.",
+                        "date": "2025-04-20"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 8,
-                name: "Yoga Mat",
-                price: 29.99,
-                originalPrice: 49.99,
-                image: "https://picsum.photos/seed/yogamat/300/300",
-                category: "sports",
-                rating: 4.7,
-                reviews: 234,
-                badge: "Hot",
-                stock: 50,
-                sold: 3456,
-                deliveryDays: "2-4",
-                deliveryCharge: 0,
-                description: "Premium yoga mat for all fitness levels",
-                images: [
-                    "https://picsum.photos/seed/yoga1/600/600",
-                    "https://picsum.photos/seed/yoga2/600/600",
-                    "https://picsum.photos/seed/yoga3/600/600",
-                    "https://picsum.photos/seed/yoga4/600/600",
-                    "https://picsum.photos/seed/yoga5/600/600",
-                    "https://picsum.photos/seed/yoga6/600/600"
-                ]
+                "id": "prod8",
+                "title": " 46 in 1 Tool Kit (2nd Quality)",
+                "short_description": "Hibuy 46pcs/set Tool Set 46 in 1 Carbon Steel Combination Set Wrench Socket Spanner Screwdriver Household Motorcycle Car Repair Tool Kit",
+                "price": 1250,
+                "original_price": 1550,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760644691/vqj8gg2gdnkwh7ldg4hs.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "dmk***@*****.com",
+                        "rating": 5,
+                        "comment": "Highly recommend!",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 130
             },
             {
-                id: 9,
-                name: "Bluetooth Speaker",
-                price: 69.99,
-                originalPrice: 99.99,
-                image: "https://picsum.photos/seed/speaker/300/300",
-                category: "electronics",
-                rating: 4.5,
-                reviews: 345,
-                badge: "Sale",
-                stock: 22,
-                sold: 789,
-                deliveryDays: "1-3",
-                deliveryCharge: 0,
-                description: "Portable Bluetooth speaker with amazing sound",
-                images: [
-                    "https://picsum.photos/seed/speaker1/600/600",
-                    "https://picsum.photos/seed/speaker2/600/600",
-                    "https://picsum.photos/seed/speaker3/600/600",
-                    "https://picsum.photos/seed/speaker4/600/600",
-                    "https://picsum.photos/seed/speaker5/600/600",
-                    "https://picsum.photos/seed/speaker6/600/600"
-                ]
+                "id": "prod9",
+                "title": "Silver Edition Edifice Casio Classic  Watch",
+                "short_description": "Men Business Fashion Cool Quartz Wristwatches Male Water Resistant Stainless Steel",
+                "price": 850,
+                "original_price": 1500,
+                "discount_percent": 5,
+                "stock": 3,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://continuing-gray-ncfnyfw9m3.edgeone.app/c6e0181d-4671-43e7-ad2b-d936a0ccaf18.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 370,
+                "reviews": [
+                    {
+                        "name": "77**5***9",
+                        "rating": 5,
+                        "comment": "මේක සුපිරි watch එකක්. good look , packing එහෙමත් හොදයි. overall සුපිරි product එකක්. recommended 😌🤍👌",
+                        "date": "2024-05-19"
+                    },
+                    {
+                        "name": "70**8***8",
+                        "rating": 5,
+                        "comment": "හොද product එකක්... ලස්සනයි... හොද quality එකක් තියෙනවා... ඔයාලත් අදම ගන්න...👍💖🥰",
+                        "date": "2024-05-28"
+                    },
+                    {
+                        "name": "71**1***5",
+                        "rating": 5,
+                        "comment": "watch එක මාරම ලස්සනයි. ගෙවන ගානට මාරම වටිනවා. දවස් 3න් ආව. හොදට pack කරලා තිබ්බා. හිතන් හිටපු වොච් එකම ආව. භය නැතුව buy කරන්න.#WIN",
+                        "date": "2025-06-15"
+                    },
+                    {
+                        "name": "77**7***9",
+                        "rating": 5,
+                        "comment": "හොද product එකක්. හොදට pack කරල තිබුණා... ඉක්මනටම ලැබුනා watch එක❤❤",
+                        "date": "2025-06-25"
+                    },
+                    {
+                        "name": "71**5***2",
+                        "rating": 5,
+                        "comment": "Highly recommend!",
+                        "date": "2025-07-05"
+                    },
+                    {
+                        "name": "70**3***1",
+                        "rating": 5,
+                        "comment": "සුපිරී මේක. ගෙවන ගානට වටිනව. ගන්න කට්ටිය බය නැතුව ගන්න. recommend.",
+                        "date": "2025-07-06"
+                    },
+                    {
+                        "name": "70**8***0",
+                        "rating": 5,
+                        "comment": "සුපිරි watch එකක්  පෙනුම මං හිතුවට වඩා ගොඩක් හොදයි, parties වලට ගොඩක්ම ගැලපෙනව, මේ ගානට ගොඩක් ලොකු සදාරණයක් ඉටු කරලා තියෙනවා, හොදට pack කරලත් තිබුන, orginal box නම් නෙමෙයි. එත් අවුලක් ඇත්තෙම නෑ. 10  out of 10 වගේ දුන්න හැකි. ",
+                        "date": "2025-08-28"
+                    },
+                    {
+                        "name": "kcd***@*****.com",
+                        "rating": 5,
+                        "comment": "Nice 😍",
+                        "date": "2025-08-20"
+                    },
+                    {
+                        "name": "ami***@*****.com",
+                        "rating": 5,
+                        "comment": "📍Fast delivery. best condishion 💯 බයනැතුව ගන්න සුපිරියක් මේ ගානට ගොඩක් වටිනවා.Thanx for Ru Online store💗",
+                        "date": "2025-10-21"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 10,
-                name: "Summer Dress",
-                price: 49.99,
-                originalPrice: 79.99,
-                image: "https://picsum.photos/seed/dress/300/300",
-                category: "clothing",
-                rating: 4.6,
-                reviews: 567,
-                badge: "New",
-                stock: 15,
-                sold: 1234,
-                deliveryDays: "2-4",
-                deliveryCharge: 0,
-                description: "Beautiful summer dress for special occasions",
-                images: [
-                    "https://picsum.photos/seed/dress1/600/600",
-                    "https://picsum.photos/seed/dress2/600/600",
-                    "https://picsum.photos/seed/dress3/600/600",
-                    "https://picsum.photos/seed/dress4/600/600",
-                    "https://picsum.photos/seed/dress5/600/600",
-                    "https://picsum.photos/seed/dress6/600/600"
-                ]
+                "id": "prod10",
+                "title": " CURREN Mens Analog Steel Band Watches Silver Black Face",
+                "short_description": "pending description",
+                "price": 799,
+                "original_price": 2500,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://civic-beige-anq1vta8al.edgeone.app/3e7450cf-f4c2-42be-9693-8c06744d6776.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 102,
+                "reviews": [
+                    {
+                        "name": "pen***@*****.com",
+                        "rating": 5,
+                        "comment": "good",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 11,
-                name: "Bed Sheets Set",
-                price: 39.99,
-                originalPrice: 59.99,
-                image: "https://picsum.photos/seed/bedsheets/300/300",
-                category: "home",
-                rating: 4.8,
-                reviews: 890,
-                badge: "Bestseller",
-                stock: 35,
-                sold: 4567,
-                deliveryDays: "3-5",
-                deliveryCharge: 5.99,
-                description: "Luxurious bed sheets set for comfortable sleep",
-                images: [
-                    "https://picsum.photos/seed/bedsheets1/600/600",
-                    "https://picsum.photos/seed/bedsheets2/600/600",
-                    "https://picsum.photos/seed/bedsheets3/600/600",
-                    "https://picsum.photos/seed/bedsheets4/600/600",
-                    "https://picsum.photos/seed/bedsheets5/600/600",
-                    "https://picsum.photos/seed/bedsheets6/600/600"
-                ]
+                "id": "prod11",
+                "title": " Kitchen Press Murukku Making Machine",
+                "short_description": " Kitchen Press Murukku Making Machine",
+                "price": 2200,
+                "original_price": 3500,
+                "discount_percent": 5,
+                "stock": 10,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 8, "discount_pct": 8},
+                    {"min_qty": 15, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://deaf-coral-fubruqn8me.edgeone.app/6d15353f-981b-48d7-bc53-b4e27e538ed2.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 5,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 12,
-                name: "Face Cream",
-                price: 24.99,
-                originalPrice: 39.99,
-                image: "https://picsum.photos/seed/facecream/300/300",
-                category: "beauty",
-                rating: 4.7,
-                reviews: 678,
-                badge: "Hot",
-                stock: 60,
-                sold: 8901,
-                deliveryDays: "1-2",
-                deliveryCharge: 0,
-                description: "Anti-aging face cream with natural ingredients",
-                images: [
-                    "https://picsum.photos/seed/cream1/600/600",
-                    "https://picsum.photos/seed/cream2/600/600",
-                    "https://picsum.photos/seed/cream3/600/600",
-                    "https://picsum.photos/seed/cream4/600/600",
-                    "https://picsum.photos/seed/cream5/600/600",
-                    "https://picsum.photos/seed/cream6/600/600"
-                ]
+                "id": "prod12",
+                "title": "Voltage Tester",
+                "short_description": " Voltage Tester Portable 1 Pieces Detector Electric Voltage Tester Voltage Detector Non-Contact Voltage Tester Electroscope Used for Voltage Tests and Current Failure Tests ",
+                "price": 750,
+                "original_price": 2500,
+                "discount_percent": 5,
+                "stock": 3,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 8, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://doubtful-copper-oztuppeyl1.edgeone.app/13f741b9-6289-4cc7-9d2d-8dae01638a5b.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 105,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 13,
-                name: "Tennis Racket",
-                price: 89.99,
-                originalPrice: 129.99,
-                image: "https://picsum.photos/seed/tennis/300/300",
-                category: "sports",
-                rating: 4.5,
-                reviews: 234,
-                badge: "Sale",
-                stock: 12,
-                sold: 567,
-                deliveryDays: "2-3",
-                deliveryCharge: 7.99,
-                description: "Professional tennis racket for champions",
-                images: [
-                    "https://picsum.photos/seed/tennis1/600/600",
-                    "https://picsum.photos/seed/tennis2/600/600",
-                    "https://picsum.photos/seed/tennis3/600/600",
-                    "https://picsum.photos/seed/tennis4/600/600",
-                    "https://picsum.photos/seed/tennis5/600/600",
-                    "https://picsum.photos/seed/tennis6/600/600"
-                ]
+                "id": "prod13",
+                "title": "4 Pcs Vip Light",
+                "short_description": " Shell 4 Pcs Vip Light Grill Car Police LED Light Strobe Red Blue Emergency Remote Wireless Control Flash RGB",
+                "price": 2100,
+                "original_price": 4000,
+                "discount_percent": 5,
+                "stock": 3,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 8, "discount_pct": 8},
+                    {"min_qty": 20, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://increased-chocolate-6fzankpyl7.edgeone.app/5b41ab6e-78b2-4025-883f-e89864c4a56e.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 185,
+                "reviews": [
+                    {
+                        "name": "pen***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 14,
-                name: "Tablet",
-                price: 299.99,
-                originalPrice: 399.99,
-                image: "https://picsum.photos/seed/tablet/300/300",
-                category: "electronics",
-                rating: 4.6,
-                reviews: 456,
-                badge: "New",
-                stock: 8,
-                sold: 345,
-                deliveryDays: "1-2",
-                deliveryCharge: 0,
-                description: "High-performance tablet for work and entertainment",
-                images: [
-                    "https://picsum.photos/seed/tablet1/600/600",
-                    "https://picsum.photos/seed/tablet2/600/600",
-                    "https://picsum.photos/seed/tablet3/600/600",
-                    "https://picsum.photos/seed/tablet4/600/600",
-                    "https://picsum.photos/seed/tablet5/600/600",
-                    "https://picsum.photos/seed/tablet6/600/600"
-                ]
+                "id": "prod14",
+                "title": "Vertical Shoe Rack ",
+                "short_description": "Modern And Creative Hard Plastic  6 Layer Random Colour",
+                "price": 1600,
+                "original_price": 1950,
+                "discount_percent": 5,
+                "stock": 20,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 8, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://blind-aqua-wfywivvrgd.edgeone.app/2741c6e2-b16d-4d63-9a37-5c4f99743052.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 15,
-                name: "Winter Coat",
-                price: 149.99,
-                originalPrice: 199.99,
-                image: "https://picsum.photos/seed/coat/300/300",
-                category: "clothing",
-                rating: 4.8,
-                reviews: 789,
-                badge: "Hot",
-                stock: 10,
-                sold: 234,
-                deliveryDays: "3-5",
-                deliveryCharge: 9.99,
-                description: "Warm winter coat for cold weather",
-                images: [
-                    "https://picsum.photos/seed/coat1/600/600",
-                    "https://picsum.photos/seed/coat2/600/600",
-                    "https://picsum.photos/seed/coat3/600/600",
-                    "https://picsum.photos/seed/coat4/600/600",
-                    "https://picsum.photos/seed/coat5/600/600",
-                    "https://picsum.photos/seed/coat6/600/600"
-                ]
+                "id": "prod15",
+                "title": "Graduation Bears",
+                "short_description": "Graduation Bears Grad Gifts Plush Teddy Bear Doll with Graduation Cap, Decorative Plush Animal Graduation Present for Preschool High School University Grad Party ",
+                "price": 1200,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 10,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://sporting-yellow-xhkdjnmtqh.edgeone.app/67f5c833-d044-4133-8028-1a31359c19dd.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": ["random"],
+                    "sizes": ["7"]
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 16,
-                name: "Kitchen Knife Set",
-                price: 79.99,
-                originalPrice: 119.99,
-                image: "https://picsum.photos/seed/knives/300/300",
-                category: "home",
-                rating: 4.7,
-                reviews: 567,
-                badge: "Sale",
-                stock: 18,
-                sold: 890,
-                deliveryDays: "2-4",
-                deliveryCharge: 5.99,
-                description: "Professional kitchen knife set for chefs",
-                images: [
-                    "https://picsum.photos/seed/knives1/600/600",
-                    "https://picsum.photos/seed/knives2/600/600",
-                    "https://picsum.photos/seed/knives3/600/600",
-                    "https://picsum.photos/seed/knives4/600/600",
-                    "https://picsum.photos/seed/knives5/600/600",
-                    "https://picsum.photos/seed/knives6/600/600"
-                ]
+                "id": "prod16",
+                "title": "Universal Devil Eyes Ambient Light Kit - Y1",
+                "short_description": "Universal Devil Eyes Ambient Light Kit - Y1",
+                "price": 1500,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 8,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://architectural-chocolate-unwvlpblgy.edgeone.app/a87d1207-953e-49fa-994b-1ad89061e412.jpg",
+                    "https://vague-coral-wugbdv3nza.edgeone.app/333ebcbf-70f2-4864-9c45-aeb56266c916.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": ["y1","y5"]
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 17,
-                name: "Hair Dryer",
-                price: 59.99,
-                originalPrice: 89.99,
-                image: "https://picsum.photos/seed/hairdryer/300/300",
-                category: "beauty",
-                rating: 4.5,
-                reviews: 345,
-                badge: "New",
-                stock: 25,
-                sold: 1234,
-                deliveryDays: "1-3",
-                deliveryCharge: 0,
-                description: "Professional hair dryer with ionic technology",
-                images: [
-                    "https://picsum.photos/seed/hairdryer1/600/600",
-                    "https://picsum.photos/seed/hairdryer2/600/600",
-                    "https://picsum.photos/seed/hairdryer3/600/600",
-                    "https://picsum.photos/seed/hairdryer4/600/600",
-                    "https://picsum.photos/seed/hairdryer5/600/600",
-                    "https://picsum.photos/seed/hairdryer6/600/600"
-                ]
+                "id": "prod17",
+                "title": "Remote Control Car Toys",
+                "short_description": "High Quality Custom 2.4Ghz 4Ch Remote Control Car Toys Fast Drift Stunt Car Rolliing For Kids Children",
+                "price": 1700,
+                "original_price": 2600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://binding-gold-voff7uesrz.edgeone.app/53498a25-661b-4eb5-bb83-213ca3e3cd50.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": ["red"],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 18,
-                name: "Basketball",
-                price: 29.99,
-                originalPrice: 49.99,
-                image: "https://picsum.photos/seed/basketball/300/300",
-                category: "sports",
-                rating: 4.6,
-                reviews: 234,
-                badge: "Sale",
-                stock: 40,
-                sold: 3456,
-                deliveryDays: "2-3",
-                deliveryCharge: 0,
-                description: "Official size basketball for outdoor play",
-                images: [
-                    "https://picsum.photos/seed/basketball1/600/600",
-                    "https://picsum.photos/seed/basketball2/600/600",
-                    "https://picsum.photos/seed/basketball3/600/600",
-                    "https://picsum.photos/seed/basketball4/600/600",
-                    "https://picsum.photos/seed/basketball5/600/600",
-                    "https://picsum.photos/seed/basketball6/600/600"
-                ]
+                "id": "prod18",
+                "title": "Warm Hand Bag- Hot Water Bag",
+                "short_description": " Disney Stitch Anime Winter Extra Large Plush Hot Water Bottle Women'S Home Water Filling Hand Warmer Holiday Gift - Random Colours",
+                "price": 2000,
+                "original_price": 5000,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://ashamed-cyan-viisdthkxu.edgeone.app/20941a3d-29db-4169-8a51-9d4cb9e710d8.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 19,
-                name: "Wireless Mouse",
-                price: 29.99,
-                originalPrice: 49.99,
-                image: "https://picsum.photos/seed/mouse/300/300",
-                category: "electronics",
-                rating: 4.4,
-                reviews: 567,
-                badge: "Hot",
-                stock: 50,
-                sold: 7890,
-                deliveryDays: "1-2",
-                deliveryCharge: 0,
-                description: "Ergonomic wireless mouse for productivity",
-                images: [
-                    "https://picsum.photos/seed/mouse1/600/600",
-                    "https://picsum.photos/seed/mouse2/600/600",
-                    "https://picsum.photos/seed/mouse3/600/600",
-                    "https://picsum.photos/seed/mouse4/600/600",
-                    "https://picsum.photos/seed/mouse5/600/600",
-                    "https://picsum.photos/seed/mouse6/600/600"
-                ]
+                "id": "prod19",
+                "title": "Super Soft Travel Neck Pillow Kit Random Colors",
+                "short_description": "1pcs Hot Sale Portable Car Flight Travel Soft Inflatable Neck Rest Cushion U Pillows Auto Car Styling Car Accessories Camping",
+                "price": 450,
+                "original_price": 600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://interested-cyan-bgij8o0eqi.edgeone.app/73c7bedb-528e-48c6-811c-16bcbfe1ff31.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 20,
-                name: "Casual Shirt",
-                price: 39.99,
-                originalPrice: 69.99,
-                image: "https://picsum.photos/seed/shirt/300/300",
-                category: "clothing",
-                rating: 4.5,
-                reviews: 345,
-                badge: "Sale",
-                stock: 30,
-                sold: 2345,
-                deliveryDays: "2-4",
-                deliveryCharge: 0,
-                description: "Comfortable casual shirt for everyday wear",
-                images: [
-                    "https://picsum.photos/seed/shirt1/600/600",
-                    "https://picsum.photos/seed/shirt2/600/600",
-                    "https://picsum.photos/seed/shirt3/600/600",
-                    "https://picsum.photos/seed/shirt4/600/600",
-                    "https://picsum.photos/seed/shirt5/600/600",
-                    "https://picsum.photos/seed/shirt6/600/600"
-                ]
+                "id": "prod20",
+                "title": "Rechargeable COB Keychain Light Mini Plastic",
+                "short_description": "Rechargeable COB Keychain Light Mini Plastic",
+                "price": 600,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://casual-harlequin-39q9gruuba.edgeone.app/ccc377de-3768-4869-87e2-52f0c519a14b.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 21,
-                name: "Vacuum Cleaner",
-                price: 199.99,
-                originalPrice: 299.99,
-                image: "https://picsum.photos/seed/vacuum/300/300",
-                category: "home",
-                rating: 4.7,
-                reviews: 678,
-                badge: "New",
-                stock: 8,
-                sold: 456,
-                deliveryDays: "3-5",
-                deliveryCharge: 12.99,
-                description: "Powerful vacuum cleaner for deep cleaning",
-                images: [
-                    "https://picsum.photos/seed/vacuum1/600/600",
-                    "https://picsum.photos/seed/vacuum2/600/600",
-                    "https://picsum.photos/seed/vacuum3/600/600",
-                    "https://picsum.photos/seed/vacuum4/600/600",
-                    "https://picsum.photos/seed/vacuum5/600/600",
-                    "https://picsum.photos/seed/vacuum6/600/600"
-                ]
+                "id": "prod21",
+                "title": "Portable Hand Mixer  Mixing Baking Cooking and Egg Whisk Beater Blender",
+                "short_description": "pending description",
+                "price": 1600,
+                "original_price": 1800,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://payable-violet-pnqcmkiemk.edgeone.app/a0599f06-63a6-4897-a67e-72d49be28aa8.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 22,
-                name: "Makeup Palette",
-                price: 34.99,
-                originalPrice: 54.99,
-                image: "https://picsum.photos/seed/palette/300/300",
-                category: "beauty",
-                rating: 4.8,
-                reviews: 890,
-                badge: "Bestseller",
-                stock: 20,
-                sold: 5678,
-                deliveryDays: "1-3",
-                deliveryCharge: 0,
-                description: "Professional makeup palette with 48 colors",
-                images: [
-                    "https://picsum.photos/seed/palette1/600/600",
-                    "https://picsum.photos/seed/palette2/600/600",
-                    "https://picsum.photos/seed/palette3/600/600",
-                    "https://picsum.photos/seed/palette4/600/600",
-                    "https://picsum.photos/seed/palette5/600/600",
-                    "https://picsum.photos/seed/palette6/600/600"
-                ]
+                "id": "prod22",
+                "title": "Nano Mist Spray Facial Steamer Moisturizing Sprayer Portable Nano Mister Mini Facial Sprayer",
+                "short_description": "Nano Mist Spray Facial Steamer Moisturizing Sprayer Portable Nano Mister Mini Facial Sprayer",
+                "price": 599,
+                "original_price": 899,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://worthwhile-pink-iic9v2ztys.edgeone.app/cf58898a-adf3-4438-986a-f5f67e5ec17e.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 23,
-                name: "Dumbbells Set",
-                price: 89.99,
-                originalPrice: 129.99,
-                image: "https://picsum.photos/seed/dumbbells/300/300",
-                category: "sports",
-                rating: 4.6,
-                reviews: 456,
-                badge: "Hot",
-                stock: 15,
-                sold: 789,
-                deliveryDays: "3-5",
-                deliveryCharge: 15.99,
-                description: "Adjustable dumbbells set for home workouts",
-                images: [
-                    "https://picsum.photos/seed/dumbbells1/600/600",
-                    "https://picsum.photos/seed/dumbbells2/600/600",
-                    "https://picsum.photos/seed/dumbbells3/600/600",
-                    "https://picsum.photos/seed/dumbbells4/600/600",
-                    "https://picsum.photos/seed/dumbbells5/600/600",
-                    "https://picsum.photos/seed/dumbbells6/600/600"
-                ]
+                "id": "prod23",
+                "title": "Electronic Digital Kitchen Scale 10Kg",
+                "short_description": "pending description",
+                "price": 1200,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://squealing-tan-6dfwm3bnrt.edgeone.app/d4e39a8e-e43f-4af4-a2e1-5f3acb3f1f36.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 24,
-                name: "USB Hub",
-                price: 24.99,
-                originalPrice: 39.99,
-                image: "https://picsum.photos/seed/usbhub/300/300",
-                category: "electronics",
-                rating: 4.5,
-                reviews: 234,
-                badge: "Sale",
-                stock: 60,
-                sold: 3456,
-                deliveryDays: "1-2",
-                deliveryCharge: 0,
-                description: "7-port USB hub for all your devices",
-                images: [
-                    "https://picsum.photos/seed/usbhub1/600/600",
-                    "https://picsum.photos/seed/usbhub2/600/600",
-                    "https://picsum.photos/seed/usbhub3/600/600",
-                    "https://picsum.photos/seed/usbhub4/600/600",
-                    "https://picsum.photos/seed/usbhub5/600/600",
-                    "https://picsum.photos/seed/usbhub6/600/600"
-                ]
+                "id": "prod24",
+                "title": "Arctic Air Clamp Rechargeable Air Cooler",
+                "short_description": "pending description",
+                "price": 3400,
+                "original_price": 4500,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://brief-bronze-tjoa7hydvt.edgeone.app/5684dba7-b553-4a3c-8a79-83b78cafb4d7.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 25,
-                name: "Jeans",
-                price: 59.99,
-                originalPrice: 89.99,
-                image: "https://picsum.photos/seed/jeans/300/300",
-                category: "clothing",
-                rating: 4.4,
-                reviews: 678,
-                badge: "New",
-                stock: 25,
-                sold: 2345,
-                deliveryDays: "2-4",
-                deliveryCharge: 0,
-                description: "Comfortable denim jeans for all sizes",
-                images: [
-                    "https://picsum.photos/seed/jeans1/600/600",
-                    "https://picsum.photos/seed/jeans2/600/600",
-                    "https://picsum.photos/seed/jeans3/600/600",
-                    "https://picsum.photos/seed/jeans4/600/600",
-                    "https://picsum.photos/seed/jeans5/600/600",
-                    "https://picsum.photos/seed/jeans6/600/600"
-                ]
+                "id": "prod25",
+                "title": " For 14 - 55 Inch TV Bracket Max 50KG",
+                "short_description": "pending description",
+                "price": 1600,
+                "original_price": 2600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://soviet-indigo-3wy4il6nzz.edgeone.app/a21dd923-7654-4c8d-b216-30f18111fda4.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 80
             },
             {
-                id: 26,
-                name: "Lamp",
-                price: 49.99,
-                originalPrice: 79.99,
-                image: "https://picsum.photos/seed/lamp/300/300",
-                category: "home",
-                rating: 4.7,
-                reviews: 345,
-                badge: "Hot",
-                stock: 18,
-                sold: 890,
-                deliveryDays: "2-4",
-                deliveryCharge: 7.99,
-                description: "Modern LED lamp for your desk",
-                images: [
-                    "https://picsum.photos/seed/lamp1/600/600",
-                    "https://picsum.photos/seed/lamp2/600/600",
-                    "https://picsum.photos/seed/lamp3/600/600",
-                    "https://picsum.photos/seed/lamp4/600/600",
-                    "https://picsum.photos/seed/lamp5/600/600",
-                    "https://picsum.photos/seed/lamp6/600/600"
-                ]
+                "id": "prod26",
+                "title": "Small Portable Wireless Thermal Photo Printer Pocket Student Mini Error Label Printer",
+                "short_description": "pending description",
+                "price": 4200,
+                "original_price": 6000,
+                "discount_percent": 5,
+                "stock": 3,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://clever-silver-zmjhiof5eq.edgeone.app/e8158325-204f-4215-a3e4-59f0473be24f.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 57,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 27,
-                name: "Perfume",
-                price: 79.99,
-                originalPrice: 119.99,
-                image: "https://picsum.photos/seed/perfume/300/300",
-                category: "beauty",
-                rating: 4.9,
-                reviews: 1234,
-                badge: "Bestseller",
-                stock: 12,
-                sold: 6789,
-                deliveryDays: "1-3",
-                deliveryCharge: 0,
-                description: "Luxury perfume with long-lasting fragrance",
-                images: [
-                    "https://picsum.photos/seed/perfume1/600/600",
-                    "https://picsum.photos/seed/perfume2/600/600",
-                    "https://picsum.photos/seed/perfume3/600/600",
-                    "https://picsum.photos/seed/perfume4/600/600",
-                    "https://picsum.photos/seed/perfume5/600/600",
-                    "https://picsum.photos/seed/perfume6/600/600"
-                ]
+                "id": "prod27",
+                "title": "5 in 1 Full Relax Tone Spin Body Massager Electric Full Body Slimming Massager",
+                "short_description": "pending description",
+                "price": 1999,
+                "original_price": 2699,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://flexible-blue-pdr3ydyl9k.edgeone.app/9367e0f0-30ac-4183-bd6b-8a1cb4148282.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
             },
             {
-                id: 28,
-                name: "Yoga Pants",
-                price: 39.99,
-                originalPrice: 59.99,
-                image: "https://picsum.photos/seed/yogapants/300/300",
-                category: "sports",
-                rating: 4.6,
-                reviews: 567,
-                badge: "Sale",
-                stock: 35,
-                sold: 3456,
-                deliveryDays: "2-3",
-                deliveryCharge: 0,
-                description: "Comfortable yoga pants for workouts",
-                images: [
-                    "https://picsum.photos/seed/yogapants1/600/600",
-                    "https://picsum.photos/seed/yogapants2/600/600",
-                    "https://picsum.photos/seed/yogapants3/600/600",
-                    "https://picsum.photos/seed/yogapants4/600/600",
-                    "https://picsum.photos/seed/yogapants5/600/600",
-                    "https://picsum.photos/seed/yogapants6/600/600"
-                ]
+                "id": "prod28",
+                "title": " Laptop Stand Metel",
+                "short_description": "pending description",
+                "price": 999,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://unusual-lime-caw8j8s8ox.edgeone.app/4a21aeb3-3d9f-491e-9e90-07b1818565cb.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             },
             {
-                id: 29,
-                name: "Power Bank",
-                price: 34.99,
-                originalPrice: 54.99,
-                image: "https://picsum.photos/seed/powerbank/300/300",
-                category: "electronics",
-                rating: 4.5,
-                reviews: 890,
-                badge: "Hot",
-                stock: 40,
-                sold: 4567,
-                deliveryDays: "1-2",
-                deliveryCharge: 0,
-                description: "20000mAh power bank for all devices",
-                images: [
-                    "https://picsum.photos/seed/powerbank1/600/600",
-                    "https://picsum.photos/seed/powerbank2/600/600",
-                    "https://picsum.photos/seed/powerbank3/600/600",
-                    "https://picsum.photos/seed/powerbank4/600/600",
-                    "https://picsum.photos/seed/powerbank5/600/600",
-                    "https://picsum.photos/seed/powerbank6/600/600"
-                ]
+                "id": "prod29",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             },
             {
-                id: 30,
-                name: "T-Shirt",
-                price: 19.99,
-                originalPrice: 34.99,
-                image: "https://picsum.photos/seed/tshirt/300/300",
-                category: "clothing",
-                rating: 4.4,
-                reviews: 2345,
-                badge: "Sale",
-                stock: 100,
-                sold: 12345,
-                deliveryDays: "2-4",
-                deliveryCharge: 0,
-                description: "Comfortable cotton t-shirt for everyday",
-                images: [
-                    "https://picsum.photos/seed/tshirt1/600/600",
-                    "https://picsum.photos/seed/tshirt2/600/600",
-                    "https://picsum.photos/seed/tshirt3/600/600",
-                    "https://picsum.photos/seed/tshirt4/600/600",
-                    "https://picsum.photos/seed/tshirt5/600/600",
-                    "https://picsum.photos/seed/tshirt6/600/600"
-                ]
+                "id": "prod30",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             },
             {
-                id: 31,
-                name: "Pillow Set",
-                price: 29.99,
-                originalPrice: 49.99,
-                image: "https://picsum.photos/seed/pillows/300/300",
-                category: "home",
-                rating: 4.7,
-                reviews: 678,
-                badge: "New",
-                stock: 25,
-                sold: 2345,
-                deliveryDays: "3-5",
-                deliveryCharge: 5.99,
-                description: "Hypoallergenic pillow set for better sleep",
-                images: [
-                    "https://picsum.photos/seed/pillows1/600/600",
-                    "https://picsum.photos/seed/pillows2/600/600",
-                    "https://picsum.photos/seed/pillows3/600/600",
-                    "https://picsum.photos/seed/pillows4/600/600",
-                    "https://picsum.photos/seed/pillows5/600/600",
-                    "https://picsum.photos/seed/pillows6/600/600"
-                ]
+                "id": "prod31",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             },
             {
-                id: 32,
-                name: "Lipstick Set",
-                price: 24.99,
-                originalPrice: 39.99,
-                image: "https://picsum.photos/seed/lipstick/300/300",
-                category: "beauty",
-                rating: 4.8,
-                reviews: 456,
-                badge: "Hot",
-                stock: 30,
-                sold: 7890,
-                deliveryDays: "1-3",
-                deliveryCharge: 0,
-                description: "Matte lipstick set with 12 colors",
-                images: [
-                    "https://picsum.photos/seed/lipstick1/600/600",
-                    "https://picsum.photos/seed/lipstick2/600/600",
-                    "https://picsum.photos/seed/lipstick3/600/600",
-                    "https://picsum.photos/seed/lipstick4/600/600",
-                    "https://picsum.photos/seed/lipstick5/600/600",
-                    "https://picsum.photos/seed/lipstick6/600/600"
-                ]
+                "id": "prod32",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             },
             {
-                id: 33,
-                name: "Tennis Ball",
-                price: 9.99,
-                originalPrice: 14.99,
-                image: "https://picsum.photos/seed/tennisball/300/300",
-                category: "sports",
-                rating: 4.5,
-                reviews: 123,
-                badge: "Sale",
-                stock: 200,
-                sold: 34567,
-                deliveryDays: "2-3",
-                deliveryCharge: 0,
-                description: "Professional tennis balls for tournaments",
-                images: [
-                    "https://picsum.photos/seed/tennisball1/600/600",
-                    "https://picsum.photos/seed/tennisball2/600/600",
-                    "https://picsum.photos/seed/tennisball3/600/600",
-                    "https://picsum.photos/seed/tennisball4/600/600",
-                    "https://picsum.photos/seed/tennisball5/600/600",
-                    "https://picsum.photos/seed/tennisball6/600/600"
-                ]
+                "id": "prod33",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             },
             {
-                id: 34,
-                name: "Webcam",
-                price: 59.99,
-                originalPrice: 89.99,
-                image: "https://picsum.photos/seed/webcam/300/300",
-                category: "electronics",
-                rating: 4.6,
-                reviews: 345,
-                badge: "New",
-                stock: 20,
-                sold: 1234,
-                deliveryDays: "1-2",
-                deliveryCharge: 0,
-                description: "HD webcam for video calls and streaming",
-                images: [
-                    "https://picsum.photos/seed/webcam1/600/600",
-                    "https://picsum.photos/seed/webcam2/600/600",
-                    "https://picsum.photos/seed/webcam3/600/600",
-                    "https://picsum.photos/seed/webcam4/600/600",
-                    "https://picsum.photos/seed/webcam5/600/600",
-                    "https://picsum.photos/seed/webcam6/600/600"
-                ]
+                "id": "prod34",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             },
             {
-                id: 35,
-                name: "Sweater",
-                price: 69.99,
-                originalPrice: 99.99,
-                image: "https://picsum.photos/seed/sweater/300/300",
-                category: "clothing",
-                rating: 4.7,
-                reviews: 567,
-                badge: "Hot",
-                stock: 15,
-                sold: 890,
-                deliveryDays: "3-5",
-                deliveryCharge: 0,
-                description: "Warm sweater for cold weather",
-                images: [
-                    "https://picsum.photos/seed/sweater1/600/600",
-                    "https://picsum.photos/seed/sweater2/600/600",
-                    "https://picsum.photos/seed/sweater3/600/600",
-                    "https://picsum.photos/seed/sweater4/600/600",
-                    "https://picsum.photos/seed/sweater5/600/600",
-                    "https://picsum.photos/seed/sweater6/600/600"
-                ]
+                "id": "prod35",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             },
             {
-                id: 36,
-                name: "Cutlery Set",
-                price: 39.99,
-                originalPrice: 69.99,
-                image: "https://picsum.photos/seed/cutlery/300/300",
-                category: "home",
-                rating: 4.8,
-                reviews: 234,
-                badge: "Bestseller",
-                stock: 12,
-                sold: 4567,
-                deliveryDays: "2-4",
-                deliveryCharge: 7.99,
-                description: "Stainless steel cutlery set for dining",
-                images: [
-                    "https://picsum.photos/seed/cutlery1/600/600",
-                    "https://picsum.photos/seed/cutlery2/600/600",
-                    "https://picsum.photos/seed/cutlery3/600/600",
-                    "https://picsum.photos/seed/cutlery4/600/600",
-                    "https://picsum.photos/seed/cutlery5/600/600",
-                    "https://picsum.photos/seed/cutlery6/600/600"
-                ]
+                "id": "prod36",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             },
             {
-                id: 37,
-                name: "Face Mask",
-                price: 14.99,
-                originalPrice: 24.99,
-                image: "https://picsum.photos/seed/facemask/300/300",
-                category: "beauty",
-                rating: 4.6,
-                reviews: 890,
-                badge: "Sale",
-                stock: 100,
-                sold: 23456,
-                deliveryDays: "1-3",
-                deliveryCharge: 0,
-                description: "Hydrating face mask for glowing skin",
-                images: [
-                    "https://picsum.photos/seed/facemask1/600/600",
-                    "https://picsum.photos/seed/facemask2/600/600",
-                    "https://picsum.photos/seed/facemask3/600/600",
-                    "https://picsum.photos/seed/facemask4/600/600",
-                    "https://picsum.photos/seed/facemask5/600/600",
-                    "https://picsum.photos/seed/facemask6/600/600"
-                ]
+                "id": "prod37",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             },
             {
-                id: 38,
-                name: "Gym Gloves",
-                price: 19.99,
-                originalPrice: 29.99,
-                image: "https://picsum.photos/seed/gymgloves/300/300",
-                category: "sports",
-                rating: 4.5,
-                reviews: 345,
-                badge: "New",
-                stock: 40,
-                sold: 6789,
-                deliveryDays: "2-3",
-                deliveryCharge: 0,
-                description: "Weightlifting gloves for gym workouts",
-                images: [
-                    "https://picsum.photos/seed/gymgloves1/600/600",
-                    "https://picsum.photos/seed/gymgloves2/600/600",
-                    "https://picsum.photos/seed/gymgloves3/600/600",
-                    "https://picsum.photos/seed/gymgloves4/600/600",
-                    "https://picsum.photos/seed/gymgloves5/600/600",
-                    "https://picsum.photos/seed/gymgloves6/600/600"
-                ]
-            },
-            {
-                id: 39,
-                name: "Keyboard",
-                price: 79.99,
-                originalPrice: 119.99,
-                image: "https://picsum.photos/seed/keyboard/300/300",
-                category: "electronics",
-                rating: 4.7,
-                reviews: 567,
-                badge: "Hot",
-                stock: 18,
-                sold: 3456,
-                deliveryDays: "1-2",
-                deliveryCharge: 0,
-                description: "Mechanical keyboard with RGB lighting",
-                images: [
-                    "https://picsum.photos/seed/keyboard1/600/600",
-                    "https://picsum.photos/seed/keyboard2/600/600",
-                    "https://picsum.photos/seed/keyboard3/600/600",
-                    "https://picsum.photos/seed/keyboard4/600/600",
-                    "https://picsum.photos/seed/keyboard5/600/600",
-                    "https://picsum.photos/seed/keyboard6/600/600"
-                ]
-            },
-            {
-                id: 40,
-                name: "Dress Shirt",
-                price: 49.99,
-                originalPrice: 79.99,
-                image: "https://picsum.photos/seed/dressshirt/300/300",
-                category: "clothing",
-                rating: 4.6,
-                reviews: 234,
-                badge: "Sale",
-                stock: 20,
-                sold: 1234,
-                deliveryDays: "2-4",
-                deliveryCharge: 0,
-                description: "Formal dress shirt for business meetings",
-                images: [
-                    "https://picsum.photos/seed/dressshirt1/600/600",
-                    "https://picsum.photos/seed/dressshirt2/600/600",
-                    "https://picsum.photos/seed/dressshirt3/600/600",
-                    "https://picsum.photos/seed/dressshirt4/600/600",
-                    "https://picsum.photos/seed/dressshirt5/600/600",
-                    "https://picsum.photos/seed/dressshirt6/600/600"
-                ]
-            },
-            {
-                id: 41,
-                name: "Wall Clock",
-                price: 34.99,
-                originalPrice: 54.99,
-                image: "https://picsum.photos/seed/clock/300/300",
-                category: "home",
-                rating: 4.8,
-                reviews: 456,
-                badge: "New",
-                stock: 15,
-                sold: 789,
-                deliveryDays: "3-5",
-                deliveryCharge: 5.99,
-                description: "Modern wall clock for your home",
-                images: [
-                    "https://picsum.photos/seed/clock1/600/600",
-                    "https://picsum.photos/seed/clock2/600/600",
-                    "https://picsum.photos/seed/clock3/600/600",
-                    "https://picsum.photos/seed/clock4/600/600",
-                    "https://picsum.photos/seed/clock5/600/600",
-                    "https://picsum.photos/seed/clock6/600/600"
-                ]
-            },
-            {
-                id: 42,
-                name: "Nail Polish Set",
-                price: 19.99,
-                originalPrice: 34.99,
-                image: "https://picsum.photos/seed/nailpolish/300/300",
-                category: "beauty",
-                rating: 4.7,
-                reviews: 678,
-                badge: "Hot",
-                stock: 50,
-                sold: 23456,
-                deliveryDays: "1-3",
-                deliveryCharge: 0,
-                description: "Colorful nail polish set with 24 shades",
-                images: [
-                    "https://picsum.photos/seed/nailpolish1/600/600",
-                    "https://picsum.photos/seed/nailpolish2/600/600",
-                    "https://picsum.photos/seed/nailpolish3/600/600",
-                    "https://picsum.photos/seed/nailpolish4/600/600",
-                    "https://picsum.photos/seed/nailpolish5/600/600",
-                    "https://picsum.photos/seed/nailpolish6/600/600"
-                ]
-            },
-            {
-                id: 43,
-                name: "Skipping Rope",
-                price: 12.99,
-                originalPrice: 19.99,
-                image: "https://picsum.photos/seed/skipping/300/300",
-                category: "sports",
-                rating: 4.5,
-                reviews: 123,
-                badge: "Sale",
-                stock: 80,
-                sold: 45678,
-                deliveryDays: "2-3",
-                deliveryCharge: 0,
-                description: "Adjustable skipping rope for cardio",
-                images: [
-                    "https://picsum.photos/seed/skipping1/600/600",
-                    "https://picsum.photos/seed/skipping2/600/600",
-                    "https://picsum.photos/seed/skipping3/600/600",
-                    "https://picsum.photos/seed/skipping4/600/600",
-                    "https://picsum.photos/seed/skipping5/600/600",
-                    "https://picsum.photos/seed/skipping6/600/600"
-                ]
-            },
-            {
-                id: 44,
-                name: "Monitor",
-                price: 249.99,
-                originalPrice: 349.99,
-                image: "https://picsum.photos/seed/monitor/300/300",
-                category: "electronics",
-                rating: 4.8,
-                reviews: 789,
-                badge: "Bestseller",
-                stock: 6,
-                sold: 234,
-                deliveryDays: "2-4",
-                deliveryCharge: 15.99,
-                description: "27-inch 4K monitor for professionals",
-                images: [
-                    "https://picsum.photos/seed/monitor1/600/600",
-                    "https://picsum.photos/seed/monitor2/600/600",
-                    "https://picsum.photos/seed/monitor3/600/600",
-                    "https://picsum.photos/seed/monitor4/600/600",
-                    "https://picsum.photos/seed/monitor5/600/600",
-                    "https://picsum.photos/seed/monitor6/600/600"
-                ]
-            },
-            {
-                id: 45,
-                name: "Blazer",
-                price: 129.99,
-                originalPrice: 189.99,
-                image: "https://picsum.photos/seed/blazer/300/300",
-                category: "clothing",
-                rating: 4.7,
-                reviews: 345,
-                badge: "New",
-                stock: 8,
-                sold: 567,
-                deliveryDays: "3-5",
-                deliveryCharge: 9.99,
-                description: "Professional blazer for formal occasions",
-                images: [
-                    "https://picsum.photos/seed/blazer1/600/600",
-                    "https://picsum.photos/seed/blazer2/600/600",
-                    "https://picsum.photos/seed/blazer3/600/600",
-                    "https://picsum.photos/seed/blazer4/600/600",
-                    "https://picsum.photos/seed/blazer5/600/600",
-                    "https://picsum.photos/seed/blazer6/600/600"
-                ]
-            },
-            {
-                id: 46,
-                name: "Plant Pot",
-                price: 24.99,
-                originalPrice: 39.99,
-                image: "https://picsum.photos/seed/plantpot/300/300",
-                category: "home",
-                rating: 4.6,
-                reviews: 234,
-                badge: "Hot",
-                stock: 30,
-                sold: 3456,
-                deliveryDays: "2-4",
-                deliveryCharge: 5.99,
-                description: "Decorative plant pot for indoor plants",
-                images: [
-                    "https://picsum.photos/seed/plantpot1/600/600",
-                    "https://picsum.photos/seed/plantpot2/600/600",
-                    "https://picsum.photos/seed/plantpot3/600/600",
-                    "https://picsum.photos/seed/plantpot4/600/600",
-                    "https://picsum.photos/seed/plantpot5/600/600",
-                    "https://picsum.photos/seed/plantpot6/600/600"
-                ]
-            },
-            {
-                id: 47,
-                name: "Eye Cream",
-                price: 29.99,
-                originalPrice: 49.99,
-                image: "https://picsum.photos/seed/eyecream/300/300",
-                category: "beauty",
-                rating: 4.9,
-                reviews: 567,
-                badge: "Bestseller",
-                stock: 18,
-                sold: 8901,
-                deliveryDays: "1-3",
-                deliveryCharge: 0,
-                description: "Anti-aging eye cream for dark circles",
-                images: [
-                    "https://picsum.photos/seed/eyecream1/600/600",
-                    "https://picsum.photos/seed/eyecream2/600/600",
-                    "https://picsum.photos/seed/eyecream3/600/600",
-                    "https://picsum.photos/seed/eyecream4/600/600",
-                    "https://picsum.photos/seed/eyecream5/600/600",
-                    "https://picsum.photos/seed/eyecream6/600/600"
-                ]
-            },
-            {
-                id: 48,
-                name: "Resistance Bands",
-                price: 19.99,
-                originalPrice: 34.99,
-                image: "https://picsum.photos/seed/bands/300/300",
-                category: "sports",
-                rating: 4.7,
-                reviews: 890,
-                badge: "Sale",
-                stock: 60,
-                sold: 12345,
-                deliveryDays: "2-3",
-                deliveryCharge: 0,
-                description: "Set of 5 resistance bands for workouts",
-                images: [
-                    "https://picsum.photos/seed/bands1/600/600",
-                    "https://picsum.photos/seed/bands2/600/600",
-                    "https://picsum.photos/seed/bands3/600/600",
-                    "https://picsum.photos/seed/bands4/600/600",
-                    "https://picsum.photos/seed/bands5/600/600",
-                    "https://picsum.photos/seed/bands6/600/600"
-                ]
-            },
-            {
-                id: 49,
-                name: "Router",
-                price: 89.99,
-                originalPrice: 129.99,
-                image: "https://picsum.photos/seed/router/300/300",
-                category: "electronics",
-                rating: 4.6,
-                reviews: 456,
-                badge: "New",
-                stock: 12,
-                sold: 789,
-                deliveryDays: "1-2",
-                deliveryCharge: 0,
-                description: "WiFi 6 router for fast internet",
-                images: [
-                    "https://picsum.photos/seed/router1/600/600",
-                    "https://picsum.photos/seed/router2/600/600",
-                    "https://picsum.photos/seed/router3/600/600",
-                    "https://picsum.photos/seed/router4/600/600",
-                    "https://picsum.photos/seed/router5/600/600",
-                    "https://picsum.photos/seed/router6/600/600"
-                ]
-            },
-            {
-                id: 50,
-                name: "Scarf",
-                price: 24.99,
-                originalPrice: 39.99,
-                image: "https://picsum.photos/seed/scarf/300/300",
-                category: "clothing",
-                rating: 4.8,
-                reviews: 345,
-                badge: "Hot",
-                stock: 40,
-                sold: 2345,
-                deliveryDays: "2-4",
-                deliveryCharge: 0,
-                description: "Warm scarf for winter fashion",
-                images: [
-                    "https://picsum.photos/seed/scarf1/600/600",
-                    "https://picsum.photos/seed/scarf2/600/600",
-                    "https://picsum.photos/seed/scarf3/600/600",
-                    "https://picsum.photos/seed/scarf4/600/600",
-                    "https://picsum.photos/seed/scarf5/600/600",
-                    "https://picsum.photos/seed/scarf6/600/600"
-                ]
+                "id": "prod38",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
             }
         ];
+
+        // Categories data
+        const categories = [
+            { id: 'electronics', name: 'Electronics', icon: 'laptop' },
+            { id: 'furniture', name: 'Furniture', icon: 'couch' },
+            { id: 'kitchen', name: 'Kitchen', icon: 'utensils' },
+            { id: 'clothing', name: 'Clothing', icon: 'tshirt' },
+            { id: 'beauty', name: 'Beauty', icon: 'spa' },
+            { id: 'sports', name: 'Sports', icon: 'football-ball' }
+        ];
+
 
         let cart = [];
         let wishlist = [];
