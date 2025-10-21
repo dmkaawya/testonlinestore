@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RU Online Store - Premium Shopping Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .category-card {
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: scale(1.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .cart-item-enter {
+            animation: slideIn 0.4s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .notification {
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .search-suggestion {
+            transition: all 0.2s ease;
+        }
+        
+        .search-suggestion:hover {
+            background-color: #f3f4f6;
+            padding-left: 20px;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .floating-badge {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+        
+        .image-gallery img {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .image-gallery img:hover {
+            transform: scale(1.05);
+        }
+        
+        .main-image {
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .image-gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="fixed top-4 right-4 z-50"></div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-2 rounded-lg mr-3">
+                        <i class="fas fa-store text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">RU Online Store</h1>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-2xl mx-8 relative">
+                    <div class="relative">
+                        <input type="text" id="searchInput" placeholder="Search for products..." 
+                               class="w-full px-5 py-3 pr-12 border border-gray-300 rounded-full focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                        <button onclick="performSearch()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600 transition">
+                            <i class="fas fa-search text-lg"></i>
+                        </button>
+                    </div>
+                    <!-- Search Suggestions -->
+                    <div id="searchSuggestions" class="absolute w-full bg-white border border-gray-200 rounded-xl shadow-xl mt-2 hidden">
+                        <div class="search-suggestion px-5 py-3 cursor-pointer rounded-t-xl" onclick="selectSuggestion('Smartphones')">
+                            <i class="fas fa-mobile-alt mr-3 text-purple-600"></i>Smartphones
+                        </div>
+                        <div class="search-suggestion px-5 py-3 cursor-pointer" onclick="selectSuggestion('Laptops')">
+                            <i class="fas fa-laptop mr-3 text-blue-600"></i>Laptops
+                        </div>
+                        <div class="search-suggestion px-5 py-3 cursor-pointer rounded-b-xl" onclick="selectSuggestion('Fashion')">
+                            <i class="fas fa-tshirt mr-3 text-pink-600"></i>Fashion
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Icons -->
+                <div class="flex items-center space-x-6">
+                    <button onclick="showLoginModal()" class="text-gray-600 hover:text-purple-600 transition flex items-center">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                        <span class="ml-2 text-sm font-medium hidden md:block">Account</span>
+                    </button>
+                    <button onclick="showWishlist()" class="text-gray-600 hover:text-red-600 transition relative">
+                        <i class="fas fa-heart text-2xl"></i>
+                        <span id="wishlistCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
+                    </button>
+                    <button onclick="toggleCart()" class="text-gray-600 hover:text-purple-600 transition relative">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="bg-gray-50 border-t">
+            <div class="container mx-auto px-4">
+                <ul class="flex space-x-8 py-3 overflow-x-auto">
+                    <li><a href="#" onclick="showCategory('all')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">All Products</a></li>
+                    <li><a href="#" onclick="showCategory('electronics')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Electronics</a></li>
+                    <li><a href="#" onclick="showCategory('clothing')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Fashion</a></li>
+                    <li><a href="#" onclick="showCategory('home')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Home & Living</a></li>
+                    <li><a href="#" onclick="showCategory('beauty')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Beauty</a></li>
+                    <li><a href="#" onclick="showCategory('sports')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Sports</a></li>
+                    <li><a href="#" onclick="showDeals()" class="text-red-600 hover:text-red-700 font-bold transition whitespace-nowrap">
+                        <i class="fas fa-fire mr-1"></i>Hot Deals
+                    </a></li>
+                    <li><a href="contact.html" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Contact</a></li>
+                    <li><a href="admin.html" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Admin</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-20"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex items-center justify-between">
+                <div class="max-w-xl">
+                    <div class="floating-badge inline-block bg-yellow-400 text-gray-900 px-4 py-2 rounded-full font-bold mb-4">
+                        <i class="fas fa-bolt mr-2"></i>50% OFF TODAY ONLY
+                    </div>
+                    <h2 class="text-5xl font-bold mb-6">Discover Your Dream Products</h2>
+                    <p class="text-xl mb-8 text-gray-100">Premium quality, unbeatable prices, lightning-fast delivery</p>
+                    <div class="flex space-x-4">
+                        <button onclick="showDeals()" class="btn-primary text-white px-8 py-4 rounded-full font-bold text-lg">
+                            Shop Now
+                        </button>
+                        <button class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="hidden lg:block">
+                    <img src="https://picsum.photos/seed/hero/600/400" alt="Hero" class="rounded-2xl shadow-2xl transform rotate-3">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Grid -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-4xl font-bold mb-4">Shop by Category</h3>
+                <p class="text-gray-600 text-lg">Find exactly what you're looking for</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <div class="category-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('electronics')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-laptop text-3xl text-purple-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Electronics</h4>
+                    <p class="text-sm text-gray-600 mt-1">2,450 items</p>
+                </div>
+                <div class="category-card bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('clothing')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-tshirt text-3xl text-pink-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Fashion</h4>
+                    <p class="text-sm text-gray-600 mt-1">5,120 items</p>
+                </div>
+                <div class="category-card bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('home')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-home text-3xl text-green-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Home</h4>
+                    <p class="text-sm text-gray-600 mt-1">3,890 items</p>
+                </div>
+                <div class="category-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('beauty')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-spa text-3xl text-purple-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Beauty</h4>
+                    <p class="text-sm text-gray-600 mt-1">1,760 items</p>
+                </div>
+                <div class="category-card bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('sports')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-football-ball text-3xl text-orange-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Sports</h4>
+                    <p class="text-sm text-gray-600 mt-1">980 items</p>
+                </div>
+                <div class="category-card bg-gradient-to-br from-red-100 to-red-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('books')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-book text-3xl text-red-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Books</h4>
+                    <p class="text-sm text-gray-600 mt-1">2,340 items</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <h3 class="text-4xl font-bold mb-2">Featured Products</h3>
+                    <p class="text-gray-600">Handpicked just for you</p>
+                </div>
+                <div class="flex space-x-4">
+                    <select id="sortSelect" onchange="sortProducts()" class="px-6 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-purple-500 bg-white">
+                        <option value="popular">Most Popular</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers Banner -->
+    <section class="py-16 bg-gradient-to-r from-yellow-400 to-orange-500">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-4xl font-bold text-white mb-4">Limited Time Offer</h3>
+            <p class="text-xl text-white mb-8">Get free shipping on orders over $50</p>
+            <button class="bg-white text-orange-500 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
+                Shop Now & Save
+            </button>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cartSidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
+        <div class="p-6 border-b bg-gray-50">
+            <div class="flex justify-between items-center">
+                <h3 class="text-2xl font-bold">Your Cart</h3>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="cartItems" class="p-6 overflow-y-auto" style="height: calc(100% - 200px);">
+            <div class="text-center py-12">
+                <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500 text-lg">Your cart is empty</p>
+                <button onclick="toggleCart()" class="mt-4 text-purple-600 font-semibold hover:text-purple-700">
+                    Continue Shopping
+                </button>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 bg-gray-50 p-6 border-t">
+            <div class="flex justify-between mb-2">
+                <span class="text-gray-600">Subtotal:</span>
+                <span id="cartSubtotal" class="font-semibold">$0.00</span>
+            </div>
+            <div class="flex justify-between mb-4">
+                <span class="text-gray-600">Shipping:</span>
+                <span class="font-semibold text-green-600">FREE</span>
+            </div>
+            <div class="flex justify-between mb-6 text-xl">
+                <span class="font-bold">Total:</span>
+                <span id="cartTotal" class="font-bold text-2xl text-purple-600">$0.00</span>
+            </div>
+            <button onclick="proceedToCheckout()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform scale-95 transition-transform">
+            <div class="text-center mb-6">
+                <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-user text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-2">Welcome Back</h3>
+                <p class="text-gray-600">Sign in to your account</p>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2 font-semibold">Username</label>
+                    <input type="text" id="username" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 mb-2 font-semibold">Password</label>
+                    <input type="password" id="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                </div>
+                <div class="flex items-center justify-between mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2">
+                        <span class="text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-purple-600 hover:text-purple-700">Forgot password?</a>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-bold hover:shadow-lg transition">
+                    Sign In
+                </button>
+            </form>
+            <div class="mt-6 text-center">
+                <p class="text-gray-600">Don't have an account? <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Sign up</a></p>
+            </div>
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Sample product data with 50 products
+        const products = [
+            {
+                id: 1,
+                name: "Wireless Headphones",
+                price: 79.99,
+                originalPrice: 129.99,
+                image: "https://picsum.photos/seed/headphones/300/300",
+                category: "electronics",
+                rating: 4.5,
+                reviews: 234,
+                badge: "Sale",
+                stock: 15,
+                sold: 892,
+                deliveryDays: "2-3",
+                deliveryCharge: 0,
+                description: "Premium wireless headphones with noise cancellation",
+                images: [
+                    "https://picsum.photos/seed/headphones1/600/600",
+                    "https://picsum.photos/seed/headphones2/600/600",
+                    "https://picsum.photos/seed/headphones3/600/600",
+                    "https://picsum.photos/seed/headphones4/600/600",
+                    "https://picsum.photos/seed/headphones5/600/600",
+                    "https://picsum.photos/seed/headphones6/600/600"
+                ]
+            },
+            {
+                id: 2,
+                name: "Smart Watch",
+                price: 199.99,
+                originalPrice: 299.99,
+                image: "https://picsum.photos/seed/smartwatch/300/300",
+                category: "electronics",
+                rating: 4.8,
+                reviews: 567,
+                badge: "Hot",
+                stock: 8,
+                sold: 1203,
+                deliveryDays: "1-2",
+                deliveryCharge: 5.99,
+                description: "Advanced smartwatch with health monitoring",
+                images: [
+                    "https://picsum.photos/seed/watch1/600/600",
+                    "https://picsum.photos/seed/watch2/600/600",
+                    "https://picsum.photos/seed/watch3/600/600",
+                    "https://picsum.photos/seed/watch4/600/600",
+                    "https://picsum.photos/seed/watch5/600/600",
+                    "https://picsum.photos/seed/watch6/600/600"
+                ]
+            },
+            {
+                id: 3,
+                name: "Designer Jacket",
+                price: 89.99,
+                originalPrice: 149.99,
+                image: "https://picsum.photos/seed/jacket/300/300",
+                category: "clothing",
+                rating: 4.3,
+                reviews: 123,
+                badge: "New",
+                stock: 25,
+                sold: 456,
+                deliveryDays: "3-5",
+                deliveryCharge: 0,
+                description: "Stylish designer jacket for all seasons",
+                images: [
+                    "https://picsum.photos/seed/jacket1/600/600",
+                    "https://picsum.photos/seed/jacket2/600/600",
+                    "https://picsum.photos/seed/jacket3/600/600",
+                    "https://picsum.photos/seed/jacket4/600/600",
+                    "https://picsum.photos/seed/jacket5/600/600",
+                    "https://picsum.photos/seed/jacket6/600/600"
+                ]
+            },
+            {
+                id: 4,
+                name: "Coffee Maker",
+                price: 129.99,
+                originalPrice: 179.99,
+                image: "https://picsum.photos/seed/coffee/300/300",
+                category: "home",
+                rating: 4.7,
+                reviews: 345,
+                badge: "Sale",
+                stock: 12,
+                sold: 678,
+                deliveryDays: "2-4",
+                deliveryCharge: 7.99,
+                description: "Professional coffee maker for home use",
+                images: [
+                    "https://picsum.photos/seed/coffee1/600/600",
+                    "https://picsum.photos/seed/coffee2/600/600",
+                    "https://picsum.photos/seed/coffee3/600/600",
+                    "https://picsum.photos/seed/coffee4/600/600",
+                    "https://picsum.photos/seed/coffee5/600/600",
+                    "https://picsum.photos/seed/coffee6/600/600"
+                ]
+            },
+            {
+                id: 5,
+                name: "Skincare Set",
+                price: 59.99,
+                originalPrice: 89.99,
+                image: "https://picsum.photos/seed/skincare/300/300",
+                category: "beauty",
+                rating: 4.9,
+                reviews: 789,
+                badge: "Bestseller",
+                stock: 30,
+                sold: 2341,
+                deliveryDays: "1-3",
+                deliveryCharge: 0,
+                description: "Complete skincare set for radiant skin",
+                images: [
+                    "https://picsum.photos/seed/skincare1/600/600",
+                    "https://picsum.photos/seed/skincare2/600/600",
+                    "https://picsum.photos/seed/skincare3/600/600",
+                    "https://picsum.photos/seed/skincare4/600/600",
+                    "https://picsum.photos/seed/skincare5/600/600",
+                    "https://picsum.photos/seed/skincare6/600/600"
+                ]
+            },
+            {
+                id: 6,
+                name: "Running Shoes",
+                price: 119.99,
+                originalPrice: 159.99,
+                image: "https://picsum.photos/seed/shoes/300/300",
+                category: "sports",
+                rating: 4.6,
+                reviews: 456,
+                badge: "Sale",
+                stock: 18,
+                sold: 1567,
+                deliveryDays: "2-3",
+                deliveryCharge: 0,
+                description: "Professional running shoes for athletes",
+                images: [
+                    "https://picsum.photos/seed/shoes1/600/600",
+                    "https://picsum.photos/seed/shoes2/600/600",
+                    "https://picsum.photos/seed/shoes3/600/600",
+                    "https://picsum.photos/seed/shoes4/600/600",
+                    "https://picsum.photos/seed/shoes5/600/600",
+                    "https://picsum.photos/seed/shoes6/600/600"
+                ]
+            },
+            {
+                id: 7,
+                name: "Laptop Stand",
+                price: 39.99,
+                originalPrice: 59.99,
+                image: "https://picsum.photos/seed/laptopstand/300/300",
+                category: "electronics",
+                rating: 4.4,
+                reviews: 178,
+                badge: "New",
+                stock: 40,
+                sold: 234,
+                deliveryDays: "1-2",
+                deliveryCharge: 3.99,
+                description: "Ergonomic laptop stand for better posture",
+                images: [
+                    "https://picsum.photos/seed/stand1/600/600",
+                    "https://picsum.photos/seed/stand2/600/600",
+                    "https://picsum.photos/seed/stand3/600/600",
+                    "https://picsum.photos/seed/stand4/600/600",
+                    "https://picsum.photos/seed/stand5/600/600",
+                    "https://picsum.photos/seed/stand6/600/600"
+                ]
+            },
+            {
+                id: 8,
+                name: "Yoga Mat",
+                price: 29.99,
+                originalPrice: 49.99,
+                image: "https://picsum.photos/seed/yogamat/300/300",
+                category: "sports",
+                rating: 4.7,
+                reviews: 234,
+                badge: "Hot",
+                stock: 50,
+                sold: 3456,
+                deliveryDays: "2-4",
+                deliveryCharge: 0,
+                description: "Premium yoga mat for all fitness levels",
+                images: [
+                    "https://picsum.photos/seed/yoga1/600/600",
+                    "https://picsum.photos/seed/yoga2/600/600",
+                    "https://picsum.photos/seed/yoga3/600/600",
+                    "https://picsum.photos/seed/yoga4/600/600",
+                    "https://picsum.photos/seed/yoga5/600/600",
+                    "https://picsum.photos/seed/yoga6/600/600"
+                ]
+            },
+            {
+                id: 9,
+                name: "Bluetooth Speaker",
+                price: 69.99,
+                originalPrice: 99.99,
+                image: "https://picsum.photos/seed/speaker/300/300",
+                category: "electronics",
+                rating: 4.5,
+                reviews: 345,
+                badge: "Sale",
+                stock: 22,
+                sold: 789,
+                deliveryDays: "1-3",
+                deliveryCharge: 0,
+                description: "Portable Bluetooth speaker with amazing sound",
+                images: [
+                    "https://picsum.photos/seed/speaker1/600/600",
+                    "https://picsum.photos/seed/speaker2/600/600",
+                    "https://picsum.photos/seed/speaker3/600/600",
+                    "https://picsum.photos/seed/speaker4/600/600",
+                    "https://picsum.photos/seed/speaker5/600/600",
+                    "https://picsum.photos/seed/speaker6/600/600"
+                ]
+            },
+            {
+                id: 10,
+                name: "Summer Dress",
+                price: 49.99,
+                originalPrice: 79.99,
+                image: "https://picsum.photos/seed/dress/300/300",
+                category: "clothing",
+                rating: 4.6,
+                reviews: 567,
+                badge: "New",
+                stock: 15,
+                sold: 1234,
+                deliveryDays: "2-4",
+                deliveryCharge: 0,
+                description: "Beautiful summer dress for special occasions",
+                images: [
+                    "https://picsum.photos/seed/dress1/600/600",
+                    "https://picsum.photos/seed/dress2/600/600",
+                    "https://picsum.photos/seed/dress3/600/600",
+                    "https://picsum.photos/seed/dress4/600/600",
+                    "https://picsum.photos/seed/dress5/600/600",
+                    "https://picsum.photos/seed/dress6/600/600"
+                ]
+            },
+            {
+                id: 11,
+                name: "Bed Sheets Set",
+                price: 39.99,
+                originalPrice: 59.99,
+                image: "https://picsum.photos/seed/bedsheets/300/300",
+                category: "home",
+                rating: 4.8,
+                reviews: 890,
+                badge: "Bestseller",
+                stock: 35,
+                sold: 4567,
+                deliveryDays: "3-5",
+                deliveryCharge: 5.99,
+                description: "Luxurious bed sheets set for comfortable sleep",
+                images: [
+                    "https://picsum.photos/seed/bedsheets1/600/600",
+                    "https://picsum.photos/seed/bedsheets2/600/600",
+                    "https://picsum.photos/seed/bedsheets3/600/600",
+                    "https://picsum.photos/seed/bedsheets4/600/600",
+                    "https://picsum.photos/seed/bedsheets5/600/600",
+                    "https://picsum.photos/seed/bedsheets6/600/600"
+                ]
+            },
+            {
+                id: 12,
+                name: "Face Cream",
+                price: 24.99,
+                originalPrice: 39.99,
+                image: "https://picsum.photos/seed/facecream/300/300",
+                category: "beauty",
+                rating: 4.7,
+                reviews: 678,
+                badge: "Hot",
+                stock: 60,
+                sold: 8901,
+                deliveryDays: "1-2",
+                deliveryCharge: 0,
+                description: "Anti-aging face cream with natural ingredients",
+                images: [
+                    "https://picsum.photos/seed/cream1/600/600",
+                    "https://picsum.photos/seed/cream2/600/600",
+                    "https://picsum.photos/seed/cream3/600/600",
+                    "https://picsum.photos/seed/cream4/600/600",
+                    "https://picsum.photos/seed/cream5/600/600",
+                    "https://picsum.photos/seed/cream6/600/600"
+                ]
+            },
+            {
+                id: 13,
+                name: "Tennis Racket",
+                price: 89.99,
+                originalPrice: 129.99,
+                image: "https://picsum.photos/seed/tennis/300/300",
+                category: "sports",
+                rating: 4.5,
+                reviews: 234,
+                badge: "Sale",
+                stock: 12,
+                sold: 567,
+                deliveryDays: "2-3",
+                deliveryCharge: 7.99,
+                description: "Professional tennis racket for champions",
+                images: [
+                    "https://picsum.photos/seed/tennis1/600/600",
+                    "https://picsum.photos/seed/tennis2/600/600",
+                    "https://picsum.photos/seed/tennis3/600/600",
+                    "https://picsum.photos/seed/tennis4/600/600",
+                    "https://picsum.photos/seed/tennis5/600/600",
+                    "https://picsum.photos/seed/tennis6/600/600"
+                ]
+            },
+            {
+                id: 14,
+                name: "Tablet",
+                price: 299.99,
+                originalPrice: 399.99,
+                image: "https://picsum.photos/seed/tablet/300/300",
+                category: "electronics",
+                rating: 4.6,
+                reviews: 456,
+                badge: "New",
+                stock: 8,
+                sold: 345,
+                deliveryDays: "1-2",
+                deliveryCharge: 0,
+                description: "High-performance tablet for work and entertainment",
+                images: [
+                    "https://picsum.photos/seed/tablet1/600/600",
+                    "https://picsum.photos/seed/tablet2/600/600",
+                    "https://picsum.photos/seed/tablet3/600/600",
+                    "https://picsum.photos/seed/tablet4/600/600",
+                    "https://picsum.photos/seed/tablet5/600/600",
+                    "https://picsum.photos/seed/tablet6/600/600"
+                ]
+            },
+            {
+                id: 15,
+                name: "Winter Coat",
+                price: 149.99,
+                originalPrice: 199.99,
+                image: "https://picsum.photos/seed/coat/300/300",
+                category: "clothing",
+                rating: 4.8,
+                reviews: 789,
+                badge: "Hot",
+                stock: 10,
+                sold: 234,
+                deliveryDays: "3-5",
+                deliveryCharge: 9.99,
+                description: "Warm winter coat for cold weather",
+                images: [
+                    "https://picsum.photos/seed/coat1/600/600",
+                    "https://picsum.photos/seed/coat2/600/600",
+                    "https://picsum.photos/seed/coat3/600/600",
+                    "https://picsum.photos/seed/coat4/600/600",
+                    "https://picsum.photos/seed/coat5/600/600",
+                    "https://picsum.photos/seed/coat6/600/600"
+                ]
+            },
+            {
+                id: 16,
+                name: "Kitchen Knife Set",
+                price: 79.99,
+                originalPrice: 119.99,
+                image: "https://picsum.photos/seed/knives/300/300",
+                category: "home",
+                rating: 4.7,
+                reviews: 567,
+                badge: "Sale",
+                stock: 18,
+                sold: 890,
+                deliveryDays: "2-4",
+                deliveryCharge: 5.99,
+                description: "Professional kitchen knife set for chefs",
+                images: [
+                    "https://picsum.photos/seed/knives1/600/600",
+                    "https://picsum.photos/seed/knives2/600/600",
+                    "https://picsum.photos/seed/knives3/600/600",
+                    "https://picsum.photos/seed/knives4/600/600",
+                    "https://picsum.photos/seed/knives5/600/600",
+                    "https://picsum.photos/seed/knives6/600/600"
+                ]
+            },
+            {
+                id: 17,
+                name: "Hair Dryer",
+                price: 59.99,
+                originalPrice: 89.99,
+                image: "https://picsum.photos/seed/hairdryer/300/300",
+                category: "beauty",
+                rating: 4.5,
+                reviews: 345,
+                badge: "New",
+                stock: 25,
+                sold: 1234,
+                deliveryDays: "1-3",
+                deliveryCharge: 0,
+                description: "Professional hair dryer with ionic technology",
+                images: [
+                    "https://picsum.photos/seed/hairdryer1/600/600",
+                    "https://picsum.photos/seed/hairdryer2/600/600",
+                    "https://picsum.photos/seed/hairdryer3/600/600",
+                    "https://picsum.photos/seed/hairdryer4/600/600",
+                    "https://picsum.photos/seed/hairdryer5/600/600",
+                    "https://picsum.photos/seed/hairdryer6/600/600"
+                ]
+            },
+            {
+                id: 18,
+                name: "Basketball",
+                price: 29.99,
+                originalPrice: 49.99,
+                image: "https://picsum.photos/seed/basketball/300/300",
+                category: "sports",
+                rating: 4.6,
+                reviews: 234,
+                badge: "Sale",
+                stock: 40,
+                sold: 3456,
+                deliveryDays: "2-3",
+                deliveryCharge: 0,
+                description: "Official size basketball for outdoor play",
+                images: [
+                    "https://picsum.photos/seed/basketball1/600/600",
+                    "https://picsum.photos/seed/basketball2/600/600",
+                    "https://picsum.photos/seed/basketball3/600/600",
+                    "https://picsum.photos/seed/basketball4/600/600",
+                    "https://picsum.photos/seed/basketball5/600/600",
+                    "https://picsum.photos/seed/basketball6/600/600"
+                ]
+            },
+            {
+                id: 19,
+                name: "Wireless Mouse",
+                price: 29.99,
+                originalPrice: 49.99,
+                image: "https://picsum.photos/seed/mouse/300/300",
+                category: "electronics",
+                rating: 4.4,
+                reviews: 567,
+                badge: "Hot",
+                stock: 50,
+                sold: 7890,
+                deliveryDays: "1-2",
+                deliveryCharge: 0,
+                description: "Ergonomic wireless mouse for productivity",
+                images: [
+                    "https://picsum.photos/seed/mouse1/600/600",
+                    "https://picsum.photos/seed/mouse2/600/600",
+                    "https://picsum.photos/seed/mouse3/600/600",
+                    "https://picsum.photos/seed/mouse4/600/600",
+                    "https://picsum.photos/seed/mouse5/600/600",
+                    "https://picsum.photos/seed/mouse6/600/600"
+                ]
+            },
+            {
+                id: 20,
+                name: "Casual Shirt",
+                price: 39.99,
+                originalPrice: 69.99,
+                image: "https://picsum.photos/seed/shirt/300/300",
+                category: "clothing",
+                rating: 4.5,
+                reviews: 345,
+                badge: "Sale",
+                stock: 30,
+                sold: 2345,
+                deliveryDays: "2-4",
+                deliveryCharge: 0,
+                description: "Comfortable casual shirt for everyday wear",
+                images: [
+                    "https://picsum.photos/seed/shirt1/600/600",
+                    "https://picsum.photos/seed/shirt2/600/600",
+                    "https://picsum.photos/seed/shirt3/600/600",
+                    "https://picsum.photos/seed/shirt4/600/600",
+                    "https://picsum.photos/seed/shirt5/600/600",
+                    "https://picsum.photos/seed/shirt6/600/600"
+                ]
+            },
+            {
+                id: 21,
+                name: "Vacuum Cleaner",
+                price: 199.99,
+                originalPrice: 299.99,
+                image: "https://picsum.photos/seed/vacuum/300/300",
+                category: "home",
+                rating: 4.7,
+                reviews: 678,
+                badge: "New",
+                stock: 8,
+                sold: 456,
+                deliveryDays: "3-5",
+                deliveryCharge: 12.99,
+                description: "Powerful vacuum cleaner for deep cleaning",
+                images: [
+                    "https://picsum.photos/seed/vacuum1/600/600",
+                    "https://picsum.photos/seed/vacuum2/600/600",
+                    "https://picsum.photos/seed/vacuum3/600/600",
+                    "https://picsum.photos/seed/vacuum4/600/600",
+                    "https://picsum.photos/seed/vacuum5/600/600",
+                    "https://picsum.photos/seed/vacuum6/600/600"
+                ]
+            },
+            {
+                id: 22,
+                name: "Makeup Palette",
+                price: 34.99,
+                originalPrice: 54.99,
+                image: "https://picsum.photos/seed/palette/300/300",
+                category: "beauty",
+                rating: 4.8,
+                reviews: 890,
+                badge: "Bestseller",
+                stock: 20,
+                sold: 5678,
+                deliveryDays: "1-3",
+                deliveryCharge: 0,
+                description: "Professional makeup palette with 48 colors",
+                images: [
+                    "https://picsum.photos/seed/palette1/600/600",
+                    "https://picsum.photos/seed/palette2/600/600",
+                    "https://picsum.photos/seed/palette3/600/600",
+                    "https://picsum.photos/seed/palette4/600/600",
+                    "https://picsum.photos/seed/palette5/600/600",
+                    "https://picsum.photos/seed/palette6/600/600"
+                ]
+            },
+            {
+                id: 23,
+                name: "Dumbbells Set",
+                price: 89.99,
+                originalPrice: 129.99,
+                image: "https://picsum.photos/seed/dumbbells/300/300",
+                category: "sports",
+                rating: 4.6,
+                reviews: 456,
+                badge: "Hot",
+                stock: 15,
+                sold: 789,
+                deliveryDays: "3-5",
+                deliveryCharge: 15.99,
+                description: "Adjustable dumbbells set for home workouts",
+                images: [
+                    "https://picsum.photos/seed/dumbbells1/600/600",
+                    "https://picsum.photos/seed/dumbbells2/600/600",
+                    "https://picsum.photos/seed/dumbbells3/600/600",
+                    "https://picsum.photos/seed/dumbbells4/600/600",
+                    "https://picsum.photos/seed/dumbbells5/600/600",
+                    "https://picsum.photos/seed/dumbbells6/600/600"
+                ]
+            },
+            {
+                id: 24,
+                name: "USB Hub",
+                price: 24.99,
+                originalPrice: 39.99,
+                image: "https://picsum.photos/seed/usbhub/300/300",
+                category: "electronics",
+                rating: 4.5,
+                reviews: 234,
+                badge: "Sale",
+                stock: 60,
+                sold: 3456,
+                deliveryDays: "1-2",
+                deliveryCharge: 0,
+                description: "7-port USB hub for all your devices",
+                images: [
+                    "https://picsum.photos/seed/usbhub1/600/600",
+                    "https://picsum.photos/seed/usbhub2/600/600",
+                    "https://picsum.photos/seed/usbhub3/600/600",
+                    "https://picsum.photos/seed/usbhub4/600/600",
+                    "https://picsum.photos/seed/usbhub5/600/600",
+                    "https://picsum.photos/seed/usbhub6/600/600"
+                ]
+            },
+            {
+                id: 25,
+                name: "Jeans",
+                price: 59.99,
+                originalPrice: 89.99,
+                image: "https://picsum.photos/seed/jeans/300/300",
+                category: "clothing",
+                rating: 4.4,
+                reviews: 678,
+                badge: "New",
+                stock: 25,
+                sold: 2345,
+                deliveryDays: "2-4",
+                deliveryCharge: 0,
+                description: "Comfortable denim jeans for all sizes",
+                images: [
+                    "https://picsum.photos/seed/jeans1/600/600",
+                    "https://picsum.photos/seed/jeans2/600/600",
+                    "https://picsum.photos/seed/jeans3/600/600",
+                    "https://picsum.photos/seed/jeans4/600/600",
+                    "https://picsum.photos/seed/jeans5/600/600",
+                    "https://picsum.photos/seed/jeans6/600/600"
+                ]
+            },
+            {
+                id: 26,
+                name: "Lamp",
+                price: 49.99,
+                originalPrice: 79.99,
+                image: "https://picsum.photos/seed/lamp/300/300",
+                category: "home",
+                rating: 4.7,
+                reviews: 345,
+                badge: "Hot",
+                stock: 18,
+                sold: 890,
+                deliveryDays: "2-4",
+                deliveryCharge: 7.99,
+                description: "Modern LED lamp for your desk",
+                images: [
+                    "https://picsum.photos/seed/lamp1/600/600",
+                    "https://picsum.photos/seed/lamp2/600/600",
+                    "https://picsum.photos/seed/lamp3/600/600",
+                    "https://picsum.photos/seed/lamp4/600/600",
+                    "https://picsum.photos/seed/lamp5/600/600",
+                    "https://picsum.photos/seed/lamp6/600/600"
+                ]
+            },
+            {
+                id: 27,
+                name: "Perfume",
+                price: 79.99,
+                originalPrice: 119.99,
+                image: "https://picsum.photos/seed/perfume/300/300",
+                category: "beauty",
+                rating: 4.9,
+                reviews: 1234,
+                badge: "Bestseller",
+                stock: 12,
+                sold: 6789,
+                deliveryDays: "1-3",
+                deliveryCharge: 0,
+                description: "Luxury perfume with long-lasting fragrance",
+                images: [
+                    "https://picsum.photos/seed/perfume1/600/600",
+                    "https://picsum.photos/seed/perfume2/600/600",
+                    "https://picsum.photos/seed/perfume3/600/600",
+                    "https://picsum.photos/seed/perfume4/600/600",
+                    "https://picsum.photos/seed/perfume5/600/600",
+                    "https://picsum.photos/seed/perfume6/600/600"
+                ]
+            },
+            {
+                id: 28,
+                name: "Yoga Pants",
+                price: 39.99,
+                originalPrice: 59.99,
+                image: "https://picsum.photos/seed/yogapants/300/300",
+                category: "sports",
+                rating: 4.6,
+                reviews: 567,
+                badge: "Sale",
+                stock: 35,
+                sold: 3456,
+                deliveryDays: "2-3",
+                deliveryCharge: 0,
+                description: "Comfortable yoga pants for workouts",
+                images: [
+                    "https://picsum.photos/seed/yogapants1/600/600",
+                    "https://picsum.photos/seed/yogapants2/600/600",
+                    "https://picsum.photos/seed/yogapants3/600/600",
+                    "https://picsum.photos/seed/yogapants4/600/600",
+                    "https://picsum.photos/seed/yogapants5/600/600",
+                    "https://picsum.photos/seed/yogapants6/600/600"
+                ]
+            },
+            {
+                id: 29,
+                name: "Power Bank",
+                price: 34.99,
+                originalPrice: 54.99,
+                image: "https://picsum.photos/seed/powerbank/300/300",
+                category: "electronics",
+                rating: 4.5,
+                reviews: 890,
+                badge: "Hot",
+                stock: 40,
+                sold: 4567,
+                deliveryDays: "1-2",
+                deliveryCharge: 0,
+                description: "20000mAh power bank for all devices",
+                images: [
+                    "https://picsum.photos/seed/powerbank1/600/600",
+                    "https://picsum.photos/seed/powerbank2/600/600",
+                    "https://picsum.photos/seed/powerbank3/600/600",
+                    "https://picsum.photos/seed/powerbank4/600/600",
+                    "https://picsum.photos/seed/powerbank5/600/600",
+                    "https://picsum.photos/seed/powerbank6/600/600"
+                ]
+            },
+            {
+                id: 30,
+                name: "T-Shirt",
+                price: 19.99,
+                originalPrice: 34.99,
+                image: "https://picsum.photos/seed/tshirt/300/300",
+                category: "clothing",
+                rating: 4.4,
+                reviews: 2345,
+                badge: "Sale",
+                stock: 100,
+                sold: 12345,
+                deliveryDays: "2-4",
+                deliveryCharge: 0,
+                description: "Comfortable cotton t-shirt for everyday",
+                images: [
+                    "https://picsum.photos/seed/tshirt1/600/600",
+                    "https://picsum.photos/seed/tshirt2/600/600",
+                    "https://picsum.photos/seed/tshirt3/600/600",
+                    "https://picsum.photos/seed/tshirt4/600/600",
+                    "https://picsum.photos/seed/tshirt5/600/600",
+                    "https://picsum.photos/seed/tshirt6/600/600"
+                ]
+            },
+            {
+                id: 31,
+                name: "Pillow Set",
+                price: 29.99,
+                originalPrice: 49.99,
+                image: "https://picsum.photos/seed/pillows/300/300",
+                category: "home",
+                rating: 4.7,
+                reviews: 678,
+                badge: "New",
+                stock: 25,
+                sold: 2345,
+                deliveryDays: "3-5",
+                deliveryCharge: 5.99,
+                description: "Hypoallergenic pillow set for better sleep",
+                images: [
+                    "https://picsum.photos/seed/pillows1/600/600",
+                    "https://picsum.photos/seed/pillows2/600/600",
+                    "https://picsum.photos/seed/pillows3/600/600",
+                    "https://picsum.photos/seed/pillows4/600/600",
+                    "https://picsum.photos/seed/pillows5/600/600",
+                    "https://picsum.photos/seed/pillows6/600/600"
+                ]
+            },
+            {
+                id: 32,
+                name: "Lipstick Set",
+                price: 24.99,
+                originalPrice: 39.99,
+                image: "https://picsum.photos/seed/lipstick/300/300",
+                category: "beauty",
+                rating: 4.8,
+                reviews: 456,
+                badge: "Hot",
+                stock: 30,
+                sold: 7890,
+                deliveryDays: "1-3",
+                deliveryCharge: 0,
+                description: "Matte lipstick set with 12 colors",
+                images: [
+                    "https://picsum.photos/seed/lipstick1/600/600",
+                    "https://picsum.photos/seed/lipstick2/600/600",
+                    "https://picsum.photos/seed/lipstick3/600/600",
+                    "https://picsum.photos/seed/lipstick4/600/600",
+                    "https://picsum.photos/seed/lipstick5/600/600",
+                    "https://picsum.photos/seed/lipstick6/600/600"
+                ]
+            },
+            {
+                id: 33,
+                name: "Tennis Ball",
+                price: 9.99,
+                originalPrice: 14.99,
+                image: "https://picsum.photos/seed/tennisball/300/300",
+                category: "sports",
+                rating: 4.5,
+                reviews: 123,
+                badge: "Sale",
+                stock: 200,
+                sold: 34567,
+                deliveryDays: "2-3",
+                deliveryCharge: 0,
+                description: "Professional tennis balls for tournaments",
+                images: [
+                    "https://picsum.photos/seed/tennisball1/600/600",
+                    "https://picsum.photos/seed/tennisball2/600/600",
+                    "https://picsum.photos/seed/tennisball3/600/600",
+                    "https://picsum.photos/seed/tennisball4/600/600",
+                    "https://picsum.photos/seed/tennisball5/600/600",
+                    "https://picsum.photos/seed/tennisball6/600/600"
+                ]
+            },
+            {
+                id: 34,
+                name: "Webcam",
+                price: 59.99,
+                originalPrice: 89.99,
+                image: "https://picsum.photos/seed/webcam/300/300",
+                category: "electronics",
+                rating: 4.6,
+                reviews: 345,
+                badge: "New",
+                stock: 20,
+                sold: 1234,
+                deliveryDays: "1-2",
+                deliveryCharge: 0,
+                description: "HD webcam for video calls and streaming",
+                images: [
+                    "https://picsum.photos/seed/webcam1/600/600",
+                    "https://picsum.photos/seed/webcam2/600/600",
+                    "https://picsum.photos/seed/webcam3/600/600",
+                    "https://picsum.photos/seed/webcam4/600/600",
+                    "https://picsum.photos/seed/webcam5/600/600",
+                    "https://picsum.photos/seed/webcam6/600/600"
+                ]
+            },
+            {
+                id: 35,
+                name: "Sweater",
+                price: 69.99,
+                originalPrice: 99.99,
+                image: "https://picsum.photos/seed/sweater/300/300",
+                category: "clothing",
+                rating: 4.7,
+                reviews: 567,
+                badge: "Hot",
+                stock: 15,
+                sold: 890,
+                deliveryDays: "3-5",
+                deliveryCharge: 0,
+                description: "Warm sweater for cold weather",
+                images: [
+                    "https://picsum.photos/seed/sweater1/600/600",
+                    "https://picsum.photos/seed/sweater2/600/600",
+                    "https://picsum.photos/seed/sweater3/600/600",
+                    "https://picsum.photos/seed/sweater4/600/600",
+                    "https://picsum.photos/seed/sweater5/600/600",
+                    "https://picsum.photos/seed/sweater6/600/600"
+                ]
+            },
+            {
+                id: 36,
+                name: "Cutlery Set",
+                price: 39.99,
+                originalPrice: 69.99,
+                image: "https://picsum.photos/seed/cutlery/300/300",
+                category: "home",
+                rating: 4.8,
+                reviews: 234,
+                badge: "Bestseller",
+                stock: 12,
+                sold: 4567,
+                deliveryDays: "2-4",
+                deliveryCharge: 7.99,
+                description: "Stainless steel cutlery set for dining",
+                images: [
+                    "https://picsum.photos/seed/cutlery1/600/600",
+                    "https://picsum.photos/seed/cutlery2/600/600",
+                    "https://picsum.photos/seed/cutlery3/600/600",
+                    "https://picsum.photos/seed/cutlery4/600/600",
+                    "https://picsum.photos/seed/cutlery5/600/600",
+                    "https://picsum.photos/seed/cutlery6/600/600"
+                ]
+            },
+            {
+                id: 37,
+                name: "Face Mask",
+                price: 14.99,
+                originalPrice: 24.99,
+                image: "https://picsum.photos/seed/facemask/300/300",
+                category: "beauty",
+                rating: 4.6,
+                reviews: 890,
+                badge: "Sale",
+                stock: 100,
+                sold: 23456,
+                deliveryDays: "1-3",
+                deliveryCharge: 0,
+                description: "Hydrating face mask for glowing skin",
+                images: [
+                    "https://picsum.photos/seed/facemask1/600/600",
+                    "https://picsum.photos/seed/facemask2/600/600",
+                    "https://picsum.photos/seed/facemask3/600/600",
+                    "https://picsum.photos/seed/facemask4/600/600",
+                    "https://picsum.photos/seed/facemask5/600/600",
+                    "https://picsum.photos/seed/facemask6/600/600"
+                ]
+            },
+            {
+                id: 38,
+                name: "Gym Gloves",
+                price: 19.99,
+                originalPrice: 29.99,
+                image: "https://picsum.photos/seed/gymgloves/300/300",
+                category: "sports",
+                rating: 4.5,
+                reviews: 345,
+                badge: "New",
+                stock: 40,
+                sold: 6789,
+                deliveryDays: "2-3",
+                deliveryCharge: 0,
+                description: "Weightlifting gloves for gym workouts",
+                images: [
+                    "https://picsum.photos/seed/gymgloves1/600/600",
+                    "https://picsum.photos/seed/gymgloves2/600/600",
+                    "https://picsum.photos/seed/gymgloves3/600/600",
+                    "https://picsum.photos/seed/gymgloves4/600/600",
+                    "https://picsum.photos/seed/gymgloves5/600/600",
+                    "https://picsum.photos/seed/gymgloves6/600/600"
+                ]
+            },
+            {
+                id: 39,
+                name: "Keyboard",
+                price: 79.99,
+                originalPrice: 119.99,
+                image: "https://picsum.photos/seed/keyboard/300/300",
+                category: "electronics",
+                rating: 4.7,
+                reviews: 567,
+                badge: "Hot",
+                stock: 18,
+                sold: 3456,
+                deliveryDays: "1-2",
+                deliveryCharge: 0,
+                description: "Mechanical keyboard with RGB lighting",
+                images: [
+                    "https://picsum.photos/seed/keyboard1/600/600",
+                    "https://picsum.photos/seed/keyboard2/600/600",
+                    "https://picsum.photos/seed/keyboard3/600/600",
+                    "https://picsum.photos/seed/keyboard4/600/600",
+                    "https://picsum.photos/seed/keyboard5/600/600",
+                    "https://picsum.photos/seed/keyboard6/600/600"
+                ]
+            },
+            {
+                id: 40,
+                name: "Dress Shirt",
+                price: 49.99,
+                originalPrice: 79.99,
+                image: "https://picsum.photos/seed/dressshirt/300/300",
+                category: "clothing",
+                rating: 4.6,
+                reviews: 234,
+                badge: "Sale",
+                stock: 20,
+                sold: 1234,
+                deliveryDays: "2-4",
+                deliveryCharge: 0,
+                description: "Formal dress shirt for business meetings",
+                images: [
+                    "https://picsum.photos/seed/dressshirt1/600/600",
+                    "https://picsum.photos/seed/dressshirt2/600/600",
+                    "https://picsum.photos/seed/dressshirt3/600/600",
+                    "https://picsum.photos/seed/dressshirt4/600/600",
+                    "https://picsum.photos/seed/dressshirt5/600/600",
+                    "https://picsum.photos/seed/dressshirt6/600/600"
+                ]
+            },
+            {
+                id: 41,
+                name: "Wall Clock",
+                price: 34.99,
+                originalPrice: 54.99,
+                image: "https://picsum.photos/seed/clock/300/300",
+                category: "home",
+                rating: 4.8,
+                reviews: 456,
+                badge: "New",
+                stock: 15,
+                sold: 789,
+                deliveryDays: "3-5",
+                deliveryCharge: 5.99,
+                description: "Modern wall clock for your home",
+                images: [
+                    "https://picsum.photos/seed/clock1/600/600",
+                    "https://picsum.photos/seed/clock2/600/600",
+                    "https://picsum.photos/seed/clock3/600/600",
+                    "https://picsum.photos/seed/clock4/600/600",
+                    "https://picsum.photos/seed/clock5/600/600",
+                    "https://picsum.photos/seed/clock6/600/600"
+                ]
+            },
+            {
+                id: 42,
+                name: "Nail Polish Set",
+                price: 19.99,
+                originalPrice: 34.99,
+                image: "https://picsum.photos/seed/nailpolish/300/300",
+                category: "beauty",
+                rating: 4.7,
+                reviews: 678,
+                badge: "Hot",
+                stock: 50,
+                sold: 23456,
+                deliveryDays: "1-3",
+                deliveryCharge: 0,
+                description: "Colorful nail polish set with 24 shades",
+                images: [
+                    "https://picsum.photos/seed/nailpolish1/600/600",
+                    "https://picsum.photos/seed/nailpolish2/600/600",
+                    "https://picsum.photos/seed/nailpolish3/600/600",
+                    "https://picsum.photos/seed/nailpolish4/600/600",
+                    "https://picsum.photos/seed/nailpolish5/600/600",
+                    "https://picsum.photos/seed/nailpolish6/600/600"
+                ]
+            },
+            {
+                id: 43,
+                name: "Skipping Rope",
+                price: 12.99,
+                originalPrice: 19.99,
+                image: "https://picsum.photos/seed/skipping/300/300",
+                category: "sports",
+                rating: 4.5,
+                reviews: 123,
+                badge: "Sale",
+                stock: 80,
+                sold: 45678,
+                deliveryDays: "2-3",
+                deliveryCharge: 0,
+                description: "Adjustable skipping rope for cardio",
+                images: [
+                    "https://picsum.photos/seed/skipping1/600/600",
+                    "https://picsum.photos/seed/skipping2/600/600",
+                    "https://picsum.photos/seed/skipping3/600/600",
+                    "https://picsum.photos/seed/skipping4/600/600",
+                    "https://picsum.photos/seed/skipping5/600/600",
+                    "https://picsum.photos/seed/skipping6/600/600"
+                ]
+            },
+            {
+                id: 44,
+                name: "Monitor",
+                price: 249.99,
+                originalPrice: 349.99,
+                image: "https://picsum.photos/seed/monitor/300/300",
+                category: "electronics",
+                rating: 4.8,
+                reviews: 789,
+                badge: "Bestseller",
+                stock: 6,
+                sold: 234,
+                deliveryDays: "2-4",
+                deliveryCharge: 15.99,
+                description: "27-inch 4K monitor for professionals",
+                images: [
+                    "https://picsum.photos/seed/monitor1/600/600",
+                    "https://picsum.photos/seed/monitor2/600/600",
+                    "https://picsum.photos/seed/monitor3/600/600",
+                    "https://picsum.photos/seed/monitor4/600/600",
+                    "https://picsum.photos/seed/monitor5/600/600",
+                    "https://picsum.photos/seed/monitor6/600/600"
+                ]
+            },
+            {
+                id: 45,
+                name: "Blazer",
+                price: 129.99,
+                originalPrice: 189.99,
+                image: "https://picsum.photos/seed/blazer/300/300",
+                category: "clothing",
+                rating: 4.7,
+                reviews: 345,
+                badge: "New",
+                stock: 8,
+                sold: 567,
+                deliveryDays: "3-5",
+                deliveryCharge: 9.99,
+                description: "Professional blazer for formal occasions",
+                images: [
+                    "https://picsum.photos/seed/blazer1/600/600",
+                    "https://picsum.photos/seed/blazer2/600/600",
+                    "https://picsum.photos/seed/blazer3/600/600",
+                    "https://picsum.photos/seed/blazer4/600/600",
+                    "https://picsum.photos/seed/blazer5/600/600",
+                    "https://picsum.photos/seed/blazer6/600/600"
+                ]
+            },
+            {
+                id: 46,
+                name: "Plant Pot",
+                price: 24.99,
+                originalPrice: 39.99,
+                image: "https://picsum.photos/seed/plantpot/300/300",
+                category: "home",
+                rating: 4.6,
+                reviews: 234,
+                badge: "Hot",
+                stock: 30,
+                sold: 3456,
+                deliveryDays: "2-4",
+                deliveryCharge: 5.99,
+                description: "Decorative plant pot for indoor plants",
+                images: [
+                    "https://picsum.photos/seed/plantpot1/600/600",
+                    "https://picsum.photos/seed/plantpot2/600/600",
+                    "https://picsum.photos/seed/plantpot3/600/600",
+                    "https://picsum.photos/seed/plantpot4/600/600",
+                    "https://picsum.photos/seed/plantpot5/600/600",
+                    "https://picsum.photos/seed/plantpot6/600/600"
+                ]
+            },
+            {
+                id: 47,
+                name: "Eye Cream",
+                price: 29.99,
+                originalPrice: 49.99,
+                image: "https://picsum.photos/seed/eyecream/300/300",
+                category: "beauty",
+                rating: 4.9,
+                reviews: 567,
+                badge: "Bestseller",
+                stock: 18,
+                sold: 8901,
+                deliveryDays: "1-3",
+                deliveryCharge: 0,
+                description: "Anti-aging eye cream for dark circles",
+                images: [
+                    "https://picsum.photos/seed/eyecream1/600/600",
+                    "https://picsum.photos/seed/eyecream2/600/600",
+                    "https://picsum.photos/seed/eyecream3/600/600",
+                    "https://picsum.photos/seed/eyecream4/600/600",
+                    "https://picsum.photos/seed/eyecream5/600/600",
+                    "https://picsum.photos/seed/eyecream6/600/600"
+                ]
+            },
+            {
+                id: 48,
+                name: "Resistance Bands",
+                price: 19.99,
+                originalPrice: 34.99,
+                image: "https://picsum.photos/seed/bands/300/300",
+                category: "sports",
+                rating: 4.7,
+                reviews: 890,
+                badge: "Sale",
+                stock: 60,
+                sold: 12345,
+                deliveryDays: "2-3",
+                deliveryCharge: 0,
+                description: "Set of 5 resistance bands for workouts",
+                images: [
+                    "https://picsum.photos/seed/bands1/600/600",
+                    "https://picsum.photos/seed/bands2/600/600",
+                    "https://picsum.photos/seed/bands3/600/600",
+                    "https://picsum.photos/seed/bands4/600/600",
+                    "https://picsum.photos/seed/bands5/600/600",
+                    "https://picsum.photos/seed/bands6/600/600"
+                ]
+            },
+            {
+                id: 49,
+                name: "Router",
+                price: 89.99,
+                originalPrice: 129.99,
+                image: "https://picsum.photos/seed/router/300/300",
+                category: "electronics",
+                rating: 4.6,
+                reviews: 456,
+                badge: "New",
+                stock: 12,
+                sold: 789,
+                deliveryDays: "1-2",
+                deliveryCharge: 0,
+                description: "WiFi 6 router for fast internet",
+                images: [
+                    "https://picsum.photos/seed/router1/600/600",
+                    "https://picsum.photos/seed/router2/600/600",
+                    "https://picsum.photos/seed/router3/600/600",
+                    "https://picsum.photos/seed/router4/600/600",
+                    "https://picsum.photos/seed/router5/600/600",
+                    "https://picsum.photos/seed/router6/600/600"
+                ]
+            },
+            {
+                id: 50,
+                name: "Scarf",
+                price: 24.99,
+                originalPrice: 39.99,
+                image: "https://picsum.photos/seed/scarf/300/300",
+                category: "clothing",
+                rating: 4.8,
+                reviews: 345,
+                badge: "Hot",
+                stock: 40,
+                sold: 2345,
+                deliveryDays: "2-4",
+                deliveryCharge: 0,
+                description: "Warm scarf for winter fashion",
+                images: [
+                    "https://picsum.photos/seed/scarf1/600/600",
+                    "https://picsum.photos/seed/scarf2/600/600",
+                    "https://picsum.photos/seed/scarf3/600/600",
+                    "https://picsum.photos/seed/scarf4/600/600",
+                    "https://picsum.photos/seed/scarf5/600/600",
+                    "https://picsum.photos/seed/scarf6/600/600"
+                ]
+            }
+        ];
+
+        let cart = [];
+        let wishlist = [];
+        let currentCategory = 'all';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts();
+            updateCartCount();
+            updateWishlistCount();
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            if (e.target.value.length > 0) {
+                document.getElementById('searchSuggestions').classList.remove('hidden');
+            } else {
+                document.getElementById('searchSuggestions').classList.add('hidden');
+            }
+        });
+
+        document.getElementById('searchInput').addEventListener('focus', function() {
+            if (this.value.length > 0) {
+                document.getElementById('searchSuggestions').classList.remove('hidden');
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#searchInput') && !e.target.closest('#searchSuggestions')) {
+                document.getElementById('searchSuggestions').classList.add('hidden');
+            }
+        });
+
+        function selectSuggestion(suggestion) {
+            document.getElementById('searchInput').value = suggestion;
+            document.getElementById('searchSuggestions').classList.add('hidden');
+            performSearch();
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm) {
+                showNotification(`Searching for "${searchTerm}"...`, 'info');
+                // Simulate search
+                setTimeout(() => {
+                    showNotification(`Found ${Math.floor(Math.random() * 50) + 10} results for "${searchTerm}"`, 'success');
+                }, 1000);
+            }
+        }
+
+        // Render products
+        function renderProducts(category = 'all') {
+            const productsGrid = document.getElementById('productsGrid');
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(p => p.category === category);
+            
+            productsGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg">
+                    <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover">
+                        ${product.badge ? `<span class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">${product.badge}</span>` : ''}
+                        <div class="absolute top-4 right-4 flex flex-col space-y-2">
+                            <button onclick="toggleWishlist(${product.id})" class="bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                                <i class="fas fa-heart text-gray-600"></i>
+                            </button>
+                            <button onclick="viewProduct(${product.id})" class="bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                                <i class="fas fa-eye text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-lg mb-2">${product.name}</h4>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                ${Array(5).fill().map((_, i) => 
+                                    `<i class="fas fa-star${i < Math.floor(product.rating) ? '' : '-o'}"></i>`
+                                ).join('')}
+                            </div>
+                            <span class="text-sm text-gray-600 ml-2">(${product.reviews})</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-purple-600">$${product.price}</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">$${product.originalPrice}</span>
+                            </div>
+                            <span class="text-sm text-green-600 font-semibold">Save ${(100 - (product.price / product.originalPrice * 100)).toFixed(0)}%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4 text-sm">
+                            <span class="text-gray-600">Stock: ${product.stock}</span>
+                            <span class="text-gray-600">Sold: ${product.sold}</span>
+                        </div>
+                        <button onclick="addToCart(${product.id})" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // View product details
+        function viewProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            localStorage.setItem('selectedProduct', JSON.stringify(product));
+            window.location.href = 'product.html';
+        }
+
+        // Cart functionality
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCartCount();
+            renderCart();
+            showNotification(`${product.name} added to cart!`, 'success');
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartCount();
+            renderCart();
+            showNotification('Item removed from cart', 'info');
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    renderCart();
+                }
+            }
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500 text-lg">Your cart is empty</p>
+                        <button onclick="toggleCart()" class="mt-4 text-purple-600 font-semibold hover:text-purple-700">
+                            Continue Shopping
+                        </button>
+                    </div>
+                `;
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item-enter bg-white rounded-lg p-4 mb-4 shadow-sm">
+                        <div class="flex items-center">
+                            <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg mr-4">
+                            <div class="flex-1">
+                                <h4 class="font-semibold">${item.name}</h4>
+                                <p class="text-purple-600 font-bold">$${item.price}</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span class="w-8 text-center font-semibold">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                                <button onclick="removeFromCart(${item.id})" class="ml-4 text-red-500 hover:text-red-700">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            updateCartTotal();
+        }
+
+        function updateCartTotal() {
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const deliveryCharge = cart.reduce((total, item) => total + (item.deliveryCharge * item.quantity), 0);
+            const total = subtotal + deliveryCharge;
+            
+            document.getElementById('cartSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
+        }
+
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            cartSidebar.classList.toggle('translate-x-full');
+            if (!cartSidebar.classList.contains('translate-x-full')) {
+                renderCart();
+            }
+        }
+
+        // Wishlist functionality
+        function toggleWishlist(productId) {
+            const product = products.find(p => p.id === productId);
+            const index = wishlist.findIndex(item => item.id === productId);
+            
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showNotification(`${product.name} removed from wishlist`, 'info');
+            } else {
+                wishlist.push(product);
+                showNotification(`${product.name} added to wishlist!`, 'success');
+            }
+            
+            updateWishlistCount();
+        }
+
+        function updateWishlistCount() {
+            document.getElementById('wishlistCount').textContent = wishlist.length;
+        }
+
+        function showWishlist() {
+            if (wishlist.length === 0) {
+                showNotification('Your wishlist is empty', 'info');
+            } else {
+                showNotification(`You have ${wishlist.length} items in wishlist`, 'info');
+            }
+        }
+
+        // Category and sorting
+        function showCategory(category) {
+            currentCategory = category;
+            renderProducts(category);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function sortProducts() {
+            const sortBy = document.getElementById('sortSelect').value;
+            let sortedProducts = [...products];
+            
+            switch(sortBy) {
+                case 'price-low':
+                    sortedProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    sortedProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'newest':
+                    sortedProducts.reverse();
+                    break;
+                default:
+                    // Keep original order for popular
+                    break;
+            }
+            
+            // Re-render with sorted products
+            const productsGrid = document.getElementById('productsGrid');
+            const filteredProducts = currentCategory === 'all' 
+                ? sortedProducts 
+                : sortedProducts.filter(p => p.category === currentCategory);
+            
+            productsGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg">
+                    <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover">
+                        ${product.badge ? `<span class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">${product.badge}</span>` : ''}
+                        <div class="absolute top-4 right-4 flex flex-col space-y-2">
+                            <button onclick="toggleWishlist(${product.id})" class="bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                                <i class="fas fa-heart text-gray-600"></i>
+                            </button>
+                            <button onclick="viewProduct(${product.id})" class="bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                                <i class="fas fa-eye text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-lg mb-2">${product.name}</h4>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                ${Array(5).fill().map((_, i) => 
+                                    `<i class="fas fa-star${i < Math.floor(product.rating) ? '' : '-o'}"></i>`
+                                ).join('')}
+                            </div>
+                            <span class="text-sm text-gray-600 ml-2">(${product.reviews})</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-purple-600">$${product.price}</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">$${product.originalPrice}</span>
+                            </div>
+                            <span class="text-sm text-green-600 font-semibold">Save ${(100 - (product.price / product.originalPrice * 100)).toFixed(0)}%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4 text-sm">
+                            <span class="text-gray-600">Stock: ${product.stock}</span>
+                            <span class="text-gray-600">Sold: ${product.sold}</span>
+                        </div>
+                        <button onclick="addToCart(${product.id})" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Modal functionality
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+            setTimeout(() => {
+                document.querySelector('#loginModal > div').classList.remove('scale-95');
+                document.querySelector('#loginModal > div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeLoginModal() {
+            document.querySelector('#loginModal > div').classList.remove('scale-100');
+            document.querySelector('#loginModal > div').classList.add('scale-95');
+            setTimeout(() => {
+                document.getElementById('loginModal').style.display = 'none';
+            }, 300);
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'Admin' && password === 'admin123') {
+                showNotification('Login successful! Welcome Admin.', 'success');
+                closeLoginModal();
+                window.location.href = 'admin.html';
+            } else {
+                showNotification('Invalid username or password', 'error');
+            }
+        }
+
+        // Other functions
+        function showDeals() {
+            showCategory('all');
+            document.getElementById('sortSelect').value = 'price-low';
+            sortProducts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty', 'warning');
+                return;
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            window.location.href = 'checkout.html';
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notificationContainer = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            
+            const bgColor = {
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500',
+                'info': 'bg-blue-500'
+            }[type] || 'bg-gray-500';
+            
+            const icon = {
+                'success': 'fa-check-circle',
+                'error': 'fa-exclamation-circle',
+                'warning': 'fa-exclamation-triangle',
+                'info': 'fa-info-circle'
+            }[type] || 'fa-info-circle';
+            
+            notification.className = `notification ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg mb-4 flex items-center`;
+            notification.innerHTML = `
+                <i class="fas ${icon} mr-3"></i>
+                <span>${message}</span>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
