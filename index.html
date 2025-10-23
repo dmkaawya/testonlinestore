@@ -1,243 +1,2253 @@
-<!doctype html>
-<html lang="si">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RU Online Stores — Single File Demo</title>
-  <style>
-    /* -------- Variables / Themes -------- */
-    :root{
-      --bg:#ffffff; --fg:#0b1220; --muted:#6b7280; --card:#f9fafb; --accent:#ef4444; --nav-bg:rgba(255,255,255,0.9);
-      --maxw:1100px;
-    }
-    [data-theme="dark"]{
-      --bg:#071026; --fg:#e6eef8; --muted:#9aa6b2; --card:#0b1220; --accent:#fb7185; --nav-bg:rgba(6,10,18,0.85);
-    }
-
-    /* -------- Basic Reset -------- */
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--fg); transition:background .22s,color .22s}
-    a{color:inherit;text-decoration:none}
-    .container{max-width:var(--maxw);margin:20px auto;padding:0 16px}
-
-    /* -------- Header / Controls -------- */
-    .header{position:sticky;top:0;z-index:80;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;background:var(--nav-bg);backdrop-filter:blur(6px) saturate(110%)}
-    .brand{font-weight:700;font-size:1.1rem}
-    .controls{display:flex;gap:8px;align-items:center}
-    .search-input{padding:8px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);min-width:180px}
-    .select, .theme-btn, .linkish {padding:8px 10px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);background:transparent;cursor:pointer}
-    .theme-btn{display:inline-flex;align-items:center;gap:8px}
-
-    /* -------- Products Grid -------- */
-    .top-controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0}
-    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-    .product-card{background:var(--card);padding:12px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06);display:flex;flex-direction:column;gap:10px}
-    .product-card img{width:100%;height:150px;object-fit:cover;border-radius:8px}
-    .product-title{font-weight:600}
-    .product-price{font-weight:700;color:var(--accent)}
-    .product-actions{display:flex;gap:8px;margin-top:auto}
-    .btn{cursor:pointer;border:0;padding:8px 10px;border-radius:10px;background:var(--accent);color:white;font-weight:600}
-    .linkish{background:transparent;border:0;color:var(--fg);cursor:pointer}
-
-    /* -------- Modal Login -------- */
-    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:120}
-    .modal{background:var(--card);padding:18px;border-radius:12px;min-width:320px;max-width:420px;box-shadow:0 14px 60px rgba(2,6,23,0.45)}
-    .form-row{margin-bottom:12px;display:flex;flex-direction:column;gap:6px}
-    input[type="email"], input[type="password"]{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)}
-    .small{font-size:0.9rem;color:var(--muted)}
-
-    /* -------- Utilities -------- */
-    .flex{display:flex}
-    .space-between{justify-content:space-between}
-    @media (max-width:520px){
-      .product-card img{height:140px}
-      .search-input{min-width:120px}
-      .header{padding:8px}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RU Online Store - Premium Shopping Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .category-card {
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: scale(1.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .cart-item-enter {
+            animation: slideIn 0.4s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .notification {
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .search-suggestion {
+            transition: all 0.2s ease;
+        }
+        
+        .search-suggestion:hover {
+            background-color: #f3f4f6;
+            padding-left: 20px;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .floating-badge {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+        
+        .image-gallery img {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .image-gallery img:hover {
+            transform: scale(1.05);
+        }
+        
+        .main-image {
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .image-gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
 </head>
-<body>
-  <header class="header" role="banner">
-    <div class="brand">RU Online Stores</div>
-    <div class="controls" role="navigation" aria-label="top controls">
-      <input id="searchInput" class="search-input" placeholder="Search products..." aria-label="Search products">
-      <select id="sortSelect" class="select" aria-label="Sort">
-        <option value="default">Default</option>
-        <option value="price-asc">Price: Low → High</option>
-        <option value="price-desc">Price: High → Low</option>
-      </select>
-      <button id="themeToggle" class="theme-btn" title="Toggle theme">🌙 Theme</button>
-      <button id="loginOpen" class="linkish">Login</button>
-    </div>
-  </header>
+<body class="bg-gray-50">
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="fixed top-4 right-4 z-50"></div>
 
-  <main class="container" role="main">
-    <section class="top-controls">
-      <div>
-        <strong id="welcomeLabel">Welcome,Guest</strong>
-        <div class="small" id="userEmail" style="margin-top:4px"></div>
-      </div>
-      <div style="margin-left:auto" class="small">Demo single-file UI • No backend</div>
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-2 rounded-lg mr-3">
+                        <i class="fas fa-store text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">RU Online Store</h1>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-2xl mx-8 relative">
+                    <div class="relative">
+                        <input type="text" id="searchInput" placeholder="Search for products..." 
+                               class="w-full px-5 py-3 pr-12 border border-gray-300 rounded-full focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                        <button onclick="performSearch()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600 transition">
+                            <i class="fas fa-search text-lg"></i>
+                        </button>
+                    </div>
+                    <!-- Search Suggestions -->
+                    <div id="searchSuggestions" class="absolute w-full bg-white border border-gray-200 rounded-xl shadow-xl mt-2 hidden">
+                        <div class="search-suggestion px-5 py-3 cursor-pointer rounded-t-xl" onclick="selectSuggestion('Smartphones')">
+                            <i class="fas fa-mobile-alt mr-3 text-purple-600"></i>Smartphones
+                        </div>
+                        <div class="search-suggestion px-5 py-3 cursor-pointer" onclick="selectSuggestion('Laptops')">
+                            <i class="fas fa-laptop mr-3 text-blue-600"></i>Laptops
+                        </div>
+                        <div class="search-suggestion px-5 py-3 cursor-pointer rounded-b-xl" onclick="selectSuggestion('Fashion')">
+                            <i class="fas fa-tshirt mr-3 text-pink-600"></i>Fashion
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Icons -->
+                <div class="flex items-center space-x-6">
+                    <button onclick="showLoginModal()" class="text-gray-600 hover:text-purple-600 transition flex items-center">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                        <span class="ml-2 text-sm font-medium hidden md:block">Account</span>
+                    </button>
+                    <button onclick="showWishlist()" class="text-gray-600 hover:text-red-600 transition relative">
+                        <i class="fas fa-heart text-2xl"></i>
+                        <span id="wishlistCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
+                    </button>
+                    <button onclick="toggleCart()" class="text-gray-600 hover:text-purple-600 transition relative">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="bg-gray-50 border-t">
+            <div class="container mx-auto px-4">
+                <ul class="flex space-x-8 py-3 overflow-x-auto">
+                    <li><a href="#" onclick="showCategory('all')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">All Products</a></li>
+                    <li><a href="#" onclick="showCategory('electronics')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Electronics</a></li>
+                    <li><a href="#" onclick="showCategory('clothing')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Fashion</a></li>
+                    <li><a href="#" onclick="showCategory('home')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Home & Living</a></li>
+                    <li><a href="#" onclick="showCategory('beauty')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Beauty</a></li>
+                    <li><a href="#" onclick="showCategory('sports')" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Sports</a></li>
+                    <li><a href="#" onclick="showDeals()" class="text-red-600 hover:text-red-700 font-bold transition whitespace-nowrap">
+                        <i class="fas fa-fire mr-1"></i>Hot Deals
+                    </a></li>
+                    <li><a href="contact.html" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Contact</a></li>
+                    <li><a href="admin.html" class="text-gray-700 hover:text-purple-600 font-semibold transition whitespace-nowrap">Admin</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-20"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex items-center justify-between">
+                <div class="max-w-xl">
+                    <div class="floating-badge inline-block bg-yellow-400 text-gray-900 px-4 py-2 rounded-full font-bold mb-4">
+                        <i class="fas fa-bolt mr-2"></i>50% OFF TODAY ONLY
+                    </div>
+                    <h2 class="text-5xl font-bold mb-6">Discover Your Dream Products</h2>
+                    <p class="text-xl mb-8 text-gray-100">Premium quality, unbeatable prices, lightning-fast delivery</p>
+                    <div class="flex space-x-4">
+                        <button onclick="showDeals()" class="btn-primary text-white px-8 py-4 rounded-full font-bold text-lg">
+                            Shop Now
+                        </button>
+                        <button class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="hidden lg:block">
+                    <img src="https://picsum.photos/seed/hero/600/400" alt="Hero" class="rounded-2xl shadow-2xl transform rotate-3">
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section id="productsSection" class="products-grid" aria-live="polite">
-      <!-- JS will render product cards here -->
+    <!-- Categories Grid -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-4xl font-bold mb-4">Shop by Category</h3>
+                <p class="text-gray-600 text-lg">Find exactly what you're looking for</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <div class="category-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('electronics')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-laptop text-3xl text-purple-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Electronics</h4>
+                    <p class="text-sm text-gray-600 mt-1">2,450 items</p>
+                </div>
+                <div class="category-card bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('clothing')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-tshirt text-3xl text-pink-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Fashion</h4>
+                    <p class="text-sm text-gray-600 mt-1">5,120 items</p>
+                </div>
+                <div class="category-card bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('home')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-home text-3xl text-green-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Home</h4>
+                    <p class="text-sm text-gray-600 mt-1">3,890 items</p>
+                </div>
+                <div class="category-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('beauty')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-spa text-3xl text-purple-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Beauty</h4>
+                    <p class="text-sm text-gray-600 mt-1">1,760 items</p>
+                </div>
+                <div class="category-card bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('sports')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-football-ball text-3xl text-orange-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Sports</h4>
+                    <p class="text-sm text-gray-600 mt-1">980 items</p>
+                </div>
+                <div class="category-card bg-gradient-to-br from-red-100 to-red-200 rounded-2xl p-8 text-center cursor-pointer" onclick="showCategory('books')">
+                    <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-book text-3xl text-red-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg">Books</h4>
+                    <p class="text-sm text-gray-600 mt-1">2,340 items</p>
+                </div>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <!-- Login modal -->
-  <div id="loginModal" class="modal-backdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-      <h3 id="loginTitle">Login</h3>
-      <div class="form-row">
-        <label for="email">Email</label>
-        <input id="email" type="email" placeholder="you@example.com" />
-      </div>
-      <div class="form-row">
-        <label for="password">Password</label>
-        <input id="password" type="password" placeholder="password" />
-      </div>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
-        <button id="loginBtn" class="btn">Sign in</button>
-        <button id="closeModal" class="linkish">Cancel</button>
-      </div>
-      <p class="small" style="margin-top:8px">Demo login only — no server. For real login we can add Firebase or similar later.</p>
+    <!-- Featured Products -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <h3 class="text-4xl font-bold mb-2">Featured Products</h3>
+                    <p class="text-gray-600">Handpicked just for you</p>
+                </div>
+                <div class="flex space-x-4">
+                    <select id="sortSelect" onchange="sortProducts()" class="px-6 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-purple-500 bg-white">
+                        <option value="popular">Most Popular</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers Banner -->
+    <section class="py-16 bg-gradient-to-r from-yellow-400 to-orange-500">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-4xl font-bold text-white mb-4">Limited Time Offer</h3>
+            <p class="text-xl text-white mb-8">Get free shipping on orders over $50</p>
+            <button class="bg-white text-orange-500 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
+                Shop Now & Save
+            </button>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cartSidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
+        <div class="p-6 border-b bg-gray-50">
+            <div class="flex justify-between items-center">
+                <h3 class="text-2xl font-bold">Your Cart</h3>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="cartItems" class="p-6 overflow-y-auto" style="height: calc(100% - 200px);">
+            <div class="text-center py-12">
+                <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500 text-lg">Your cart is empty</p>
+                <button onclick="toggleCart()" class="mt-4 text-purple-600 font-semibold hover:text-purple-700">
+                    Continue Shopping
+                </button>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 bg-gray-50 p-6 border-t">
+            <div class="flex justify-between mb-2">
+                <span class="text-gray-600">Subtotal:</span>
+                <span id="cartSubtotal" class="font-semibold">$0.00</span>
+            </div>
+            <div class="flex justify-between mb-4">
+                <span class="text-gray-600">Shipping:</span>
+                <span class="font-semibold text-green-600">FREE</span>
+            </div>
+            <div class="flex justify-between mb-6 text-xl">
+                <span class="font-bold">Total:</span>
+                <span id="cartTotal" class="font-bold text-2xl text-purple-600">$0.00</span>
+            </div>
+            <button onclick="proceedToCheckout()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
+                Proceed to Checkout
+            </button>
+        </div>
     </div>
-  </div>
 
-  <script>
-    /***** Single-file JS: Theme, Login, Products, Search/Sort *****/
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform scale-95 transition-transform">
+            <div class="text-center mb-6">
+                <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-user text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-2">Welcome Back</h3>
+                <p class="text-gray-600">Sign in to your account</p>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2 font-semibold">Username</label>
+                    <input type="text" id="username" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 mb-2 font-semibold">Password</label>
+                    <input type="password" id="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+                </div>
+                <div class="flex items-center justify-between mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2">
+                        <span class="text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-purple-600 hover:text-purple-700">Forgot password?</a>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-bold hover:shadow-lg transition">
+                    Sign In
+                </button>
+            </form>
+            <div class="mt-6 text-center">
+                <p class="text-gray-600">Don't have an account? <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Sign up</a></p>
+            </div>
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+    </div>
 
-    /* ---------- Theme (dark/light) ---------- */
-    const themeToggle = document.getElementById('themeToggle');
-    const applyTheme = (t) => {
-      if (t === 'dark') document.documentElement.setAttribute('data-theme','dark');
-      else document.documentElement.removeAttribute('data-theme');
-      themeToggle.textContent = t === 'dark' ? '☀️ Light' : '🌙 Dark';
-    };
-    const stored = localStorage.getItem('ru_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    applyTheme(stored);
-    themeToggle.addEventListener('click', ()=> {
-      const now = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      applyTheme(now);
-      localStorage.setItem('ru_theme', now);
-    });
+    <script>
+        // Sample product data with additional fields
+        const products = [
+            {
+                "id": "prod1",
+                "title": " Portable Mini Ironing Machine",
+                "short_description": "Mini Iron Professional Micro Steam Flatiron Convenient Handheld Household Iron Portable Wet Dry Ironing Machine",
+                "price": 1200,
+                "original_price": 6500,
+                "discount_percent": 25,
+                "stock": 15,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 5},
+                    {"min_qty": 5, "discount_pct": 10}
+                ],
+                "images": [
+                    "https://i.ibb.co/d4svzKPh/1b31fbfd-a528-481d-8f6c-7552e9381091.jpg",
+                    "https://i.ibb.co/MkLdnhML/download.jpg",
+                    "https://i.ibb.co/TqN6hd7N/images.jpg",
+                    "https://i.ibb.co/hxh0Fj0t/images.jpg",
+                    "https://i.ibb.co/TxdHLqq2/images.jpg",
+                    "https://i.ibb.co/s9YYLT1t/images.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 0,
+                "reviews": [
+                    {
+                        "name": "9477****455",
+                        "rating": 5,
+                        "comment": "Good",
+                        "date": "2025-10-16"
+                    },
+                    {
+                        "name": "9476****144",
+                        "rating": 4,
+                        "comment": "best",
+                        "date": "2025-10-16"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod2",
+                "title": "RGB Party Light With Remote 15W",
+                "short_description": "LED RGB Lamp Spotlight Bulb 220V Bombillas LED 5W 10W 15W IR Remote Control Led Bulb 2835 SMD Dimmable Magic Light Bulb 110V",
+                "price": 750,
+                "original_price": 1500,
+                "discount_percent": 5,
+                "stock": 8,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 2, "discount_pct": 5},
+                    {"min_qty": 5, "discount_pct": 12}
+                ],
+                "images": [
+                    "https://i.ibb.co/wZp0xsj5/1b18ebd3-33da-4292-8e2b-465dcf015e66.jpg",
+                    "https://i.ibb.co/3YC8ByGC/download.jpg",
+                    "https://i.ibb.co/bMGcX5h6/download.jpg",
+                    "https://i.ibb.co/Z6JByG7q/download.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 28,
+                "reviews": [
+                    {
+                        "name": "ka***a@*****.com",
+                        "rating": 5,
+                        "comment": "amazing!",
+                        "date": "2025-05-12"
+                    },
+                    {
+                        "name": "Sarath",
+                        "rating": 4,
+                        "comment": "Good.",
+                        "date": "2025-06-25"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod3",
+                "title": "Portable Electric Household Sewing Machine - 12 Stitches Presser Foot Pedal Light & Adjustable Speed",
+                "short_description": "Multifunctional Sewing Machine CGSM505 Household Sewing Machine Electric Micro-Sewing Machine Mini Sewing Machine 12 stich Overlock Embroidery Letters",
+                "price": 6500,
+                "original_price": 14000,
+                "discount_percent": 15,
+                "stock": 3,
+                "delivery_fee": 350,
+                "wholesale_breaks": [],
+                "images": [
+                    "https://married-emerald-kv15coxjxe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 15,
+                "reviews": [
+                    {
+                        "name": "9474*****78",
+                        "rating": 5,
+                        "comment": "good",
+                        "date": "2025-05-08"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 130
+            },
+            {
+                "id": "prod4",
+                "title": "Vacuum Flask Set - Good Quality",
+                "short_description": "Vaccum Flask Set With 3 Cups Keep Warm for 12 Hours",
+                "price": 999,
+                "original_price": 1299,
+                "discount_percent": 10,
+                "stock": 5,
+                "delivery_fee": 350,
+                "wholesale_breaks": [],
+                "images": [
+                    "https://other-gray-mmjr5teo33.edgeone.app/b0533235-81da-4246-9381-29fb5d982313.jpg",
+                    "https://alive-gray-vy5pz05ydf.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 32,
+                "reviews": [
+                    {
+                        "name": "9474*****96",
+                        "rating": 5,
+                        "comment": "Good",
+                        "date": "2025-04-01"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod5",
+                "title": "Bunny Hat Light Up Cute Plush Pikachu Hat Moving Ears With Colorful Led Random Clrs.",
+                "short_description": "60cm Pikachu Hat Ears Down Air Bag Plush Cap Birthday",
+                "price": 1200,
+                "original_price": 2000,
+                "discount_percent": 20,
+                "stock": 12,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 5, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760641807/vi7q0qeswqum4seuj0wk.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "furniture",
+                "soldCount": 18,
+                "reviews": [
+                    {
+                        "name": "9477****524",
+                        "rating": 4,
+                        "comment": "Good",
+                        "date": "2025-04-28"
+                    }
+                ],
+                "variants": {
+                    "colors": ["Yellow"],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod6",
+                "title": " Sports Sound Stereo Wireless Headset Music & Movement Hands Free Bluetooth Headphone NO Warranty",
+                "short_description": "Bluetooth wireless earphone smart Magnetic Sports and Gaming Headphone Noise Reduction Headset with Mic/i12 Airpods and Inpods 12 Waterproof Portable Earbuds Full Set with Box For Iphone,Samsung and All Mobile Phones(Features i7s,i11,i12,i15,i18)",
+                "price": 799,
+                "original_price": 1115,
+                "discount_percent": 21,
+                "stock": 6,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 2, "discount_pct": 7},
+                    {"min_qty": 4, "discount_pct": 12}
+                ],
+                "images": [
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760642932/e9brepy9rjlf1vkuixoa.jpg",
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760643011/d7bro13vckuydgg6fr3r.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 24,
+                "reviews": [
+                    {
+                        "name": "9476****555",
+                        "rating": 5,
+                        "comment": "Great quality Items",
+                        "date": "2025-04-25"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod7",
+                "title": " 53Pcs Socket Set 53 Pcs Tool Set Tool Box",
+                "short_description": "53-piece tool set for home repairs, DIY projects, and maintenance Includes hammer, adjustable wrench, 6″ long-nose pliers, and utility knife Features 8 hex keys (1.5-6mm) and 20 screwdriver bits (Phillips, Slotted, Torx) Contains 1/4″ drive sockets (5-13mm) and 4 precision screwdrivers 8ft measuring tape and level for accurate measurements Made of durable carbon steel with rust-resistant chrome plating Ergonomic grips for comfort during extended use Sturdy carrying case for organized storage and portability Ideal for homeowners, renters, or DIY enthusiasts",
+                "price": 2499,
+                "original_price": 3499,
+                "discount_percent": 29,
+                "stock": 25,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 5, "discount_pct": 10},
+                    {"min_qty": 10, "discount_pct": 20}
+                ],
+                "images": [
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760643509/ww82zei9rn19if4agcra.jpg",
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760643708/qhplkse9lj8tn2ucsbfk.jpg",
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760644044/scuvqk09xegkhewyn3if.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 56,
+                "reviews": [
+                    {
+                        "name": "dil***@*****.com",
+                        "rating": 4,
+                        "comment": "good.",
+                        "date": "2025-04-20"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod8",
+                "title": " 46 in 1 Tool Kit (2nd Quality)",
+                "short_description": "Hibuy 46pcs/set Tool Set 46 in 1 Carbon Steel Combination Set Wrench Socket Spanner Screwdriver Household Motorcycle Car Repair Tool Kit",
+                "price": 1250,
+                "original_price": 1550,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1760644691/vqj8gg2gdnkwh7ldg4hs.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "dmk***@*****.com",
+                        "rating": 5,
+                        "comment": "Highly recommend!",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 130
+            },
+            {
+                "id": "prod9",
+                "title": "Silver Edition Edifice Casio Classic  Watch",
+                "short_description": "Men Business Fashion Cool Quartz Wristwatches Male Water Resistant Stainless Steel",
+                "price": 850,
+                "original_price": 1500,
+                "discount_percent": 5,
+                "stock": 3,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://continuing-gray-ncfnyfw9m3.edgeone.app/c6e0181d-4671-43e7-ad2b-d936a0ccaf18.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 370,
+                "reviews": [
+                    {
+                        "name": "77**5***9",
+                        "rating": 5,
+                        "comment": "මේක සුපිරි watch එකක්. good look , packing එහෙමත් හොදයි. overall සුපිරි product එකක්. recommended 😌🤍👌",
+                        "date": "2024-05-19"
+                    },
+                    {
+                        "name": "70**8***8",
+                        "rating": 5,
+                        "comment": "හොද product එකක්... ලස්සනයි... හොද quality එකක් තියෙනවා... ඔයාලත් අදම ගන්න...👍💖🥰",
+                        "date": "2024-05-28"
+                    },
+                    {
+                        "name": "71**1***5",
+                        "rating": 5,
+                        "comment": "watch එක මාරම ලස්සනයි. ගෙවන ගානට මාරම වටිනවා. දවස් 3න් ආව. හොදට pack කරලා තිබ්බා. හිතන් හිටපු වොච් එකම ආව. භය නැතුව buy කරන්න.#WIN",
+                        "date": "2025-06-15"
+                    },
+                    {
+                        "name": "77**7***9",
+                        "rating": 5,
+                        "comment": "හොද product එකක්. හොදට pack කරල තිබුණා... ඉක්මනටම ලැබුනා watch එක❤❤",
+                        "date": "2025-06-25"
+                    },
+                    {
+                        "name": "71**5***2",
+                        "rating": 5,
+                        "comment": "Highly recommend!",
+                        "date": "2025-07-05"
+                    },
+                    {
+                        "name": "70**3***1",
+                        "rating": 5,
+                        "comment": "සුපිරී මේක. ගෙවන ගානට වටිනව. ගන්න කට්ටිය බය නැතුව ගන්න. recommend.",
+                        "date": "2025-07-06"
+                    },
+                    {
+                        "name": "70**8***0",
+                        "rating": 5,
+                        "comment": "සුපිරි watch එකක්  පෙනුම මං හිතුවට වඩා ගොඩක් හොදයි, parties වලට ගොඩක්ම ගැලපෙනව, මේ ගානට ගොඩක් ලොකු සදාරණයක් ඉටු කරලා තියෙනවා, හොදට pack කරලත් තිබුන, orginal box නම් නෙමෙයි. එත් අවුලක් ඇත්තෙම නෑ. 10  out of 10 වගේ දුන්න හැකි. ",
+                        "date": "2025-08-28"
+                    },
+                    {
+                        "name": "kcd***@*****.com",
+                        "rating": 5,
+                        "comment": "Nice 😍",
+                        "date": "2025-08-20"
+                    },
+                    {
+                        "name": "ami***@*****.com",
+                        "rating": 5,
+                        "comment": "📍Fast delivery. best condishion 💯 බයනැතුව ගන්න සුපිරියක් මේ ගානට ගොඩක් වටිනවා.Thanx for Ru Online store💗",
+                        "date": "2025-10-21"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod10",
+                "title": " CURREN Mens Analog Steel Band Watches Silver Black Face",
+                "short_description": "pending description",
+                "price": 799,
+                "original_price": 2500,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://civic-beige-anq1vta8al.edgeone.app/3e7450cf-f4c2-42be-9693-8c06744d6776.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 102,
+                "reviews": [
+                    {
+                        "name": "pen***@*****.com",
+                        "rating": 5,
+                        "comment": "good",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod11",
+                "title": " Kitchen Press Murukku Making Machine",
+                "short_description": " Kitchen Press Murukku Making Machine",
+                "price": 2200,
+                "original_price": 3500,
+                "discount_percent": 5,
+                "stock": 10,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 8, "discount_pct": 8},
+                    {"min_qty": 15, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://deaf-coral-fubruqn8me.edgeone.app/6d15353f-981b-48d7-bc53-b4e27e538ed2.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 5,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod12",
+                "title": "Voltage Tester",
+                "short_description": " Voltage Tester Portable 1 Pieces Detector Electric Voltage Tester Voltage Detector Non-Contact Voltage Tester Electroscope Used for Voltage Tests and Current Failure Tests ",
+                "price": 750,
+                "original_price": 2500,
+                "discount_percent": 5,
+                "stock": 3,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 8, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://doubtful-copper-oztuppeyl1.edgeone.app/13f741b9-6289-4cc7-9d2d-8dae01638a5b.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 105,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod13",
+                "title": "4 Pcs Vip Light",
+                "short_description": " Shell 4 Pcs Vip Light Grill Car Police LED Light Strobe Red Blue Emergency Remote Wireless Control Flash RGB",
+                "price": 2100,
+                "original_price": 4000,
+                "discount_percent": 5,
+                "stock": 3,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 8, "discount_pct": 8},
+                    {"min_qty": 20, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://increased-chocolate-6fzankpyl7.edgeone.app/5b41ab6e-78b2-4025-883f-e89864c4a56e.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 185,
+                "reviews": [
+                    {
+                        "name": "pen***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod14",
+                "title": "Vertical Shoe Rack ",
+                "short_description": "Modern And Creative Hard Plastic  6 Layer Random Colour",
+                "price": 1600,
+                "original_price": 1950,
+                "discount_percent": 5,
+                "stock": 20,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 8, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://blind-aqua-wfywivvrgd.edgeone.app/2741c6e2-b16d-4d63-9a37-5c4f99743052.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod15",
+                "title": "Graduation Bears",
+                "short_description": "Graduation Bears Grad Gifts Plush Teddy Bear Doll with Graduation Cap, Decorative Plush Animal Graduation Present for Preschool High School University Grad Party ",
+                "price": 1200,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 10,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://sporting-yellow-xhkdjnmtqh.edgeone.app/67f5c833-d044-4133-8028-1a31359c19dd.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": ["random"],
+                    "sizes": ["7"]
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod16",
+                "title": "Universal Devil Eyes Ambient Light Kit - Y1",
+                "short_description": "Universal Devil Eyes Ambient Light Kit - Y1",
+                "price": 1500,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 8,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://architectural-chocolate-unwvlpblgy.edgeone.app/a87d1207-953e-49fa-994b-1ad89061e412.jpg",
+                    "https://vague-coral-wugbdv3nza.edgeone.app/333ebcbf-70f2-4864-9c45-aeb56266c916.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": ["y1","y5"]
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod17",
+                "title": "Remote Control Car Toys",
+                "short_description": "High Quality Custom 2.4Ghz 4Ch Remote Control Car Toys Fast Drift Stunt Car Rolliing For Kids Children",
+                "price": 1700,
+                "original_price": 2600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://binding-gold-voff7uesrz.edgeone.app/53498a25-661b-4eb5-bb83-213ca3e3cd50.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": ["red"],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod18",
+                "title": "Warm Hand Bag- Hot Water Bag",
+                "short_description": " Disney Stitch Anime Winter Extra Large Plush Hot Water Bottle Women'S Home Water Filling Hand Warmer Holiday Gift - Random Colours",
+                "price": 2000,
+                "original_price": 5000,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://ashamed-cyan-viisdthkxu.edgeone.app/20941a3d-29db-4169-8a51-9d4cb9e710d8.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod19",
+                "title": "Super Soft Travel Neck Pillow Kit Random Colors",
+                "short_description": "1pcs Hot Sale Portable Car Flight Travel Soft Inflatable Neck Rest Cushion U Pillows Auto Car Styling Car Accessories Camping",
+                "price": 450,
+                "original_price": 600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://interested-cyan-bgij8o0eqi.edgeone.app/73c7bedb-528e-48c6-811c-16bcbfe1ff31.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod20",
+                "title": "Rechargeable COB Keychain Light Mini Plastic",
+                "short_description": "Rechargeable COB Keychain Light Mini Plastic",
+                "price": 600,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://casual-harlequin-39q9gruuba.edgeone.app/ccc377de-3768-4869-87e2-52f0c519a14b.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod21",
+                "title": "Portable Hand Mixer  Mixing Baking Cooking and Egg Whisk Beater Blender",
+                "short_description": "pending description",
+                "price": 1600,
+                "original_price": 1800,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://payable-violet-pnqcmkiemk.edgeone.app/a0599f06-63a6-4897-a67e-72d49be28aa8.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod22",
+                "title": "Nano Mist Spray Facial Steamer Moisturizing Sprayer Portable Nano Mister Mini Facial Sprayer",
+                "short_description": "Nano Mist Spray Facial Steamer Moisturizing Sprayer Portable Nano Mister Mini Facial Sprayer",
+                "price": 599,
+                "original_price": 899,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://worthwhile-pink-iic9v2ztys.edgeone.app/cf58898a-adf3-4438-986a-f5f67e5ec17e.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod23",
+                "title": "Electronic Digital Kitchen Scale 10Kg",
+                "short_description": "pending description",
+                "price": 1200,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://squealing-tan-6dfwm3bnrt.edgeone.app/d4e39a8e-e43f-4af4-a2e1-5f3acb3f1f36.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod24",
+                "title": "Arctic Air Clamp Rechargeable Air Cooler",
+                "short_description": "pending description",
+                "price": 3400,
+                "original_price": 4500,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://brief-bronze-tjoa7hydvt.edgeone.app/5684dba7-b553-4a3c-8a79-83b78cafb4d7.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod25",
+                "title": " For 14 - 55 Inch TV Bracket Max 50KG",
+                "short_description": "pending description",
+                "price": 1600,
+                "original_price": 2600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://soviet-indigo-3wy4il6nzz.edgeone.app/a21dd923-7654-4c8d-b216-30f18111fda4.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 80
+            },
+            {
+                "id": "prod26",
+                "title": "Small Portable Wireless Thermal Photo Printer Pocket Student Mini Error Label Printer",
+                "short_description": "pending description",
+                "price": 4200,
+                "original_price": 6000,
+                "discount_percent": 5,
+                "stock": 3,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://clever-silver-zmjhiof5eq.edgeone.app/e8158325-204f-4215-a3e4-59f0473be24f.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 57,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod27",
+                "title": "5 in 1 Full Relax Tone Spin Body Massager Electric Full Body Slimming Massager",
+                "short_description": "pending description",
+                "price": 1999,
+                "original_price": 2699,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://flexible-blue-pdr3ydyl9k.edgeone.app/9367e0f0-30ac-4183-bd6b-8a1cb4148282.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 0
+            },
+            {
+                "id": "prod28",
+                "title": " Laptop Stand Metel",
+                "short_description": "pending description",
+                "price": 999,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://unusual-lime-caw8j8s8ox.edgeone.app/4a21aeb3-3d9f-491e-9e90-07b1818565cb.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            },
+            {
+                "id": "prod29",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            },
+            {
+                "id": "prod30",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            },
+            {
+                "id": "prod31",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            },
+            {
+                "id": "prod32",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            },
+            {
+                "id": "prod33",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            },
+            {
+                "id": "prod34",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            },
+            {
+                "id": "prod35",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            },
+            {
+                "id": "prod36",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            },
+            {
+                "id": "prod37",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            },
+            {
+                "id": "prod38",
+                "title": "Pending Product",
+                "short_description": "pending description",
+                "price": 1000,
+                "original_price": 1600,
+                "discount_percent": 5,
+                "stock": 18,
+                "delivery_fee": 350,
+                "wholesale_breaks": [
+                    {"min_qty": 3, "discount_pct": 8},
+                    {"min_qty": 6, "discount_pct": 15}
+                ],
+                "images": [
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
+                    "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg"
+                ],
+                "category": "electronics",
+                "soldCount": 37,
+                "reviews": [
+                    {
+                        "name": "pend***@*****.com",
+                        "rating": 5,
+                        "comment": "pending review",
+                        "date": "2025-06-15"
+                    }
+                ],
+                "variants": {
+                    "colors": [],
+                    "sizes": []
+                },
+                "cod_fee_extra": 30
+            }
+        ];
 
-    /* ---------- Login modal demo ---------- */
-    const loginOpen = document.getElementById('loginOpen');
-    const loginModal = document.getElementById('loginModal');
-    const closeModal = document.getElementById('closeModal');
-    const loginBtn = document.getElementById('loginBtn');
-    const welcomeLabel = document.getElementById('welcomeLabel');
-    const userEmailEl = document.getElementById('userEmail');
+        // Categories data
+        const categories = [
+            { id: 'electronics', name: 'Electronics', icon: 'laptop' },
+            { id: 'furniture', name: 'Furniture', icon: 'couch' },
+            { id: 'kitchen', name: 'Kitchen', icon: 'utensils' },
+            { id: 'clothing', name: 'Clothing', icon: 'tshirt' },
+            { id: 'beauty', name: 'Beauty', icon: 'spa' },
+            { id: 'sports', name: 'Sports', icon: 'football-ball' }
+        ];
 
-    function showModal(){ loginModal.style.display='flex'; loginModal.setAttribute('aria-hidden','false'); }
-    function hideModal(){ loginModal.style.display='none'; loginModal.setAttribute('aria-hidden','true'); }
 
-    loginOpen.addEventListener('click', showModal);
-    closeModal.addEventListener('click', hideModal);
-    loginModal.addEventListener('click', (e)=> { if (e.target === loginModal) hideModal(); });
+        let cart = [];
+        let wishlist = [];
+        let currentCategory = 'all';
 
-    loginBtn.addEventListener('click', ()=> {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      if (!email || !password){ alert('කරුණාකර Email සහ Password දෙකම ඇතුලත් කරන්න.'); return; }
-      // Demo: save user in localStorage
-      localStorage.setItem('ru_user', JSON.stringify({email}));
-      updateUserUI();
-      hideModal();
-      alert('Successfully signed in (demo): ' + email);
-    });
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts();
+            updateCartCount();
+            updateWishlistCount();
+        });
 
-    function signOut(){ localStorage.removeItem('ru_user'); updateUserUI(); alert('Signed out'); }
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            if (e.target.value.length > 0) {
+                document.getElementById('searchSuggestions').classList.remove('hidden');
+            } else {
+                document.getElementById('searchSuggestions').classList.add('hidden');
+            }
+        });
 
-    function updateUserUI(){
-      const raw = localStorage.getItem('ru_user');
-      if (!raw){ welcomeLabel.textContent = 'Welcome, Guest'; userEmailEl.textContent=''; loginOpen.textContent='Login'; loginOpen.onclick = showModal; return; }
-      const user = JSON.parse(raw);
-      welcomeLabel.textContent = 'Welcome,' + (user.email.split('@')[0] || user.email);
-      userEmailEl.textContent = user.email;
-      loginOpen.textContent = 'Account';
-      loginOpen.onclick = ()=> {
-        if (confirm('Sign out from demo account?')) signOut();
-      };
-    }
-    updateUserUI();
+        document.getElementById('searchInput').addEventListener('focus', function() {
+            if (this.value.length > 0) {
+                document.getElementById('searchSuggestions').classList.remove('hidden');
+            }
+        });
 
-    /* ---------- Products data (demo) ---------- */
-    // If you already have product HTML in your file, you can replace rendering with extraction.
-    let products = [
-      {id:1, title:'Carrot 22 (කැරට් 22)', price:120, img:'https://picsum.photos/seed/carrot/600/400'},
-      {id:2, title:'Apple Pack (ඇපල් පැකේජය)', price:380, img:'https://picsum.photos/seed/apple/600/400'},
-      {id:3, title:'Honey Jar (ගේනී)', price:750, img:'https://picsum.photos/seed/honey/600/400'},
-      {id:4, title:'Organic Rice 5kg', price:2400, img:'https://picsum.photos/seed/rice/600/400'},
-      {id:5, title:'Green Tea Box', price:980, img:'https://picsum.photos/seed/tea/600/400'},
-      {id:6, title:'Coconut Oil 1L', price:1450, img:'https://picsum.photos/seed/coconut/600/400'}
-    ];
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#searchInput') && !e.target.closest('#searchSuggestions')) {
+                document.getElementById('searchSuggestions').classList.add('hidden');
+            }
+        });
 
-    const productsSection = document.getElementById('productsSection');
+        function selectSuggestion(suggestion) {
+            document.getElementById('searchInput').value = suggestion;
+            document.getElementById('searchSuggestions').classList.add('hidden');
+            performSearch();
+        }
 
-    function renderProducts(list){
-      productsSection.innerHTML = '';
-      if (!list.length){ productsSection.innerHTML = '<div class="small">No products found.</div>'; return; }
-      for (const p of list){
-        const art = document.createElement('article');
-        art.className = 'product-card';
-        art.innerHTML = `
-          <img src="${p.img}" alt="${p.title}">
-          <div class="product-title">${p.title}</div>
-          <div class="product-price">Rs. ${Number(p.price).toFixed(2)}</div>
-          <div class="product-actions">
-            <button class="btn add-cart" data-id="${p.id}">Add to Cart</button>
-            <button class="linkish buy-now" data-id="${p.id}">Buy Now</button>
-          </div>
-        `;
-        productsSection.appendChild(art);
-      }
-    }
-    renderProducts(products);
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm) {
+                showNotification(`Searching for "${searchTerm}"...`, 'info');
+                // Simulate search
+                setTimeout(() => {
+                    showNotification(`Found ${Math.floor(Math.random() * 50) + 10} results for "${searchTerm}"`, 'success');
+                }, 1000);
+            }
+        }
 
-    /* ---------- Search & Sort ---------- */
-    const searchInput = document.getElementById('searchInput');
-    const sortSelect = document.getElementById('sortSelect');
+        // Render products
+        function renderProducts(category = 'all') {
+            const productsGrid = document.getElementById('productsGrid');
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(p => p.category === category);
+            
+            productsGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg">
+                    <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover">
+                        ${product.badge ? `<span class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">${product.badge}</span>` : ''}
+                        <div class="absolute top-4 right-4 flex flex-col space-y-2">
+                            <button onclick="toggleWishlist(${product.id})" class="bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                                <i class="fas fa-heart text-gray-600"></i>
+                            </button>
+                            <button onclick="viewProduct(${product.id})" class="bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                                <i class="fas fa-eye text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-lg mb-2">${product.name}</h4>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                ${Array(5).fill().map((_, i) => 
+                                    `<i class="fas fa-star${i < Math.floor(product.rating) ? '' : '-o'}"></i>`
+                                ).join('')}
+                            </div>
+                            <span class="text-sm text-gray-600 ml-2">(${product.reviews})</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-purple-600">$${product.price}</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">$${product.originalPrice}</span>
+                            </div>
+                            <span class="text-sm text-green-600 font-semibold">Save ${(100 - (product.price / product.originalPrice * 100)).toFixed(0)}%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4 text-sm">
+                            <span class="text-gray-600">Stock: ${product.stock}</span>
+                            <span class="text-gray-600">Sold: ${product.sold}</span>
+                        </div>
+                        <button onclick="addToCart(${product.id})" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-    function applyFilters(){
-      const q = (searchInput.value || '').toLowerCase().trim();
-      let filtered = products.filter(p => p.title.toLowerCase().includes(q));
-      const s = sortSelect.value;
-      if (s === 'price-asc') filtered.sort((a,b)=>a.price-b.price);
-      if (s === 'price-desc') filtered.sort((a,b)=>b.price-a.price);
-      renderProducts(filtered);
-    }
-    searchInput.addEventListener('input', applyFilters);
-    sortSelect.addEventListener('change', applyFilters);
+        // View product details
+        function viewProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            localStorage.setItem('selectedProduct', JSON.stringify(product));
+            window.location.href = 'product.html';
+        }
 
-    /* ---------- Simple Add to Cart Demo ---------- */
-    document.body.addEventListener('click', (e)=> {
-      if (e.target.matches('.add-cart')){
-        const id = e.target.dataset.id;
-        const p = products.find(x=>x.id==id);
-        if (!p) return;
-        // demo cart in localStorage
-        const cart = JSON.parse(localStorage.getItem('ru_cart') || '[]');
-        cart.push({id:p.id, title:p.title, price:p.price, qty:1});
-        localStorage.setItem('ru_cart', JSON.stringify(cart));
-        alert(p.title + ' added to cart (demo). Cart size: ' + cart.length);
-      }
-      if (e.target.matches('.buy-now')){
-        const id = e.target.dataset.id;
-        const p = products.find(x=>x.id==id);
-        if (!p) return;
-        alert('Buy now clicked for: ' + p.title + '\\n(This is a demo. Integrate payment gateway to proceed.)');
-      }
-    });
+        // Cart functionality
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCartCount();
+            renderCart();
+            showNotification(`${product.name} added to cart!`, 'success');
+        }
 
-    /* ---------- Accessibility: Close modal with ESC ---------- */
-    document.addEventListener('keydown', (ev)=> {
-      if (ev.key === 'Escape') hideModal();
-    });
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartCount();
+            renderCart();
+            showNotification('Item removed from cart', 'info');
+        }
 
-    /* ---------- End of single-file script ---------- */
-  </script>
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    renderCart();
+                }
+            }
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500 text-lg">Your cart is empty</p>
+                        <button onclick="toggleCart()" class="mt-4 text-purple-600 font-semibold hover:text-purple-700">
+                            Continue Shopping
+                        </button>
+                    </div>
+                `;
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item-enter bg-white rounded-lg p-4 mb-4 shadow-sm">
+                        <div class="flex items-center">
+                            <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg mr-4">
+                            <div class="flex-1">
+                                <h4 class="font-semibold">${item.name}</h4>
+                                <p class="text-purple-600 font-bold">$${item.price}</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span class="w-8 text-center font-semibold">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                                <button onclick="removeFromCart(${item.id})" class="ml-4 text-red-500 hover:text-red-700">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            updateCartTotal();
+        }
+
+        function updateCartTotal() {
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const deliveryCharge = cart.reduce((total, item) => total + (item.deliveryCharge * item.quantity), 0);
+            const total = subtotal + deliveryCharge;
+            
+            document.getElementById('cartSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
+        }
+
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            cartSidebar.classList.toggle('translate-x-full');
+            if (!cartSidebar.classList.contains('translate-x-full')) {
+                renderCart();
+            }
+        }
+
+        // Wishlist functionality
+        function toggleWishlist(productId) {
+            const product = products.find(p => p.id === productId);
+            const index = wishlist.findIndex(item => item.id === productId);
+            
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showNotification(`${product.name} removed from wishlist`, 'info');
+            } else {
+                wishlist.push(product);
+                showNotification(`${product.name} added to wishlist!`, 'success');
+            }
+            
+            updateWishlistCount();
+        }
+
+        function updateWishlistCount() {
+            document.getElementById('wishlistCount').textContent = wishlist.length;
+        }
+
+        function showWishlist() {
+            if (wishlist.length === 0) {
+                showNotification('Your wishlist is empty', 'info');
+            } else {
+                showNotification(`You have ${wishlist.length} items in wishlist`, 'info');
+            }
+        }
+
+        // Category and sorting
+        function showCategory(category) {
+            currentCategory = category;
+            renderProducts(category);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function sortProducts() {
+            const sortBy = document.getElementById('sortSelect').value;
+            let sortedProducts = [...products];
+            
+            switch(sortBy) {
+                case 'price-low':
+                    sortedProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    sortedProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'newest':
+                    sortedProducts.reverse();
+                    break;
+                default:
+                    // Keep original order for popular
+                    break;
+            }
+            
+            // Re-render with sorted products
+            const productsGrid = document.getElementById('productsGrid');
+            const filteredProducts = currentCategory === 'all' 
+                ? sortedProducts 
+                : sortedProducts.filter(p => p.category === currentCategory);
+            
+            productsGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg">
+                    <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover">
+                        ${product.badge ? `<span class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">${product.badge}</span>` : ''}
+                        <div class="absolute top-4 right-4 flex flex-col space-y-2">
+                            <button onclick="toggleWishlist(${product.id})" class="bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                                <i class="fas fa-heart text-gray-600"></i>
+                            </button>
+                            <button onclick="viewProduct(${product.id})" class="bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                                <i class="fas fa-eye text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-lg mb-2">${product.name}</h4>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                ${Array(5).fill().map((_, i) => 
+                                    `<i class="fas fa-star${i < Math.floor(product.rating) ? '' : '-o'}"></i>`
+                                ).join('')}
+                            </div>
+                            <span class="text-sm text-gray-600 ml-2">(${product.reviews})</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-purple-600">$${product.price}</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">$${product.originalPrice}</span>
+                            </div>
+                            <span class="text-sm text-green-600 font-semibold">Save ${(100 - (product.price / product.originalPrice * 100)).toFixed(0)}%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4 text-sm">
+                            <span class="text-gray-600">Stock: ${product.stock}</span>
+                            <span class="text-gray-600">Sold: ${product.sold}</span>
+                        </div>
+                        <button onclick="addToCart(${product.id})" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Modal functionality
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+            setTimeout(() => {
+                document.querySelector('#loginModal > div').classList.remove('scale-95');
+                document.querySelector('#loginModal > div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeLoginModal() {
+            document.querySelector('#loginModal > div').classList.remove('scale-100');
+            document.querySelector('#loginModal > div').classList.add('scale-95');
+            setTimeout(() => {
+                document.getElementById('loginModal').style.display = 'none';
+            }, 300);
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'Admin' && password === 'admin123') {
+                showNotification('Login successful! Welcome Admin.', 'success');
+                closeLoginModal();
+                window.location.href = 'admin.html';
+            } else {
+                showNotification('Invalid username or password', 'error');
+            }
+        }
+
+        // Other functions
+        function showDeals() {
+            showCategory('all');
+            document.getElementById('sortSelect').value = 'price-low';
+            sortProducts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty', 'warning');
+                return;
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            window.location.href = 'checkout.html';
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notificationContainer = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            
+            const bgColor = {
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500',
+                'info': 'bg-blue-500'
+            }[type] || 'bg-gray-500';
+            
+            const icon = {
+                'success': 'fa-check-circle',
+                'error': 'fa-exclamation-circle',
+                'warning': 'fa-exclamation-triangle',
+                'info': 'fa-info-circle'
+            }[type] || 'fa-info-circle';
+            
+            notification.className = `notification ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg mb-4 flex items-center`;
+            notification.innerHTML = `
+                <i class="fas ${icon} mr-3"></i>
+                <span>${message}</span>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
