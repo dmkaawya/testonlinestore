@@ -694,7 +694,6 @@
             margin-top: 5px;
         }
 
-
         .shop-header {
             display: flex;
             justify-content: space-between;
@@ -1470,86 +1469,113 @@
             }
         }
 
-    /* contact form*/
-  .contact-section {
-  width: 100%;
-  max-width: 40rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 3rem 1rem;
-}
+        /* contact form*/
+        .contact-section {
+            width: 100%;
+            max-width: 40rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 3rem 1rem;
+        }
 
-.contact-intro > * + * {
-  margin-top: 1rem;
-}
+        .contact-intro > * + * {
+            margin-top: 1rem;
+        }
 
-.contact-title {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-  font-weight: 700;
-}
+        .contact-title {
+            font-size: 1.875rem;
+            line-height: 2.25rem;
+            font-weight: 700;
+        }
 
-.contact-description {
-  color: rgb(107 114 128);
-}
+        .contact-description {
+            color: rgb(107 114 128);
+        }
 
-.form-group-container {
-  display: grid;
-  gap: 1rem;
-  margin-top: 2rem;
-}
+        .form-group-container {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
 
-.form-label {
-  margin-bottom: 0.5rem;
-}
+        .form-label {
+            margin-bottom: 0.5rem;
+        }
 
-.form-input,
-.form-textarea {
-  padding: 0.5rem;
-  border: 1px solid #e5e7eb;
-  display: flex;
-  height: 2.5rem;
-  width: 100%;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
+        .form-input,
+        .form-textarea {
+            padding: 0.5rem;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            height: 2.5rem;
+            width: 100%;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
 
-.form-input::placeholder,
-.form-textarea:focus-visible {
-  color: #6b7280;
-}
+        .form-input::placeholder,
+        .form-textarea:focus-visible {
+            color: #6b7280;
+        }
 
-.form-input:focus-visible,
-.form-textarea:focus-visible {
-  outline: 2px solid #2563eb;
-  outline-offset: 2px;
-}
+        .form-input:focus-visible,
+        .form-textarea:focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
 
-.form-textarea {
-  min-height: 120px;
-}
+        .form-textarea {
+            min-height: 120px;
+        }
 
-.form-submit {
-  width: 100%;
-  margin-top: 1.2rem;
-  background-color: #3124ca;
-  color: #fff;
-  padding: 13px 5px;
-  border-radius: 0.375rem;
-}
+        .form-submit {
+            width: 100%;
+            margin-top: 1.2rem;
+            background-color: #3124ca;
+            color: #fff;
+            padding: 13px 5px;
+            border-radius: 0.375rem;
+        }
 
+        /* Login Status */
+        .login-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            color: var(--danger-color);
+        }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Notification Container -->
-    <div id="notificationContainer" class="fixed top-4 right-4 z-50"></div>
-
+<body>
     <!-- Header -->
     <header>
         <div class="container header-container">
@@ -1558,9 +1584,11 @@
                 <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
                 <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
             </div>
-            <div class="cart-icon" id="cartIcon" role="button" aria-label="Shopping cart" tabindex="0">
-                <i class="fas fa-shopping-cart" aria-hidden="true"></i>
-                <span class="cart-count" id="cartCount" aria-live="polite" aria-atomic="true">0</span>
+            <div class="login-status" id="loginStatus">
+                <div class="cart-icon" id="cartIcon" role="button" aria-label="Shopping cart" tabindex="0">
+                    <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                    <span class="cart-count" id="cartCount" aria-live="polite" aria-atomic="true">0</span>
+                </div>
             </div>
         </div>
     </header>
@@ -1585,10 +1613,10 @@
                     <a href="#about" class="nav-link" data-page="about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#contact.html" class="nav-link" data-page="contact">Contact</a>
+                    <a href="#contact" class="nav-link" data-page="contact">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#admin.html" class="nav-link" data-page="login">Login</a>
+                    <a href="#login" class="nav-link" data-page="login" id="loginLink">Login</a>
                 </li>
             </ul>
         </div>
@@ -1825,6 +1853,24 @@
                             <label class="form-label" for="deliveryAddress">Delivery Address *</label>
                             <textarea class="form-textarea" id="deliveryAddress" required></textarea>
                         </div>
+                        
+                        <!-- Receiver Information Section -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="receiverName">Receiver's Name *</label>
+                                <input type="text" class="form-input" id="receiverName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="receiverWhatsApp">Receiver's WhatsApp Number *</label>
+                                <input type="tel" class="form-input" id="receiverWhatsApp" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="profitAmount">Profit Amount (LKR) *</label>
+                            <input type="number" class="form-input" id="profitAmount" min="0" step="0.01" required>
+                        </div>
+                        
                         <div class="form-group">
                             <label class="form-label" for="customerNotes">Notes (Optional)</label>
                             <textarea class="form-textarea" id="customerNotes"></textarea>
@@ -1888,7 +1934,7 @@
             <div class="container">
                 <div class="login-container">
                     <div class="login-form-container">
-                        <h2 class="login-title">Login to Your Account(Not Update)</h2>
+                        <h2 class="login-title">Login to Your Account</h2>
                         <form id="loginForm">
                             <div class="form-group">
                                 <label for="loginEmail">Email</label>
@@ -1926,7 +1972,7 @@
                             </div>
                             <div class="contact-info-detail">
                                 <i class="fas fa-phone contact-info-icon"></i>
-                                <span>+94 77 504 8455</span>
+                                <span>+94 77 504 8455.</span>
                             </div>
                             <div class="contact-info-detail">
                                 <i class="fas fa-envelope contact-info-icon"></i>
@@ -1934,7 +1980,7 @@
                             </div>
                             <div class="contact-info-detail">
                                 <i class="fab fa-whatsapp contact-info-icon"></i>
-                                <span>+94 77 504 8455</span>
+                                <span>+94 77 504 8455.</span>
                             </div>
                         </div>
                         
@@ -1955,50 +2001,47 @@
                         </div>
                     </div>
 
-                    <!-- 
-    This is a working contact form. To receive email, 
-    Replace YOUR_ACCESS_KEY_HERE with your actual Access Key.
+                    <section class="contact-section">
+                        <div class="contact-intro">
+                            <h2 class="contact-title">Get in Touch</h2>
+                            <p class="contact-description">
+                                Fill out the form below and we'll get back to you as soon as possible.
+                            </p>
+                        </div>
 
-    Create Access Key here 👉 https://web3forms.com/
- -->
+                        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
 
-<section class="contact-section">
-  <div class="contact-intro">
-    <h2 class="contact-title">Get in Touch</h2>
-    <p class="contact-description">
-      Fill out the form below and we'll get back to you as soon as possible.
-    </p>
-  </div>
+                            <input type="hidden" name="access_key" value="c95e74a2-7e94-46a6-b730-f6ce448c01b9" />
+                            <input type="hidden" name="subject" value="New Contact Form Submission from Web3Forms" />
+                            <input type="hidden" name="from_name" value="My Website" />
+                            <!-- More custom ization options available in the docs: https://docs.web3forms.com -->
 
-  <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                            <div class="form-group-container">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input id="name" name="name" class="form-input" placeholder="Your name" type="text" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input id="email" name="email" class="form-input" placeholder="Your email" type="email" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input id="phone" name="phone" class="form-input" placeholder="+94 77 50 48 455" type="text" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-textarea" id="message" name="message" placeholder="Your message"></textarea>
+                                </div>
+                            </div>
+                            <button class="form-submit" type="submit">Send Message</button>
+                        </form>
 
-    <input type="hidden" name="access_key" value="c95e74a2-7e94-46a6-b730-f6ce448c01b9" />
-    <input type="hidden" name="subject" value="New Contact Form Submission from Web3Forms" />
-    <input type="hidden" name="from_name" value="My Website" />
-    <!-- More custom ization options available in the docs: https://docs.web3forms.com -->
-
-    <div class="form-group-container">
-      <div class="form-group">
-        <label for="name" class="form-label">Name</label>
-        <input id="name" name="name" class="form-input" placeholder="Your name" type="text" />
-      </div>
-      <div class="form-group">
-        <label for="email" class="form-label">Email</label>
-        <input id="email" name="email" class="form-input" placeholder="Your email" type="email" />
-      </div>
-      <div class="form-group">
-        <label for="phone" class="form-label">Phone</label>
-        <input id="phone" name="phone" class="form-input" placeholder="+94 77 50 48 455" type="text" />
-      </div>
-      <div class="form-group">
-        <label for="message" class="form-label">Message</label>
-        <textarea class="form-textarea" id="message" name="message" placeholder="Your message"></textarea>
-      </div>
-    </div>
-    <button class="form-submit" type="submit">Send Message</button>
-  </form>
-
-</section>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <!-- Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
@@ -2059,7 +2102,7 @@
                     </div>
                     <div class="footer-contact">
                         <i class="fas fa-phone footer-contact-icon"></i>
-                        <span>+94 77 504 8455</span>
+                        <span>+94 77 504 8455.</span>
                     </div>
                     <div class="footer-contact">
                         <i class="fas fa-envelope footer-contact-icon"></i>
@@ -2067,7 +2110,7 @@
                     </div>
                     <div class="footer-contact">
                         <i class="fab fa-whatsapp footer-contact-icon"></i>
-                        <span>+94 77 504 8455</span>
+                        <span>+94 77 504 8455.</span>
                     </div>
                 </div>
             </div>
@@ -2081,8 +2124,6 @@
     <div class="toast" id="toast"></div>
 
     <script>
-
-        
         // Sample product data with additional fields
         const products = [
             {
@@ -2308,7 +2349,7 @@
             },
             {
                 "id": "prod7",
-                "title": " 53Pcs Socket Set 53 Pcs Tool Set Tool Box",
+                "title": "53Pcs Socket Set 53 Pcs Tool Set Tool Box",
                 "short_description": "53-piece tool set for home repairs, DIY projects, and maintenance Includes hammer, adjustable wrench, 6″ long-nose pliers, and utility knife Features 8 hex keys (1.5-6mm) and 20 screwdriver bits (Phillips, Slotted, Torx) Contains 1/4″ drive sockets (5-13mm) and 4 precision screwdrivers 8ft measuring tape and level for accurate measurements Made of durable carbon steel with rust-resistant chrome plating Ergonomic grips for comfort during extended use Sturdy carrying case for organized storage and portability Ideal for homeowners, renters, or DIY enthusiasts",
                 "price": 2499,
                 "original_price": 3499,
@@ -2345,7 +2386,7 @@
             },
             {
                 "id": "prod8",
-                "title": " 46 in 1 Tool Kit (2nd Quality)",
+                "title": "46 in 1 Tool Kit (2nd Quality)",
                 "short_description": "Hibuy 46pcs/set Tool Set 46 in 1 Carbon Steel Combination Set Wrench Socket Spanner Screwdriver Household Motorcycle Car Repair Tool Kit",
                 "price": 1250,
                 "original_price": 1550,
@@ -2812,7 +2853,7 @@
                     {"min_qty": 6, "discount_pct": 15}
                 ],
                 "images": [
-                    "https://interested-cyan-bgij8o0eqi.edgeone.app/73c7bedb-528e-48c6-811c-16bcbfe1ff31.jpg",
+                    "https://interested-cyan-bgij8o0eqi.edgeone.app/73c7bedb-528e-486c-811c-16bcbfe1ff31.jpg",
                     "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
                     "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
                     "https://free-aqua-rr13gsfnfe.edgeone.app/unnamed.jpg",
@@ -3553,7 +3594,7 @@
         // Configuration
         const config = {
             defaultDeliveryFee: 350,
-            whatsappNumber: "94765767113",
+            whatsappNumber: "94775048455", // Updated to correct format
             currency: "LKR",
             wholesaleBreaks: [
                 { minQty: 5, discountPct: 5 },
@@ -3567,6 +3608,7 @@
         let currentPage = 'shop';
         let currentProduct = null;
         let filteredProducts = [...products];
+        let currentUser = null;
 
         // DOM elements
         const productsGrid = document.getElementById('productsGrid');
@@ -3598,16 +3640,66 @@
         const loginForm = document.getElementById('loginForm');
         const contactForm = document.getElementById('contactForm');
         const toast = document.getElementById('toast');
+        const loginStatus = document.getElementById('loginStatus');
+        const loginLink = document.getElementById('loginLink');
 
         // Initialize the app
         function init() {
             setupEventListeners();
+            checkLoginStatus();
             navigateToPage('shop');
             loadFeaturedProducts();
             loadCategories();
             loadSpecialOffers();
             renderProducts();
             updateCartUI();
+        }
+
+        // Check login status
+        function checkLoginStatus() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateLoginStatus();
+            }
+        }
+
+        // Update login status display
+        function updateLoginStatus() {
+            if (currentUser) {
+                loginStatus.innerHTML = `
+                    <div class="user-avatar">${currentUser.name.charAt(0).toUpperCase()}</div>
+                    <span>${currentUser.name}</span>
+                    <button class="logout-btn" id="logoutBtn">Logout</button>
+                `;
+                loginLink.style.display = 'none';
+                
+                // Add logout event listener
+                document.getElementById('logoutBtn').addEventListener('click', logout);
+            } else {
+                loginStatus.innerHTML = `
+                    <div class="cart-icon" id="cartIcon" role="button" aria-label="Shopping cart" tabindex="0">
+                        <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                        <span class="cart-count" id="cartCount" aria-live="polite" aria-atomic="true">0</span>
+                    </div>
+                `;
+                loginLink.style.display = 'block';
+                
+                // Re-attach cart icon event listener
+                const newCartIcon = document.getElementById('cartIcon');
+                if (newCartIcon) {
+                    newCartIcon.addEventListener('click', toggleCart);
+                }
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            updateLoginStatus();
+            showToast('Logged out successfully');
+            navigateToPage('home');
         }
 
         // Setup event listeners
@@ -3626,7 +3718,11 @@
             });
 
             // Cart
-            cartIcon.addEventListener('click', toggleCart);
+            const cartIconElement = document.getElementById('cartIcon');
+            if (cartIconElement) {
+                cartIconElement.addEventListener('click', toggleCart);
+            }
+            
             closeCart.addEventListener('click', closeCartSidebar);
             continueShopping.addEventListener('click', () => {
                 closeCartSidebar();
@@ -4299,7 +4395,7 @@
             if (!isNaN(newQuantity) && newQuantity >= 1 && newQuantity <= product.stock) {
                 selectedOptions[productId].quantity = newQuantity;
                 
-                // Re-render the product card to update prices
+                // Re-render the product card
                 const productCard = document.querySelector(`[data-product-id="${productId}"]`).closest('.product-card');
                 if (productCard) {
                     const newCard = createProductCard(product);
@@ -4926,24 +5022,40 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             
-            // In a real app, you would send this to a server for authentication
-            console.log('Login attempt:', { email, password });
-            
-            // For demo purposes, we'll just show a success message
-            showToast('Login successful!');
-            navigateToPage('home');
+            // Simple authentication (in a real app, this would be done on a server)
+            if (email && password) {
+                // Create user object
+                const user = {
+                    id: Date.now(),
+                    name: email.split('@')[0], // Use part before @ as name
+                    email: email,
+                    loginTime: new Date().toISOString()
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                currentUser = user;
+                
+                // Update UI
+                updateLoginStatus();
+                
+                showToast('Login successful!');
+                navigateToPage('home');
+            } else {
+                showToast('Please enter valid credentials');
+            }
         }
 
         // Handle contact form
         function handleContactForm(e) {
             e.preventDefault();
-            const name = document.getElementById('contactName').value;
-            const email = document.getElementById('contactEmail').value;
-            const subject = document.getElementById('contactSubject').value;
-            const message = document.getElementById('contactMessage').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
             
             // In a real application, you would send this data to a server
-            console.log('Contact form submitted:', { name, email, subject, message });
+            console.log('Contact form submitted:', { name, email, phone, message });
             
             // Show success message
             showToast('Your message has been sent successfully!');
@@ -4958,10 +5070,13 @@
             const customerPhone = document.getElementById('customerPhone').value;
             const customerDistrict = document.getElementById('customerDistrict').value;
             const deliveryAddress = document.getElementById('deliveryAddress').value;
+            const receiverName = document.getElementById('receiverName').value;
+            const receiverWhatsApp = document.getElementById('receiverWhatsApp').value;
+            const profitAmount = document.getElementById('profitAmount').value;
             const customerNotes = document.getElementById('customerNotes').value;
             const paymentMethod = paymentMethodSelect.value;
             
-            if (!customerName || !customerPhone || !customerDistrict || !deliveryAddress) {
+            if (!customerName || !customerPhone || !customerDistrict || !deliveryAddress || !receiverName || !receiverWhatsApp || !profitAmount) {
                 showToast('Please fill in all required fields');
                 return;
             }
@@ -4971,113 +5086,43 @@
                 return;
             }
             
-            let itemsSubtotal = 0;
-            let totalDiscounts = 0;
-            let totalDeliveryFee = 0;
-            let totalCodFee = 0;
+            let grandTotal = 0;
             
-            // Build the message text
-            let message = `🛒 *R U Online Stores — New Order*\n\n`;
-            message += `🧾 Order #: ${Date.now()}\n`;
-            message += `👤 Name: ${customerName}\n`;
-            message += `📞 Phone: ${customerPhone}\n`;
+            // Build a simplified message
+            let message = `🛒 *RU Online Stores — New Order*\n\n`;
+            message += `👤 Customer Name: ${customerName}\n`;
+            message += `📞 Customer Phone: ${customerPhone}\n`;
             message += `🏙️ District: ${customerDistrict}\n`;
             message += `📍 Address: ${deliveryAddress}\n\n`;
-            message += `────────────────────────\n`;
+            message += `🚚 Delivery Details:\n`;
+            message += `   Receiver Name: ${receiverName}\n`;
+            message += `   Receiver WhatsApp: ${receiverWhatsApp}\n`;
+            message += `   Profit Amount: ${formatCurrency(parseFloat(profitAmount))}\n\n`;
             message += `*Items:*\n`;
             
-            // Group items by shop (for demo, we assume all items are from the same shop)
-            const shopItems = cart.reduce((acc, item) => {
-                acc[item.shop || 'default'] = (acc[item.shop || 'default'] || 0) + item.quantity;
-                return acc;
-            }, {});
-            
             cart.forEach((item, index) => {
-                // Calculate wholesale discount
-                let wholesaleDiscount = 0;
-                if (item.wholesale_breaks && item.quantity > 1) {
-                    for (const breakPoint of item.wholesale_breaks) {
-                        if (item.quantity >= breakPoint.min_qty) {
-                            wholesaleDiscount = breakPoint.discount_pct;
-                        }
-                    }
-                }
+                const itemTotal = item.price * item.quantity;
+                grandTotal += itemTotal;
                 
-                // Calculate prices
-                const basePrice = item.price;
-                const wholesaleDiscountAmount = (basePrice * wholesaleDiscount) / 100;
-                const finalPrice = basePrice - wholesaleDiscountAmount;
-                
-                // Calculate delivery fee
-                let deliveryFee = item.delivery_fee || config.defaultDeliveryFee;
-                
-                // Apply special delivery rate if more than 4 items from the same shop
-                const shopId = item.shop || 'default';
-                if (shopItems[shopId] > 4) {
-                    deliveryFee = deliveryFee * 0.8; // 20% discount on delivery fee
-                }
-                
-                // Calculate COD fee
-                const codFee = paymentMethod === 'cod' ? (item.cod_fee_extra || 0) : 0;
-                
-                // Calculate line subtotal
-                const lineSubtotal = (finalPrice * item.quantity) + deliveryFee + codFee;
-                
-                // Update totals
-                itemsSubtotal += finalPrice * item.quantity;
-                totalDiscounts += wholesaleDiscountAmount * item.quantity;
-                totalDeliveryFee += deliveryFee;
-                totalCodFee += codFee;
-                
-                // Add item to message
-                 message += `${index + 1}) ${item.title}\n`;
-                if (item.color || item.size) {
-                    message += `   • Options: `;
-                    if (item.color) message += `Color: ${item.color}`;
-                    if (item.color && item.size) message += `, `;
-                    if (item.size) message += `Size: ${item.size}`;
-                    message += `\n`;
-                }
-                message += `   • Qty: ${item.quantity}\n`;
-                message += `   • Unit: ${formatCurrency(finalPrice)}\n`;
-                message += `   • Line total: ${formatCurrency(finalPrice * item.quantity)}\n`;
-                message += `   • Delivery fee: ${formatCurrency(deliveryFee)}\n`;
-                if (codFee > 0) {
-                    message += `   • COD fee: ${formatCurrency(codFee)}\n`;
-                }
-                message += `   -----------------------\n`;
+                message += `${index + 1}) ${item.title}\n`;
+                message += `   Qty: ${item.quantity} × ${formatCurrency(item.price)} = ${formatCurrency(itemTotal)}\n`;
             });
             
-            const grandTotal = itemsSubtotal + totalDeliveryFee + totalCodFee;
-           message += `────────────────────────\n\n`;
-            message += `Subtotal (items): ${formatCurrency(itemsSubtotal)}\n`;
-            if (totalDiscounts > 0) {
-                message += `Total discounts: ${formatCurrency(totalDiscounts)}\n`;
-            }
-            message += `Total delivery fee: ${formatCurrency(totalDeliveryFee)}\n`;
-            if (totalCodFee > 0) {
-                message += `COD fee: ${formatCurrency(totalCodFee)}\n`;
-            }
-            message += `Payment method: ${getPaymentMethodName(paymentMethod)}\n`;
-            message += `Grand total: *${formatCurrency(grandTotal)}*\n\n`;
-            message += `📝 Notes: ${customerNotes || 'None'}\n\n`;
-            message += `Support:0775048455, Hotline: ${config.whatsappNumber}`;
+            message += `\n────────────────────────\n`;
+            message += `Payment: ${getPaymentMethodName(paymentMethod)}\n`;
+            message += `Total: *${formatCurrency(grandTotal)}*\n\n`;
+            message += `Notes: ${customerNotes || 'None'}\n\n`;
+            message += `Support: 0775048455`;
             
             // Format phone number for WhatsApp
-            let formattedPhone = config.whatsappNumber.replace(/\D/g, '');
+            const formattedPhone = config.whatsappNumber.replace(/\D/g, '');
             
             // Create WhatsApp URL with proper encoding
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
-            
-            // For debugging: log the URL to console
-            console.log('WhatsApp URL:', whatsappUrl);
+            const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
             
             // Try to open WhatsApp
             try {
                 window.open(whatsappUrl, '_blank');
-                
-                // Show success message
                 showToast('Order sent successfully!');
                 
                 // Clear cart and navigate to shop
@@ -5095,6 +5140,14 @@
         // Format currency
         function formatCurrency(amount) {
             return `${config.currency} ${amount.toLocaleString()}`;
+        }
+
+        // Format phone number with dot at the end
+        function formatPhoneNumber(phone) {
+            // Remove any existing dots and non-digit characters
+            const cleaned = phone.replace(/[^\d]/g, '');
+            // Add dot at the end
+            return cleaned + '.';
         }
 
         // Get payment method name
@@ -5121,7 +5174,6 @@
 
         // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', init);
-
     </script>
 </body>
 </html>
