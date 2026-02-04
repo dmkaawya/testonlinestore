@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NovaX - All-in-One Promotion Network</title>
+    <title>Packages - NovaX Promotion Network</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,31 +61,26 @@
     </script>
 
     <style>
-        /* Custom Styles */
         body {
             background-color: #020617;
             color: #e2e8f0;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
-            padding-bottom: 100px; /* Space for FAB and Footer */
+            padding-bottom: 100px;
         }
-
-        /* Glassmorphism */
         .glass {
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
         .glass-modal {
             background: rgba(2, 6, 23, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(6, 182, 212, 0.15);
         }
-
-        /* Custom Checkbox for TikTok */
+        /* Custom Checkbox */
         .custom-checkbox:checked {
             background-color: #06b6d4;
             border-color: #06b6d4;
@@ -94,35 +89,28 @@
             border-color: #06b6d4;
             background: rgba(6, 182, 212, 0.1);
         }
-
         /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #020617; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
-
-        /* Borders & Gradients */
         .border-neon-cyan { border-color: #06b6d4; box-shadow: 0 0 10px rgba(6, 182, 212, 0.2); }
         .border-neon-purple { border-color: #a855f7; box-shadow: 0 0 10px rgba(168, 85, 247, 0.2); }
         .border-neon-gold { border-color: #eab308; box-shadow: 0 0 10px rgba(234, 179, 8, 0.2); }
         .border-neon-green { border-color: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.2); }
         .border-neon-silver { border-color: #94a3b8; }
-
         .text-gradient {
             background: linear-gradient(to right, #06b6d4, #a855f7, #eab308);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        /* Animation utilities */
         .step-content { display: none; animation: fadeIn 0.4s ease-out; }
         .step-content.active { display: block; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         /* Toast */
         #toast-container {
             position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
@@ -137,12 +125,8 @@
             transform: translateX(-20px); opacity: 0; transition: all 0.3s ease; pointer-events: auto;
         }
         .toast.show { transform: translateX(0); opacity: 1; }
-
-        /* Hide scrollbar for nav on mobile */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Tab Switching Logic */
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
     </style>
@@ -154,23 +138,29 @@
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
             <!-- Logo -->
             <div class="flex items-center gap-2 shrink-0">
-                <i class="fa-solid fa-bolt text-cyber-cyan text-2xl animate-pulse"></i>
-                <span class="text-xl font-bold tracking-wider text-white">Nova<span class="text-cyber-cyan">X</span></span>
+                <a href="index.html" class="flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-cyber-cyan text-2xl animate-pulse"></i>
+                    <span class="text-xl font-bold tracking-wider text-white">Nova<span class="text-cyber-cyan">X</span></span>
+                </a>
             </div>
 
             <!-- Nav Links -->
             <div class="hidden md:flex items-center gap-3">
-                <a href="admin.html" class="px-4 py-1.5 rounded-full border border-cyber-cyan/30 text-cyber-cyan text-xs font-bold hover:bg-cyber-cyan hover:text-black transition-all shadow-[0_0_5px_rgba(6,182,212,0.1)] hover:shadow-[0_0_10px_rgba(6,182,212,0.3)]">
-                    <i class="fa-solid fa-user-shield mr-1"></i> Admin
+                <a href="index.html" class="px-4 py-1.5 rounded-full border border-slate-700 text-gray-400 text-xs font-bold hover:bg-slate-700 hover:text-white transition-all">
+                    Home
                 </a>
-                <a href="rules.html" class="px-4 py-1.5 rounded-full border border-cyber-purple/30 text-cyber-purple text-xs font-bold hover:bg-cyber-purple hover:text-white transition-all shadow-[0_0_5px_rgba(168,85,247,0.1)] hover:shadow-[0_0_10px_rgba(168,85,247,0.3)]">
-                    <i class="fa-solid fa-gavel mr-1"></i> Rules
+                <a href="admin.html" class="px-4 py-1.5 rounded-full border border-cyber-cyan/30 text-cyber-cyan text-xs font-bold hover:bg-cyber-cyan hover:text-black transition-all">
+                    Admin
+                </a>
+                <a href="rules.html" class="px-4 py-1.5 rounded-full border border-cyber-purple/30 text-cyber-purple text-xs font-bold hover:bg-cyber-purple hover:text-white transition-all">
+                    Rules
                 </a>
             </div>
         </div>
         
         <!-- Mobile Nav -->
         <div class="md:hidden border-t border-white/5 bg-black/20 overflow-x-auto whitespace-nowrap no-scrollbar px-4 py-2 flex gap-3 justify-center">
+            <a href="index.html" class="text-xs text-gray-400 bg-slate-800 px-3 py-1 rounded-full">Home</a>
             <a href="admin.html" class="text-xs text-cyber-cyan bg-cyber-cyan/10 px-3 py-1 rounded-full">Admin</a>
             <a href="rules.html" class="text-xs text-cyber-purple bg-cyber-purple/10 px-3 py-1 rounded-full">Rules</a>
         </div>
@@ -179,32 +169,20 @@
     <!-- Main Content -->
     <main class="flex-grow pt-24 pb-10 px-4 sm:px-6">
         
-        <!-- Hero Section -->
-        <section class="max-w-4xl mx-auto text-center mb-16 animate-slide-up">
-            <div class="inline-block px-4 py-1 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 text-cyber-cyan text-sm font-semibold mb-4">
-                <i class="fa-solid fa-star mr-2"></i> #1 in Sri Lanka
-            </div>
-            <h1 class="text-4xl sm:text-6xl font-extrabold mb-6 leading-tight">
-                NovaX - Promotion <br>
-                <span class="text-gradient">Network</span>
+        <!-- Small Hero for Packages -->
+        <section class="max-w-4xl mx-auto text-center mb-12 animate-slide-up">
+            <h1 class="text-3xl sm:text-5xl font-extrabold mb-4">
+                Our Packages
             </h1>
-            <p class="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
-                Boost your visibility with Sri Lanka's most trusted promotion service for TikTok, WhatsApp, Zoom, and TV Ads.
+            <p class="text-gray-400 text-lg">
+                Choose the best promotion strategy for your business.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="scrollToSection('tiktok')" class="px-8 py-4 bg-gradient-to-r from-pink-500 to-rose-600 rounded-lg font-bold text-white shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:shadow-[0_0_30px_rgba(236,72,153,0.6)] hover:scale-105 transition-all">
-                    <i class="fa-brands fa-tiktok mr-2"></i> TikTok Promo
-                </button>
-                <button onclick="scrollToSection('channel')" class="px-8 py-4 bg-gradient-to-r from-cyber-cyan to-blue-600 rounded-lg font-bold text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-105 transition-all">
-                    WhatsApp Promo
-                </button>
-            </div>
         </section>
 
         <div class="max-w-7xl mx-auto space-y-16">
             
             <!-- ========================================== -->
-            <!-- NEW: TIKTOK PROMOTIONS SECTION -->
+            <!-- TIKTOK PROMOTIONS SECTION -->
             <!-- ========================================== -->
             <section id="tiktok" class="glass p-6 rounded-3xl border border-pink-500/20 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl -z-10"></div>
@@ -363,7 +341,7 @@
             </section>
 
             <!-- ========================================== -->
-            <!-- NEW: TV COMMERCIAL & VIDEO EDITING -->
+            <!-- TV COMMERCIAL & VIDEO EDITING -->
             <!-- ========================================== -->
             <section id="tv-video" class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 
@@ -442,17 +420,17 @@
             </section>
 
             <!-- ========================================== -->
-            <!-- EXISTING: WHATSAPP/ZOOM (Modified Layout) -->
+            <!-- WHATSAPP/ZOOM -->
             <!-- ========================================== -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
-                <!-- WhatsApp Promotions (Expanded) -->
+                <!-- WhatsApp Promotions -->
                 <div id="whatsapp-promo" class="glass p-6 rounded-3xl border border-green-500/20">
                     <h2 class="text-2xl font-bold mb-6 flex items-center gap-3 pl-4">
                         <i class="fa-brands fa-whatsapp text-green-500"></i> WhatsApp Promotion
                     </h2>
                     
-                    <!-- Sub-tabs for WA -->
+                    <!-- Sub-tabs -->
                     <div class="flex gap-2 mb-6 text-sm">
                         <button onclick="switchWaTab('edu')" id="wa-tab-edu" class="px-4 py-1.5 rounded-full bg-green-500/20 text-green-400 border border-green-500/30">Edu</button>
                         <button onclick="switchWaTab('business')" id="wa-tab-business" class="px-4 py-1.5 rounded-full bg-slate-800 text-gray-400 border border-transparent">Business</button>
@@ -489,13 +467,12 @@
                     </div>
                 </div>
 
-                <!-- Old Zoom Promo (Keeping Existing) -->
+                <!-- Zoom Promo -->
                 <div id="zoom" class="glass p-6 rounded-3xl border border-cyber-purple/20">
                     <h2 class="text-2xl font-bold mb-6 flex items-center gap-3 pl-4">
                         <i class="fa-solid fa-video text-cyber-purple"></i> Zoom Promotion
                     </h2>
                     <div class="grid grid-cols-1 gap-4">
-                        <!-- Item 3 -->
                         <div class="glass p-4 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
                             <div class="flex justify-between items-center mb-2">
                                 <h3 class="font-bold text-gray-200">100 Members</h3>
@@ -503,7 +480,6 @@
                             </div>
                             <button onclick="addToCart('Zoom Promo (100 Members)', 10000)" class="w-full py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm font-medium transition-colors">Add to Cart</button>
                         </div>
-                        <!-- Item 4 -->
                         <div class="glass p-4 rounded-xl border border-neon-purple relative overflow-hidden">
                             <div class="absolute top-0 right-0 bg-cyber-purple text-white text-[10px] font-bold px-2 py-0.5 rounded-bl-lg z-10">POPULAR</div>
                             <div class="flex justify-between items-center mb-2">
@@ -512,7 +488,6 @@
                             </div>
                             <button onclick="addToCart('Zoom Promo (200 Members)', 18000)" class="w-full py-2 bg-cyber-purple/20 hover:bg-cyber-purple/30 text-cyber-purple border border-cyber-purple rounded-lg text-sm font-medium transition-all">Add to Cart</button>
                         </div>
-                        <!-- Item 5 -->
                         <div class="glass p-4 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
                             <div class="flex justify-between items-center mb-2">
                                 <h3 class="font-bold text-gray-200">300 Members</h3>
@@ -524,7 +499,7 @@
                 </div>
             </div>
 
-            <!-- Channel & Group Rent (Existing Grid) -->
+            <!-- Channel & Group Rent -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Channel Packages -->
                 <div id="channel">
@@ -592,7 +567,7 @@
             </div>
 
             <!-- ========================================== -->
-            <!-- NEW: SOCIAL MEDIA (PENDING) -->
+            <!-- SOCIAL MEDIA (PENDING) -->
             <!-- ========================================== -->
             <div id="social-pending">
                 <h2 class="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-500">
@@ -620,7 +595,7 @@
                 </div>
             </div>
 
-            <!-- Additional Services & Links Section -->
+            <!-- More Services Links -->
             <div class="mt-16 mb-12 border-t border-slate-800 pt-10">
                 <h3 class="text-xl font-bold text-center mb-8 text-gray-300">More Services & Information</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
@@ -688,10 +663,10 @@
                 <div>
                     <h4 class="text-white font-bold mb-4 uppercase text-sm tracking-wider">Quick Links</h4>
                     <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="index.html" class="hover:text-cyber-cyan transition-colors">Home</a></li>
                         <li><a href="rules.html" class="hover:text-cyber-cyan transition-colors">Terms & Rules</a></li>
                         <li><a href="admin.html" class="hover:text-cyber-cyan transition-colors">Admin Panel</a></li>
                         <li><a href="about.html" class="hover:text-cyber-cyan transition-colors">About Us</a></li>
-                        <li><a href="contact.html" class="hover:text-cyber-cyan transition-colors">Contact Support</a></li>
                         <li><a href="partnership.html" class="hover:text-cyber-cyan transition-colors">Become a Partner</a></li>
                     </ul>
                 </div>
@@ -1120,15 +1095,12 @@ _Status: Pending Verification_`;
 
         // TikTok Calculator Logic
         function switchTikTokTab(type) {
-            // Hide all contents
             document.getElementById('tiktok-edu').classList.remove('active');
             document.getElementById('tiktok-business').classList.remove('active');
             
-            // Reset Button Styles
             const btnEdu = document.getElementById('tab-btn-edu');
             const btnBiz = document.getElementById('tab-btn-business');
             
-            // Set active
             document.getElementById(`tiktok-${type}`).classList.add('active');
             
             if(type === 'edu') {
@@ -1144,15 +1116,16 @@ _Status: Pending Verification_`;
         document.addEventListener('DOMContentLoaded', () => {
             // Edu Checkboxes
             document.querySelectorAll('.custom-checkbox').forEach(chk => {
-                chk.addEventListener('change', () => calcTikTokTotal('edu'));
+                chk.addEventListener('change', () => calcTiktokTotal('edu')); // Fixed Function Name
             });
             // Business Checkboxes
             document.querySelectorAll('.custom-checkbox-b').forEach(chk => {
-                chk.addEventListener('change', () => calcTiktokTotal('business'));
+                chk.addEventListener('change', () => calcTiktokTotal('business')); // Fixed Function Name
             });
             updatePaymentMethod();
         });
 
+        // FIXED FUNCTION NAME (Previously 'calcTikTokTotal' vs 'calcTiktokTotal')
         function calcTiktokTotal(type) {
             let sum = 0;
             let count = 0;
